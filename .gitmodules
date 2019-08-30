@@ -1,3 +1,6 @@
 [submodule "private_odoo-purchased"]
 	path = private_odoo-purchased
 	url = https://gitlab.com/abakus-it/odoo-purchased
+[submodule "private_account_export"]
+	path = private_account_export
+	url = https://gitlab.com/abakus-it/odoo-private/account_export
