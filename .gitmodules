@@ -1,0 +1,3 @@
+[submodule "private_odoo-purchased"]
+	path = private_odoo-purchased
+	url = https://gitlab.com/abakus-it/odoo-purchased
