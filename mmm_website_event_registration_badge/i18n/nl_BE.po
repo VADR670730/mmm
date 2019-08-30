@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mmm_website_event_registration_badge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-01 10:12+0000\n"
+"PO-Revision-Date: 2018-06-01 12:14+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: nl_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.registration_badge_l2f_document
+msgid "&amp;nbsp;"
+msgstr "&amp;nbsp;"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model,name:mmm_website_event_registration_badge.model_event_registration
+msgid "Attendee"
+msgstr "Deelnemer"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_filter_print_badge
+msgid "Badge Not Printed"
+msgstr "Badge niet afgedrukt"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_filter_print_badge
+msgid "Badge Printed"
+msgstr "Badge afgedrukt"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "Badge Style"
+msgstr "Badge Style"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_container_img
+msgid "Badge container img"
+msgstr "Badge Container"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model,name:mmm_website_event_registration_badge.model_event_event
+msgid "Event"
+msgstr "Evenement"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_registration_export_file
+msgid "Export file"
+msgstr "Exporteer bestand"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_registration_is_badge_printed
+msgid "Is badge printed"
+msgstr "Is badge afgedrukt"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "PNG picture 86mm x 97mm"
+msgstr "PNG pic 86x97mm"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_form_print_badge
+msgid "Print Badge"
+msgstr "Print Badge"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.actions.report.xml,name:mmm_website_event_registration_badge.report_event_registration_badge_l2f
+msgid "Registration Badge L2F"
+msgstr "Registration Badge L2F"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "Registration badge skin"
+msgstr "Registration Badge Skin"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_registration_export_file
+msgid "This field holds the generated badge."
+msgstr "This field holds the generated badge."

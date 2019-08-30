@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_event_form_registration_badge_skin" model="ir.ui.view">
+        <field name="name">view_event_form_registration_badge_skin</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="badge_style" string="Badge Style">
+                    <group>
+                        <field name="badge_container_img" widget="image"
+                               help="PNG picture 86mm x 97mm"
+                               string="Registration badge skin"
+                        />
+                        <group>
+                            <field name="badge_attendee_name_show" />
+                            <field name="badge_attendee_name_color_code" widget="color" attrs="{'invisible': [('badge_attendee_name_show', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="badge_company_show" />
+                            <field name="badge_company_color_code" widget="color" attrs="{'invisible': [('badge_company_show', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="badge_url_show" />
+                            <field name="badge_url_color_code" widget="color" attrs="{'invisible': [('badge_url_show', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="badge_table_show" />
+                            <field name="badge_table_color_code" widget="color" attrs="{'invisible': [('badge_table_show', '=', False)]}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Remove origin button to edit badge layout -->
+    <record id="view_event_sale_form_removed_edit_badge_button" model="ir.ui.view">
+        <field name="name">view_event_sale_form_removed_edit_badge_button</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="website_event.view_event_sale_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_badge_editor']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

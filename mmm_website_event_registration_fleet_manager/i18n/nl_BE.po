@@ -1,0 +1,189 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mmm_website_event_registration_fleet_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180201\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-17 09:03+0000\n"
+"PO-Revision-Date: 2018-04-17 11:04+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: nl_BE\n"
+"X-Generator: Poedit 2.0.1\n"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "<i>to</i>"
+msgstr "<i>tot</i>"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_attendee_details_more_fields_fleet_manager
+msgid "<strong>Are you a Fleet Manager?</strong>"
+msgstr "<strong>Fleet Owner?</strong>"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_attendee_details_more_fields_fleet_manager
+msgid "<strong>Do you want to join us on these sub events?</strong>"
+msgstr "<strong>Wil je met ons meedoen aan deze sub-evenementen?</strong>"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_attendee_details_more_fields_fleet_manager
+msgid ""
+"<strong>Join the Blue Run?</strong>\n"
+"                        <span class=\"text-muted\"/>"
+msgstr ""
+"<strong>Join the Blue Run?</strong>\n"
+"                        <span class=\"text-muted\"/>"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_event_ticket_ask_for_is_fleet_manager
+msgid "Ask for is fleet manager"
+msgstr "Vraag om fleetowner"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_event_ticket_ask_for_is_participating_blue_run
+msgid "Ask for is participating blue run"
+msgstr "Vraag om deelnaam aan blue run"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model,name:mmm_website_event_registration_fleet_manager.model_event_registration
+msgid "Attendee"
+msgstr "Deelnemer"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.actions.act_window,name:mmm_website_event_registration_fleet_manager.act_sub_event_registration_from_sub_event
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.view_event_sub_event_form
+msgid "Attendees"
+msgstr "Deelnemers"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "Blue Run"
+msgstr "Blue Run"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_create_uid
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_create_date
+msgid "Created on"
+msgstr "Aangemaakt op"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_display_name
+msgid "Display Name"
+msgstr "Weergave naam"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model,name:mmm_website_event_registration_fleet_manager.model_event_event
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_event_id
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "Event"
+msgstr "Afspraak"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model,name:mmm_website_event_registration_fleet_manager.model_event_event_ticket
+msgid "Event Ticket"
+msgstr "Event ticket"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.view_event_registration_form_fleet_manager
+msgid "Fleet"
+msgstr "Fleet"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_id
+msgid "ID"
+msgstr "ID"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_registration_is_fleet_manager
+msgid "Is fleet manager"
+msgstr "Fleet Owner"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_registration_is_participating_blue_run
+msgid "Is participating blue run"
+msgstr "Neemt aan blue run deel"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event___last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_name
+msgid "Name"
+msgstr "Naam"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "No"
+msgstr "Nee"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_registration_count
+msgid "Registration count"
+msgstr "Registration count"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_sub_event_registration_ids
+msgid "Registrations"
+msgstr "Inschrijvingen"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.view_event_sub_event_form
+msgid "See registered to this sub event"
+msgstr "See registered to this sub event"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.view_event_sub_event_form
+msgid "Sub Event"
+msgstr "Sub Event"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.actions.act_window,name:mmm_website_event_registration_fleet_manager.menu_event_sub_events_action
+#: model:ir.ui.menu,name:mmm_website_event_registration_fleet_manager.menu_event_sub_events
+msgid "Sub Events"
+msgstr "Sub Events"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_event_sub_event_ids
+#: model:ir.model.fields,field_description:mmm_website_event_registration_fleet_manager.field_event_registration_sub_event_ids
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.view_event_form_inherit_ticket_fleet_manager
+msgid "Sub events"
+msgstr "Sub events"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "Yes"
+msgstr "Ja"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_fleet_manager.registration_complete_sub_events
+msgid "Your registration"
+msgstr "Uw inschrijving"
+
+#. module: mmm_website_event_registration_fleet_manager
+#: model:ir.model,name:mmm_website_event_registration_fleet_manager.model_event_sub_event
+msgid "event.sub.event"
+msgstr "event.sub.event"

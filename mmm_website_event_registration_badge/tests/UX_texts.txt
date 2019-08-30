@@ -1,0 +1,26 @@
+Badge Formating test sets:
+
+First/Last name
+1/ First name longer than 25 chars
+2/ Last name longer than 25 chars
+3/ First and Last Name longer than 25 chars
+
+URL/PIN:
+1/ No URL/PIN (user not a fleeet manager)
+2/ URL+PIN longer than 20+6 chars (only first 20 are written)
+
+Table number
+1/ No table number
+2/ Table number one digit (0-9)
+3/ Table number 2 digits (11-99)
+4/ Table number 3 digits (not allowed)
+
+Table image (Best aspect 150 x 100 )
+1/ No table image
+2/ Table image square aspect ratio bigger than 150 x 150 px
+3/ Table image square aspect ratio smaller than 150 x 150 px
+4/ Table image non-square aspect ratio
+
+Badge skin
+1/ No skin (use default)
+2/ Skin with Bad aspect ratio (not 97x86 mm - 1146 x 1016 mm @ 32 bits depth) (should be refused)

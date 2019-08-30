@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="act_sub_event_registration_from_sub_event" model="ir.actions.act_window">
+            <field name="res_model">event.registration</field>
+            <field name="view_type">form</field>
+            <field name="name">Attendees</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+             <field name="domain">[('sub_event_ids.id', '=', context.get('event_sub_event_id'))]</field>
+        </record>
+
+        <record id="view_event_sub_event_form" model="ir.ui.view">
+            <field name="name">view_event_sub_event_form</field>
+            <field name="model">event.sub.event</field>
+            <field name="arch" type="xml">
+                <form string="Sub Event">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" groups="base.group_user">
+                            <button name="%(mmm_website_event_registration_fleet_manager.act_sub_event_registration_from_sub_event)d" type="action" class="oe_stat_button oe_event_attendee_button" icon="fa-users" help="See registered to this sub event" context="{'event_sub_event_id': id, 'default_event_sub_event_ids': [id]}">
+                                <field name="registration_count" widget="statinfo" string="Attendees"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="event_id" />
+                                <field name="sequence" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_event_sub_event_tree" model="ir.ui.view">
+            <field name="name">view_event_sub_event_tree</field>
+            <field name="model">event.sub.event</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="event_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="menu_event_sub_events_action" model="ir.actions.act_window">
+            <field name="name">Sub Events</field>
+            <field name="res_model">event.sub.event</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Sub Events"
+            id="menu_event_sub_events" parent="event.event_main_menu"
+            sequence="10" action="menu_event_sub_events_action" />
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Registration form -->
+        <template id="registration_attendee_details_more_fields_fleet_manager"
+                  inherit_id="website_event_registration_info.registration_attendee_details_more_fields">
+            <xpath expr="//input[@t-attf-name='#{counter}-ticket_id']" position="before">
+                <!-- js -->
+                <script type="text/javascript">
+                     /* <![CDATA[ */
+                    $(document).ready(function() {
+                        var i;
+                        for (i = 1; i < 11; i = i + 1) { 
+                            $('#' + i + '-is_fleet_manager').change(function() {
+                                var sub_id = this.name + '_blue_run_div'
+                                if(this.checked) {
+                                    $('#' + sub_id).show();
+                                } else {
+                                    $('#' + sub_id).hide();
+                                }
+                                $('#' + this.name).val(this.checked);
+                            });
+                        }
+                    });
+                    /* ]]> */
+                </script>
+                <script type="text/javascript" src="/mmm_website_event_registration_fleet_manager/static/src/js/bootstrap-multiselect.js"/>
+
+                <!-- CSS -->
+                <link rel="stylesheet" href="/mmm_website_event_registration_fleet_manager/static/src/css/bootstrap-multiselect.css"/>
+                <script type="text/javascript">
+                    /* <![CDATA[ */
+                    $(function() {
+                        var i;
+                        for (i = 1; i < 11; i = i + 1) { 
+                            $('#' + i + '-sub_event_multiple').multiselect({
+                                includeSelectAllOption: true
+                            });
+                        }
+                    });
+                     /* ]]> */
+                </script>
+                
+                <t t-if="ticket['ask_for_is_fleet_manager'] == True">
+                    <!-- Fleet Manager -->
+                    <div class="col-md-4">
+                        <strong>Are you a Fleet Manager?</strong>
+                        <input type="checkbox" t-attf-id="#{counter}-is_fleet_manager" t-attf-name="#{counter}-is_fleet_manager" value="True"/>
+                    </div>
+                </t>
+                <t t-if="ticket['ask_for_is_participating_blue_run'] == True">
+                    <!-- Blue Run -->
+                    <div t-attf-id="#{counter}-is_fleet_manager_blue_run_div" class="col-md-4" style="display: none;">
+                        <strong>Join the Blue Run?</strong>
+                        <span class="text-muted"/>
+                        <input type="checkbox" id="is_participating_blue_run"
+                               t-attf-name="#{counter}-is_participating_blue_run"/>
+                    </div>
+                </t>
+
+                <!-- Sub Events -->
+                <t t-if="len(ticket['sub_events']) > 0">
+                    <div t-attf-id="#{counter}-sub_events" class="col-md-12">
+                        <strong>Do you want to join us on these sub events?</strong>
+                        <select multiple="multiple" t-attf-name="#{counter}-sub_event_ids" t-attf-id="#{counter}-sub_event_multiple" class="form-control select2">
+                            <t t-foreach="ticket['sub_events']" t-as="sub_event">
+                                <option t-att-value="sub_event['id']">
+                                    <t t-esc="sub_event['name']"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="registration_complete_sub_events" inherit_id="website_event.registration_complete">
+            <xpath expr="//div[@class='row']" position="replace">
+                <div class="row">
+                    <div class="col-md-3 mt16">
+                        <h4>Your registration</h4>
+                    </div>
+                    <div class="col-md-9 mt16">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Blue Run</th>
+                                    <th>Sub events</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="attendees" t-as="attendee">
+                                    <tr>
+                                        <td>
+                                            <a t-attf-href="/event/#{slug(event)}"><t t-esc="event.name"/></a><br />
+                                            <i class="fa fa-clock-o"/> <span itemprop="startDate" t-esc="event.date_begin_located[:-3]"> </span> <i>to</i> <span itemprop="endDate" t-esc="event.date_end_located[:-3]"> </span>
+                                        </td>
+                                        <td>
+                                            <t t-if="attendee.is_participating_blue_run == True">Yes</t>
+                                            <t t-if="attendee.is_participating_blue_run == False">No</t>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <t t-foreach="attendee.sub_event_ids" t-as="sub_event">
+                                                    <li><span t-esc="sub_event.name" /></li>
+                                                </t>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

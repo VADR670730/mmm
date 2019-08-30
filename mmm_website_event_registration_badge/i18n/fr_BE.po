@@ -1,0 +1,127 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mmm_website_event_registration_badge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20181130\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-12 09:12+0000\n"
+"PO-Revision-Date: 2019-03-12 10:16+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model,name:mmm_website_event_registration_badge.model_event_registration
+msgid "Attendee"
+msgstr "Participant"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_filter_print_badge
+msgid "Badge Not Printed"
+msgstr "Badge non-imprimé"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_filter_print_badge
+msgid "Badge Printed"
+msgstr "Badge imprimé"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "Badge Style"
+msgstr "Style de Badge"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_container_img
+msgid "Badge container img"
+msgstr "Habillage de Badge"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_attendee_name_color_code
+msgid "Color for attendee name"
+msgstr "Couleur pour le nom du participant"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_company_color_code
+msgid "Color for company"
+msgstr "Couleur pour l'entreprise"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_table_color_code
+msgid "Color for table"
+msgstr "Couleur pour la table"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_url_color_code
+msgid "Color for url"
+msgstr "Couleur pour l'URL"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model,name:mmm_website_event_registration_badge.model_event_event
+msgid "Event"
+msgstr "Evènement"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_registration_export_file
+msgid "Export file"
+msgstr "Exporter fichier"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_event_badge_attendee_name_color_code
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_event_badge_company_color_code
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_event_badge_table_color_code
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_event_badge_url_color_code
+msgid "Insert an hexadecimal code as #ABCDEF"
+msgstr "Insérez ici un code couleur hexadécimal comme #ABCDEF"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_registration_is_badge_printed
+msgid "Is badge printed"
+msgstr "Le badge est imprimé"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "PNG picture 86mm x 97mm"
+msgstr "image PNG ratio 86mm x 97mm"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.actions.server,name:mmm_website_event_registration_badge.action_registration_print_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_registration_form_print_badge
+msgid "Print Badge"
+msgstr "Imprimer Badge"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.ui.view,arch_db:mmm_website_event_registration_badge.view_event_form_registration_badge_skin
+msgid "Registration badge skin"
+msgstr "Habillage Badge d'Inscription"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_attendee_name_show
+msgid "Show attendee name"
+msgstr "Montrer le nom du participant"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_company_show
+msgid "Show company name"
+msgstr "Montrer l'entreprise"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_table_show
+msgid "Show table"
+msgstr "Montrer la table"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,field_description:mmm_website_event_registration_badge.field_event_event_badge_url_show
+msgid "Show url"
+msgstr "Montrer l'URL"
+
+#. module: mmm_website_event_registration_badge
+#: model:ir.model.fields,help:mmm_website_event_registration_badge.field_event_registration_export_file
+msgid "This field holds the generated badge."
+msgstr "Ce champs contient le badge crée."

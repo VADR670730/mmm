@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_event_registration_form_fleet_manager" model="ir.ui.view">
+            <field name="name">view_event_registration_form_fleet_manager</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='attendee']" position="after">
+                    <group name="fleet" string="Fleet">
+                        <field name="is_fleet_manager" />
+                        <field name="is_participating_blue_run" attrs="{'invisible': [('is_fleet_manager', '=', False)]}"/>
+                        <field name="sub_event_ids" widget="many2many_tags" domain="[('event_id', '=', event_id)]" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_event_registration_tree_fleet_manager" model="ir.ui.view">
+            <field name="name">view_event_registration_tree_fleet_manager</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="is_fleet_manager" />
+                    <field name="is_participating_blue_run" />
+                    <field name="sub_event_ids" widget="many2many_tags" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

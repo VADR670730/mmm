@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_event_form_inherit_ticket_fleet_manager" model="ir.ui.view">
+            <field name="name">view_event_form_inherit_ticket_fleet_manager</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event_sale.view_event_form_inherit_ticket"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='event_ticket_ids']//field[@name='seats_max']" position="before">
+                    <field name="ask_for_is_fleet_manager" />
+                    <field name="ask_for_is_participating_blue_run" />
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Sub events">
+                        <field name="sub_event_ids" context="{'default_ticket': id}">
+                            <tree string="Sub events" editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="event_ticket_form_view_fleet_manager" model="ir.ui.view">
+            <field name="name">event_ticket_form_view_fleet_manager</field>
+            <field name="model">event.event.ticket</field>
+            <field name="inherit_id" ref="event_sale.event_ticket_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='seats_max']" position="before">
+                    <field name="ask_for_is_fleet_manager" />
+                    <field name="ask_for_is_participating_blue_run" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

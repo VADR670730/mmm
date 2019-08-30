@@ -1,0 +1,14 @@
+ div.butterfly_top {
+     clear: both;
+     position: fixed;
+     top: 0;
+     height: 180mm;
+     width: 207mm;
+}
+ div.butterfly_bottom {
+     clear: both;
+     position: fixed;
+     bottom: 0;
+     height: 114mm;
+     width: 207mm;
+}
