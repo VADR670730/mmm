@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="registration_attendee_registration_code" name="Registration Attendee Registration Code"
+        inherit_id="website_event_registration_info.registration_attendee_details_more_fields">
+        <xpath expr="//input[@t-attf-name='#{counter}-ticket_id']" position="before">
+            <script>
+                <![CDATA[
+odoo.define('event_sponsoring.registration_code', ['web.ajax'], function (require) {
+    "use strict";
+
+    $('.registration-code').on('click', '.js_update_voucher', function(e) {
+        e.preventDefault();
+        var $link = $(e.currentTarget);
+        var $input = $link.parent().find("input");
+        var event_id = parseInt($input.data('event-id'),10);;
+        var registration_code = $input.val();
+        var ajax = require('web.ajax');
+
+        var clickwatch = (function(){
+              var timer = 0;
+              return function(callback, ms){
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+              };
+        })();
+
+        $input.data('update_change', true);
+        clickwatch(function(){
+            ajax.jsonRpc("/event/registration_code/validate_json", 'call', {
+                'event_id': event_id,
+                'registration_code': registration_code
+            }).then(function (data) {
+                $input.data('update_change', false);
+                var check_mark = document.getElementById('registration_code_check_mark');
+                if(data){
+                    var reg_code_input = document.getElementsByName('1-registration_code');
+                    if('registration_code_id' in data) {
+                        /* Invalid code */
+                        if(data['registration_code_id'] == -1) {
+                            check_mark.innerText = (data['message']);
+                        }
+                        else if ('registration_code_name' in data && 'registration_code_sponsor_name' in data) {
+                            reg_code_input[0].readOnly = true;
+                            $("#validateButton").removeAttr("style").hide();
+                            $("#registration_code_title").removeAttr("style").hide();
+                            check_mark.innerText = (data['message']);
+                            
+                            $("#"+$input.attr("data-cntr")+"-sub_events_multiple_total_price").val($("#"+$input.attr("data-cntr")+"-sub_events_multiple_total_price").val()* 100/100);
+                            var total_price = $("#"+$input.attr("data-cntr")+"-sub_events_multiple_total_price").val();
+                            var discount = data['registration_discount_rate']
+                            var discount_amount = (total_price * discount)/100
+
+                            /* Discounted price, the one showed */
+                            $("#"+$input.attr("data-cntr")+"-sub_events_multiple_total_price_discounted").val(total_price - discount_amount);
+                        }
+                    } else {
+                        check_mark.innerText = (" -> Validation issue!");
+                    }
+                } else {
+                    check_mark.innerText = ("");
+                }
+
+            });
+        }, 500);
+
+        return false;
+    });
+});
+                ]]>
+            </script>
+            <div class="col-md-8 registration-code">
+                <t t-if="'registration_code' in ticket">
+                   <strong>Registration code</strong>
+                </t>
+                <t t-else="1">
+                    <div id="registration_code_title">
+                        <t t-if="event.registration_code_mandatory">
+                            <strong style="font-style:italic">Please enter here your registration code to go further.</strong>
+                        </t>
+                        <t t-if="not event.registration_code_mandatory">
+                            <strong style="font-style:italic">Do you have a registration code ? If so apply it here.</strong>
+                        </t>
+                    </div>
+                </t>
+
+                <span class="text-muted"/>
+                <div class="input-group">
+                    <span id="registration_code_check_mark" style="color: red;" value="" />
+                    <t t-if="event.registration_code_mandatory">
+                        <input type="text" class="js_voucher form-control voucher"
+                               t-attf-name="#{counter}-registration_code"
+                               t-attf-data-event-id="#{event.id}"
+                               t-attf-data-cntr="#{counter}"
+                               required="This Field is required"
+                               t-att-value="ticket['registration_code'] if 'registration_code' in ticket else ''"
+                               t-att-readonly="'registration_code' in ticket"
+                        />
+                    </t>
+                    <t t-if="not event.registration_code_mandatory">
+                        <input type="text" class="js_voucher form-control voucher"
+                               t-attf-name="#{counter}-registration_code"
+                               t-attf-data-event-id="#{event.id}"
+                               t-attf-data-cntr="#{counter}"
+                               t-att-value="ticket['registration_code'] if 'registration_code' in ticket else ''"
+                               t-att-readonly="'registration_code' in ticket"
+                        />
+                    </t>
+                    <a t-attf-href="#"
+                       class="mb8 input-group-addon float_left js_update_voucher"
+                       id="validateButton"
+                       data-no-instant=""
+                       t-att-style="'display: none;' if 'registration_code' in ticket else 'text-decoration: none;'">
+                        VALIDATE
+                    </a>
+                    <script>
+                        if ($('.js_voucher').val()) {
+                            $('.js_update_voucher')[0].click();
+                        }
+                    </script>
+                    <!--input class="form-control" type="hidden" t-attf-name="#{counter}-registration_code_id"/-->
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

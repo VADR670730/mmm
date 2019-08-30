@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- account edit using token form listing page -->
+    <template id="attendee_update_form" name="Event Registration Form Update">
+        <t t-call="website.layout">
+            <style>
+                .attendee_state {
+                    border: 1px solid gray;
+                    background-color: lightgray;
+                    padding: 2px 8px 2px 8px;
+                    border-radius: 50px;
+                    font-weight: bold;
+                }
+            </style>
+            <div id="wrap">
+                <div class="container">
+                    <div class="container">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>My event registration</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" id="event_info">
+                                    <div class="col-md-6">
+                                        <strong>Event:</strong>
+                                        <span t-field="attendee.event_id.name"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Ticket:</strong>
+                                        <span t-field="attendee.event_ticket_id.name"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Date:</strong>
+                                        <span t-field="attendee.event_id.create_date" t-options='{"widget": "date"}'/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Location:</strong>
+                                        <span t-field="attendee.event_id.address_id.name" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Registration status:</strong>
+                                        <span t-field="attendee.state" class="attendee_state"/>
+                                    </div>
+                                    <t t-if="not is_anonymized and attendee.state != 'cancel'">
+                                        <div class="col-md-2">
+                                            <form t-attf-action="/my/account/{{token}}/anonymize" method="get"
+                                                  onsubmit="return confirm('Do you really want to anonymize your registration info?');">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <button type="submit" class="btn btn-default btn-primary pull-left mb32">
+                                                    Anonymize
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </t>
+                                    <t t-if="attendee.state != 'cancel'">
+                                        <div class="col-md-2">
+                                            <form t-attf-action="/my/account/{{token}}/cancel" method="get"
+                                                  onsubmit="return confirm('Do you really want to cancel your registration?');">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <button type="submit" class="btn btn-default btn-danger pull-left mb32">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="row" id="registration_info">
+                                    <t t-set="edition_allowed" t-value="attendee.event_id.is_registration_editable()" />
+                                    <t t-if="not edition_allowed">
+                                        <div class="col-md-12" style="clear: left;">
+                                            <h3>Your details can not be modified now.</h3>
+                                        </div>
+                                        <!-- Civility -->
+                                        <div class="col-md-2" style="clear: left;">
+                                            <strong>Title</strong>
+                                            <span t-field="attendee.civility" />
+                                        </div>
+
+                                        <!-- Firstname -->
+                                        <div class="col-md-5">
+                                            <strong>Firstname</strong>
+                                            <span t-field="attendee.name" />
+                                        </div>
+
+                                        <!-- Lastname -->
+                                        <div class="col-md-5">
+                                            <strong>Lastname</strong>
+                                            <span t-field="attendee.last_name" />
+                                        </div>
+
+                                        <!-- Company -->
+                                        <div class="col-md-5">
+                                            <strong>Company</strong>
+                                            <span t-field="attendee.company" />
+                                        </div>
+
+                                        <!-- Function -->
+                                        <div class="col-md-5">
+                                            <strong>Function</strong>
+                                            <span t-field="attendee.function" />
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="col-md-5">
+                                            <strong>Email</strong>
+                                            <span t-field="attendee.email" />
+                                        </div>
+
+                                        <!-- Phone -->
+                                        <div class="col-md-5">
+                                            <strong>Phone</strong>
+                                            <span t-field="attendee.phone" />
+                                        </div>
+                                    </t>
+                                    <t t-if="edition_allowed">
+                                        <form t-attf-action="/my/account/{{token}}/update" method="post"
+                                              onsubmit="return confirm('Do you really want to update your registration info?');">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <!-- Civility -->
+                                            <div class="col-md-2" style="clear: left;">
+                                                <strong>Title</strong>
+                                                <select class="form-control" name="civility">
+                                                    <t t-foreach="titles" t-as="title">
+                                                        <option t-att-value="title.id" t-esc="title.name"
+                                                                t-att-selected="title.id==attendee.civility.id"/>
+                                                    </t>
+                                                </select>
+                                            </div>
+
+                                            <!-- Firstname -->
+                                            <div class="col-md-5">
+                                                <strong>Firstname</strong>
+                                                <input class="form-control" type="text" name="name"
+                                                       t-attf-value="{{attendee.name}}"
+                                                       required="This field is required"/>
+                                            </div>
+
+                                            <!-- Lastname -->
+                                            <div class="col-md-5">
+                                                <strong>Lastname</strong>
+                                                <input class="form-control" type="text" name="last_name"
+                                                       t-attf-value="{{attendee.last_name}}"
+                                                       required="This field is required"/>
+                                            </div>
+
+                                            <!-- Company -->
+                                            <div class="col-md-5">
+                                                <strong>Company</strong>
+                                                <input class="form-control" type="text" name="company"
+                                                       t-attf-value="{{attendee.company}}"
+                                                       required="This field is required"/>
+                                            </div>
+
+                                            <!-- Function -->
+                                            <div class="col-md-5">
+                                                <strong>Function</strong>
+                                                <input class="form-control" type="text" name="function"
+                                                       t-attf-value="{{attendee.function}}"
+                                                       required="This field is required"/>
+                                            </div>
+
+                                            <!-- Email -->
+                                            <div class="col-md-5">
+                                                <strong>Email</strong>
+                                                <input class="form-control" type="email" name="email"
+                                                       t-attf-value="{{attendee.email}}"
+                                                       required="This field is required"/>
+                                            </div>
+
+                                            <!-- Phone -->
+                                            <div class="col-md-5">
+                                                <strong>Phone</strong>
+                                                <input class="form-control" type="phone" name="phone"
+                                                       t-attf-value="{{attendee.phone}}"/>
+                                            </div>
+                                                <t t-if="attendee.state != 'cancel'">
+                                                <div class="col-md-5" style="clear: left;">
+                                                    <br/>
+                                                    <button type="submit" class="btn btn-default btn-primary pull-left mb32"
+                                                            style="margin-right: 10px;">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </t>
+                                        </form>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Inherit Portal Template to allow sponsors to edit info -->
+    <template id="vouchers_followup_sponsor_management" inherit_id="event_sponsoring.vouchers_followup">
+        <xpath expr="//table[@id='attendees_table']//thead//th[last()]" position="after">
+            <t t-if="voucher.allow_registration_change">
+                <th>Details</th>
+            </t>
+        </xpath>
+        <xpath expr="//table[@id='attendees_table']//tbody//span[@t-field='ol.name']" position="before">
+            <t t-if="ol.is_anonymized">
+                /!\ Anonymized | 
+            </t>
+        </xpath>
+        <xpath expr="//table[@id='attendees_table']//tbody//td[last()]" position="after">
+            <t t-if="voucher.allow_registration_change">
+                <td>
+                    <a t-attf-href="/my/account/{{ol.portal_update_token}}/view">Details</a>
+                </td>
+            </t>
+        </xpath>
+    </template>
+</odoo>

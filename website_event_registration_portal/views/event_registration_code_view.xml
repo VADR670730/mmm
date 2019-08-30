@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form -->
+    <record id="view_event_registration_code_form_portal_rights" model="ir.ui.view">
+        <field name="name">event.registration.code.form</field>
+        <field name="model">event.registration.code</field>
+        <field name="inherit_id" ref="event_sponsoring.view_event_registration_code_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sponsoring_id']" position="after">
+                <field name="allow_registration_change" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_production_template_document">
+
+            <t t-set="doc" t-value="doc.with_context({'lang':user.partner_id.lang})" />
+
+            <t t-set="header_title1" t-value="doc.name" />
+
+            <t t-call="publisher.publisher_layout_internal">
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <table style="width:100%; font-size:0.8em; margin-bottom:2em;">
+                        <tr>
+                            <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey;">
+                                 <table style="width:100%;">
+                                    <tr t-if="doc.name">
+                                        <td style="width:40%;">Production</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.name"/></td>
+                                    </tr>
+                                    <tr t-if="doc.production_type_id">
+                                        <td style="width:40%;">Production Type</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.production_type_id"/></td>
+                                    </tr>
+                                    <tr t-if="doc.project_id">
+                                        <td style="width:40%;">Project</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.project_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Draft</td>
+                                        <td style="font-weight:bold; width:60%;">
+                                            <span t-esc="len([line for line in doc.sale_line_ids if line.state in ['draft', 'sent']])"/>/<span t-esc="len(doc.sale_line_ids)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Option</td>
+                                        <td style="font-weight:bold; width:60%;">
+                                            <span t-esc="len([line for line in doc.sale_line_ids if line.state in ['option']])"/>/<span t-esc="len(doc.sale_line_ids)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Sale</td>
+                                        <td style="font-weight:bold; width:60%;">
+                                            <span t-esc="len([line for line in doc.sale_line_ids if line.state in ['sale']])"/>/<span t-esc="len(doc.sale_line_ids)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Archived</td>
+                                        <td style="font-weight:bold; width:60%;">
+                                            <span t-esc="len([line for line in doc.sale_line_ids if line.state in ['done']])"/>/<span t-esc="len(doc.sale_line_ids)"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="doc.note">
+                                        <td style="width:40%;">Comment</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.note"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey;">
+                                <table style="width:100%;">
+                                    <tr t-if="doc.state">
+                                        <td style="width:40%;">State</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.state" /></td>
+                                    </tr>
+                                    <tr t-if="doc.date_start">
+                                        <td style="width:40%;">Publication Date</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.date_start" /></td>
+                                    </tr>
+                                    <tr t-if="doc.date_end">
+                                        <td style="width:40%;">End Date</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.date_end" /></td>
+                                    </tr>
+                                    <tr t-if="doc.date_closing">
+                                        <td style="width:40%;">Closing Date</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.date_closing" /></td>
+                                    </tr>
+                                    <tr t-if="doc.sale_lines_confirmed_count">
+                                        <td style="width:40%;">Confirmed Lines</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.sale_lines_confirmed_count" /></td>
+                                    </tr>
+                                    <tr t-if="doc.sale_lines_full_equipment_count">
+                                        <td style="width:40%;">Equipment Received</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.sale_lines_full_equipment_count" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding:0.5em; width:33.333333%;">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:40%;">Expected Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.expected_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Potential Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.potential_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Actual Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.actual_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Turnover Result</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_delta_sign" /><span t-field="doc.turnover_delta" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <t t-foreach="doc.sale_ids" t-as="sale">
+
+                        <t t-set="sale" t-value="sale.with_context({'lang':user.partner_id.lang})" />
+
+                        <table style="width:100%; font-size:0.8em; border:2px solid black; margin-top:0.8em;">
+                            <tr>
+                                <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr t-if="sale.name">
+                                            <td style="width:40%;">Sale</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.name" /></td>
+                                        </tr>
+                                        <tr t-if="sale.state">
+                                            <td style="width:40%;">State</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.state" /></td>
+                                        </tr>
+                                        <tr t-if="sale.agency_id">
+                                            <td style="width:40%;">Agency</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.agency_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.partner_id">
+                                            <td style="width:40%;">Customer</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.partner_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.note">
+                                            <td style="width:40%;">Comment</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.note" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr t-if="sale.user_id">
+                                            <td style="width:40%;">Salesperson</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.user_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.confirmation_date">
+                                            <td style="width:40%;">Confirmation Date</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.confirmation_date" /></td>
+                                        </tr>
+                                        <tr t-if="sale.client_order_ref">
+                                            <td style="width:40%;">Customer Reference</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.client_order_ref" /></td>
+                                        </tr>
+                                        <tr t-if="sale.reference">
+                                            <td style="width:40%;">Internal Reference</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.reference" /></td>
+                                        </tr>
+                                        <tr t-if="sale.partner_invoice_id">
+                                            <td style="width:40%;">Invoice Address</td>
+                                            <td style="font-weight:bold; width:60%;">
+                                                <address t-field="sale.partner_invoice_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax", "email", "website"], "no_marker": True, "phone_icons": True}' />
+                                                <div t-if="sale.partner_invoice_id.vat">VAT: <span t-field="sale.partner_invoice_id.vat"/></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="padding:0.5em; width:33.333333%; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <t t-set="total" t-value="sum((l.price_subtotal) for l in sale.order_line)"/>
+                                            <td style="width:40%;">Total</td>
+                                            <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="total" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <t t-foreach="sale.order_line" t-as="line"><t t-if="line.production_id.id == doc.id">
+
+                                <t t-set="line" t-value="line.with_context({'lang':user.partner_id.lang})" />
+
+                                <tr>
+                                    <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:0.5px solid black;">
+                                        <table style="width:100%;">
+                                            <tr t-if="line.product_id">
+                                                <td style="width:40%;">Product</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.product_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.name">
+                                                <td style="width:40%;">Description</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.name" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Full Equipment</td>
+                                                <td style="width:60%;">
+                                                    <i class="fa fa-times" aria-hidden="true" t-if="not line.full_equipment_received" />
+                                                    <i class="fa fa-check" aria-hidden="true" t-if="line.full_equipment_received" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:0.5px solid black;">
+                                        <table style="width:100%;">
+                                            <tr t-if="doc.production_type_id.media_id">
+                                                <td style="width:40%;">Media</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="doc.production_type_id.media_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.format_id">
+                                                <td style="width:40%;">Format</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.format_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.location_id">
+                                                <td style="width:40%;">Location</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.location_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.date_start">
+                                                <td style="width:40%;">Publication Date</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.date_start" /></td>
+                                            </tr>
+                                            <tr t-if="line.date_end">
+                                                <td style="width:40%;">End Date</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.date_end" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding:0.5em; width:33.333333%; border-bottom:0.5px solid black;">
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="width:40%;">Unit Price</td>
+                                                <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Quantity</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-field="line.product_uom_qty" /></td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_unit * line.product_uom_qty" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Discount</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-esc="round(line.discount_base, 2)" /> %</td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_unit * line.product_uom_qty * (1-line.discount_base/100)" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Commission</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-esc="round(line.commission, 2)" /> %</td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%; padding-top:0.5em;">Total</td>
+                                                <td style="font-weight:bold; width:60%; padding-top:0.5em; text-align:right;"><span t-field="line.price_subtotal" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </t></t>
+
+                        </table>
+                    </t>
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_production_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="publisher.report_production_template_document" t-lang="user.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+
+
+
+        <template id="report_production_invoice_status_template_document">
+
+            <t t-set="doc" t-value="doc.with_context({'lang':user.partner_id.lang})" />
+
+            <t t-set="header_title1" t-value="doc.name" />
+
+            <t t-call="publisher.publisher_layout_internal">
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <table style="width:100%; font-size:0.8em; margin-bottom:2em;">
+                        <tr>
+                            <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey;">
+                                <table style="width:100%;">
+                                    <tr t-if="doc.name">
+                                        <td style="width:40%;">Production</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.name" /></td>
+                                    </tr>
+                                    <tr t-if="doc.production_type_id">
+                                        <td style="width:40%;">Production Type</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.production_type_id" /></td>
+                                    </tr>
+                                    <tr t-if="doc.project_id">
+                                        <td style="width:40%;">Project</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.project_id" /></td>
+                                    </tr>
+                                    <tr t-if="doc.note">
+                                        <td style="width:40%;">Comment</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.note" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey;">
+                                <table style="width:100%;">
+                                    <tr t-if="doc.state">
+                                        <td style="width:40%;">State</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.state" /></td>
+                                    </tr>
+                                    <tr t-if="doc.date_start">
+                                        <td style="width:40%;">Publication Date</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.date_start" /></td>
+                                    </tr>
+                                    <tr t-if="doc.sale_lines_confirmed_count">
+                                        <td style="width:40%;">Confirmed Lines</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.sale_lines_confirmed_count" /></td>
+                                    </tr>
+                                    <tr t-if="doc.invoicing_mode">
+                                        <td style="width:40%;">Invoice Mode</td>
+                                        <td style="font-weight:bold; width:60%;"><span t-field="doc.invoicing_mode" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding:0.5em; width:33.333333%;">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:40%;">Expected Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.expected_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Potential Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.potential_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Actual Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.actual_turnover" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Turnover Result</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_delta_sign" /><span t-field="doc.turnover_delta" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <t t-foreach="doc.sale_ids" t-as="sale">
+
+                        <t t-set="sale" t-value="sale.with_context({'lang':user.partner_id.lang})" />
+
+                        <table style="width:100%; font-size:0.8em; border:2px solid black; margin-top:0.8em;">
+                            <tr>
+                                <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr t-if="sale.name">
+                                            <td style="width:40%;">Sale</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.name" /></td>
+                                        </tr>
+                                        <tr t-if="sale.state">
+                                            <td style="width:40%;">State</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.state" /></td>
+                                        </tr>
+                                        <tr t-if="sale.agency_id">
+                                            <td style="width:40%;">Agency</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.agency_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.partner_id">
+                                            <td style="width:40%;">Customer</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.partner_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.note">
+                                            <td style="width:40%;">Comment</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.note" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr t-if="sale.user_id">
+                                            <td style="width:40%;">Salesperson</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.user_id" /></td>
+                                        </tr>
+                                        <tr t-if="sale.confirmation_date">
+                                            <td style="width:40%;">Confirmation Date</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.confirmation_date" /></td>
+                                        </tr>
+                                        <tr t-if="sale.client_order_ref">
+                                            <td style="width:40%;">Customer Reference</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.client_order_ref" /></td>
+                                        </tr>
+                                        <tr t-if="sale.reference">
+                                            <td style="width:40%;">Internal Reference</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-field="sale.reference" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="padding:0.5em; width:33.333333%; border-bottom:2px solid black;">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <t t-set="total" t-value="sum((l.price_subtotal) for l in sale.order_line)"/>
+                                            <td style="width:40%;">Total</td>
+                                            <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="total" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="total_invoiced" t-value="sum((l.price_subtotal * l.qty_invoiced_confirmed / l.product_uom_qty) for l in sale.order_line)"/>
+                                            <td style="width:40%;">Invoiced</td>
+                                            <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="total_invoiced" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <t t-set="total_to_invoice" t-value="sum((l.price_subtotal * l.qty_to_invoice_confirmed / l.product_uom_qty) for l in sale.order_line)"/>
+                                            <td style="width:40%;">To Invoice</td>
+                                            <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="total_to_invoice" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:40%;">Invoiced Proportion</td>
+                                            <td style="font-weight:bold; width:60%;"><span t-esc="round(total_invoiced / total * 100 if total != 0 else 0, 2)" /> %</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <t t-foreach="sale.order_line" t-as="line"><t t-if="line.production_id.id == doc.id">
+
+                                <t t-set="line" t-value="line.with_context({'lang':user.partner_id.lang})" />
+
+                                <tr>
+                                    <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:0.5px solid black;">
+                                        <table style="width:100%;">
+                                            <tr t-if="line.product_id">
+                                                <td style="width:40%;">Product</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.product_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.name">
+                                                <td style="width:40%;">Description</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.name" /></td>
+                                            </tr>
+                                            <tr t-if="doc.production_type_id.media_id">
+                                                <td style="width:40%;">Media</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="doc.production_type_id.media_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.format_id">
+                                                <td style="width:40%;">Format</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.format_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.location_id">
+                                                <td style="width:40%;">Location</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.location_id" /></td>
+                                            </tr>
+                                            <tr t-if="line.date_start">
+                                                <td style="width:40%;">Publication Date</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.date_start" /></td>
+                                            </tr>
+                                            <tr t-if="line.date_end">
+                                                <td style="width:40%;">End Date</td>
+                                                <td style="font-weight:bold; width:60%;"><span t-field="line.date_end" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding:0.5em; width:33.333333%; border-right:0.5px solid grey; border-bottom:0.5px solid black;">
+                                        <div style="font-weight:bold; padding-bottom:0.5em; text-decoration:underline;">Invoices</div>
+
+                                        <t t-set="invoices" t-value="[]" />
+                                        <t t-set="draft_invoices_count" t-value="0" />
+                                        <t t-foreach="line.invoice_lines" t-as="invoice_line">
+                                            <t t-if="not invoice_line.invoice_id in invoices">
+                                                <t t-set="invoices" t-value="invoices + [invoice_line.invoice_id]"/>
+
+                                                <t t-if="not invoice_line.invoice_id.number">
+                                                    <t t-set="draft_invoices_count" t-value="draft_invoices_count + 1" />
+                                                </t>
+                                            </t>
+                                        </t>
+
+                                        <t t-set="invoices_count" t-value="1" />
+                                        <t t-foreach="invoices" t-as="invoice">
+                                            <t t-if="invoice.number">
+                                                <div>
+                                                    #<span t-esc="invoices_count" />
+
+                                                    <strong t-esc="invoice.number" />
+
+                                                    <t t-set="invoice_date" t-value="invoice.date_invoice.split('-')"/>
+                                                    (<span t-esc="invoice_date[2] + '/' + invoice_date[1] + '/' + invoice_date[0]" />)
+
+                                                     - 
+
+                                                    <span t-field="invoice.state" />
+                                                </div>
+
+                                                <t t-set="invoices_count" t-value="invoices_count + 1" />
+                                            </t>
+                                        </t>
+
+                                        <t t-if="draft_invoices_count &gt; 0">
+                                            <div><em>+<t t-esc="draft_invoices_count" /> Draft Invoice(s)</em></div>
+                                        </t>
+                                    </td>
+                                    <td style="padding:0.5em; width:33.333333%; border-bottom:0.5px solid black;">
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="width:40%;">Unit Price</td>
+                                                <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Quantity</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-field="line.product_uom_qty" /></td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_unit * line.product_uom_qty" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Discount</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-esc="round(line.discount_base, 2)" /> %</td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_unit * line.product_uom_qty * (1-line.discount_base/100)" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Commission</td>
+                                                <td style="width:60%;">
+                                                    <table style="width:100%; font-weight:bold;"><tr>
+                                                        <td><span t-esc="round(line.commission, 2)" /> %</td>
+                                                        <td style="text-align:right;"><span t-esc="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                                    </tr></table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%; padding-top:0.5em;">Total</td>
+                                                <td style="font-weight:bold; width:60%; padding-top:0.5em; text-align:right;"><span t-field="line.price_subtotal" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">Invoiced</td>
+                                                <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="line.price_subtotal * line.qty_invoiced_confirmed / line.product_uom_qty if line.product_uom_qty != 0 else 0" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:40%;">To Invoice</td>
+                                                <td style="font-weight:bold; width:60%; text-align:right;"><span t-esc="line.price_subtotal * line.qty_to_invoice_confirmed / line.product_uom_qty if line.product_uom_qty != 0 else 0" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </t></t>
+
+                        </table>
+                    </t>
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_production_invoice_status_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="publisher.report_production_invoice_status_template_document" t-lang="user.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+
+
+
+        <template id="report_production_global_template">
+            <t t-call="report.html_container">
+
+                <t t-call="publisher.publisher_layout_internal">
+                    <div class="page">
+                        <div class="oe_structure" />
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Production</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th class="text-right">Expected</th>
+                                    <th class="text-right">Actual</th>
+                                    <th class="text-right">Ratio</th>
+                                    <th class="text-right">Difference</th>
+                                    <th>Closing</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+
+                                <t t-set="total_expected" t-value="0"/>
+                                <t t-set="total_actual" t-value="0"/>
+                                <t t-set="total_delta" t-value="0"/>
+
+                                <t t-foreach="data" t-as="prod_type_id">
+
+                                    <t t-set="prod_type" t-value="data[prod_type_id]['obj']"/>
+                                    <t t-set="prods" t-value="data[prod_type_id]['prods']"/>
+
+                                    <t t-set="prod_type" t-value="prod_type.with_context({'lang':user.partner_id.lang})" />
+                                    
+                                    <t t-set="prod_type_expected" t-value="sum(prod.expected_turnover for prod in prods)"/>
+                                    <t t-set="prod_type_actual" t-value="sum(prod.actual_turnover for prod in prods)"/>
+                                    <t t-set="prod_type_delta" t-value="prod_type_actual - prod_type_expected"/>
+
+                                    <t t-set="total_expected" t-value="total_expected + prod_type_expected"/>
+                                    <t t-set="total_actual" t-value="total_actual + prod_type_actual"/>
+                                    <t t-set="total_delta" t-value="total_delta + prod_type_delta"/>
+
+                                    <tr class="border-black" style="font-weight:bold;">
+                                        <td colspan="3" style="font-size:1.2em;"><span t-field="prod_type.name"/></td>
+                                        <td class="text-right"><span t-esc="prod_type_expected" t-options="{'widget': 'monetary', 'display_currency': prods[0].currency_id}"/></td>
+                                        <td class="text-right"><span t-esc="prod_type_actual" t-options="{'widget': 'monetary', 'display_currency': prods[0].currency_id}"/></td>
+                                        <td class="text-right"><span t-esc="round(prod_type_actual / prod_type_expected * 100 if prod_type_expected > 0 else 0, 2)"/> %</td>
+                                        <td class="text-right"><span t-esc="'+' if prod_type_delta > 0 else ''"/><span t-esc="prod_type_delta" t-options="{'widget': 'monetary', 'display_currency': prods[0].currency_id}"/></td>
+                                        <td> </td>
+                                    </tr>
+
+                                    <t t-foreach="prods" t-as="prod">
+
+                                        <t t-set="prod" t-value="prod.with_context({'lang':user.partner_id.lang})" />
+
+                                        <tr>
+                                            <td><span t-field="prod.seq_number"/></td>
+                                            <td><span t-field="prod.name"/></td>
+                                            <td><span t-field="prod.state"/></td>
+                                            <td class="text-right"><span t-esc="prod.expected_turnover" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
+                                            <td class="text-right"><span t-esc="prod.actual_turnover" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
+                                            <td class="text-right"><span t-esc="round(prod.actual_turnover / prod.expected_turnover * 100 if prod.expected_turnover > 0 else 0, 2)"/> %</td>
+                                            <td class="text-right"><span t-esc="prod.turnover_delta_sign"/><span t-esc="prod.turnover_delta" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
+                                            <td><span t-field="prod.date_closing"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <tr class="border-black" style="font-weight:bold;">
+                                    <td colspan="3" style="font-size:1.4em;">Total</td>
+                                    <td class="text-right"><span t-esc="total_expected"/> €</td>
+                                    <td class="text-right"><span t-esc="total_actual"/> €</td>
+                                    <td class="text-right"><span t-esc="round(total_actual / total_expected * 100 if total_expected > 0 else 0, 2)"/> %</td>
+                                    <td class="text-right"><span t-esc="'+' if total_delta > 0 else ''"/><span t-esc="total_delta"/> €</td>
+                                    <td> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

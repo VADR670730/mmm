@@ -1,0 +1,156 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_event_table
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180201\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-11 07:21+0000\n"
+"PO-Revision-Date: 2018-04-11 09:25+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: en\n"
+"X-Generator: Poedit 2.0.1\n"
+
+#. module: website_event_table
+#: model:ir.model,name:website_event_table.model_event_registration
+msgid "Attendee"
+msgstr "Participant"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_attendee_number
+msgid "Attendee number"
+msgstr "Nombre de places"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_attendee_ids
+msgid "Attendees"
+msgstr "Participants"
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:43
+#, python-format
+msgid "Attendees on this table exceed the max set."
+msgstr "Le nombre de participants à cette table dépasse le nombre maximum de places."
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:49
+#, python-format
+msgid "Attendees on this table exceed the max set. Remove attendees first"
+msgstr "Le nombre de participants à cette table dépasse le nombre maximum de places. Veuillez supprimer des participants à cette table avant d'en ajouter."
+
+#. module: website_event_table
+#: model:ir.actions.act_window,help:website_event_table.act_event_event_table
+msgid "Click to add a new table"
+msgstr "Cliquez ici pour ajouter une table"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: website_event_table
+#: model:ir.model,name:website_event_table.model_event_event
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_event_id
+msgid "Event"
+msgstr "Evènement"
+
+#. module: website_event_table
+#: model:ir.model,name:website_event_table.model_event_event_table
+msgid "Event Attendee Table"
+msgstr "Table"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_id
+msgid "ID"
+msgstr "ID"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_attendee_number_max
+msgid "Max Attendees"
+msgstr "Nombre de places"
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:20
+#: sql_constraint:event.event.table:0
+#, python-format
+msgid "More attendees than seats"
+msgstr "Plus de participants que de places"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_sponsor_logo
+msgid "Sponsor logo"
+msgstr "Logo du sponsor"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_registration_table_id
+msgid "Table"
+msgstr "Table"
+
+#. module: website_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_table_table_number
+msgid "Table number"
+msgstr "Numéro de table"
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:21
+#: sql_constraint:event.event.table:0
+#, python-format
+msgid "Table should have at least one seat"
+msgstr "La table doit avoir au moins une place"
+
+#. module: website_event_table
+#: model:ir.actions.act_window,name:website_event_table.act_event_event_table
+#: model:ir.model.fields,field_description:website_event_table.field_event_event_event_tables_number
+#: model:ir.ui.view,arch_db:website_event_table.view_event_form_event_table_toolbox
+msgid "Tables"
+msgstr "Tables"
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:19
+#: sql_constraint:event.event.table:0
+#, python-format
+msgid "This table name is already in use"
+msgstr "Le nom de cette table est déjà utilisé"
+
+#. module: website_event_table
+#: code:addons/website_event_table/models/event_table.py:18
+#: sql_constraint:event.event.table:0
+#, python-format
+msgid "This table number is already attributed"
+msgstr "Le numéro de cette table est déjà utilisé"

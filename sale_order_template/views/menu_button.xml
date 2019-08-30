@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="action_order_templates" model="ir.actions.act_window">
+        <field name="name">Quotation Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.template</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_sale_order_template_tree"/>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a quotation template.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_order_template"
+              action="action_order_templates" parent="sales_team.menu_base_partner"
+              sequence="12"/>
+
+</odoo>

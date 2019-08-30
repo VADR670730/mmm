@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_project_kanban_publisher" model="ir.ui.view">
+            <field name="name">view_project_kanban_publisher</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//kanban" position="inside">
+                        <field name="production_id" />
+                    </xpath>
+
+                    <xpath expr="//div[@class='o_primary']" position="after">
+                        <a type="button" attrs="{'invisible': [('production_id', '=', False)]}">
+                            <button class="btn-primary btn-sm" type="object" name="project_project_production_action" style="margin: 3px; font-size: 0.8em;">
+                                <span>Show Production</span>
+                            </button>
+                        </a>
+                        <a type="button">
+                            <button class="btn-primary btn-sm" type="object" name="download_attachments" style="margin: 3px; font-size: 0.8em;">
+                                <span>Download Attachments</span>
+                            </button>
+                        </a>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_project_form_publisher" model="ir.ui.view">
+            <field name="name">view_project_form_publisher</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//sheet" position="before">
+                        <header>
+                            <button string="Download Attachments" class="btn-primary" type="object" name="download_attachments" />
+                        </header>
+                    </xpath>
+
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="production_id" readonly="1" attrs="{'invisible': [('production_id', '=', False)]}" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="publisher_invitation_partner_action" model="ir.actions.act_window">
+            <field name="name">Invited Contacts</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('invitation_ids.id', '=', context.get('invitation_id'))]</field>
+        </record>
+
+        <record id="view_publisher_invitation_tree" model="ir.ui.view">
+            <field name="name">view_publisher_invitation_tree</field>
+            <field name="model">publisher.invitation</field>
+            <field name="arch" type="xml">
+                <tree string="Invitation Groups">
+                    <field name="name" />
+                    <field name="company_id" invisible="1" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_invitation_form" model="ir.ui.view">
+            <field name="name">view_publisher_invitation_form</field>
+            <field name="model">publisher.invitation</field>
+            <field name="arch" type="xml">
+                <form string="Invitation Group">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="%(publisher_invitation_partner_action)d" type="action" icon="fa-paper-plane" context="{'invitation_id': id, 'default_invitation_ids': [id]}">
+                                <field string="Invited Contacts" name="partner_count" widget="statinfo" modifiers="{'readonly': true}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                                <field name="active" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="company_id" invisible="1" />
+                        </group>
+                        <group>
+                            <field name="partner_ids" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_sale_order_template_tree" model="ir.ui.view">
+        <field name="name">sale.order.template.tree</field>
+        <field name="model">sale.order.template</field>
+        <field name="priority">4</field>
+        <field name="arch" type="xml">
+            <tree class="o_sale_order">
+                <field name="name"/>
+                <button name="action_template_quotation" type="object" string="Create Quotation From Template"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sale_order_template_form" model="ir.ui.view">
+        <field name="name">sale.order.template.form</field>
+        <field name="model">sale.order.template</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order Template" class="o_sale_order">
+                <header>
+                    <button name="action_template_quotation" type="object" string="Create Quotation From Template"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <field name="order_lines" mode="tree">
+                        <tree editable="bottom">
+                            <field name="product_id"
+                                   context="{'quantity':product_uom_qty}"
+                            />
+                            <field name="name"/>
+                            <field name="product_uom_qty"
+                                   context="{'quantity':product_uom_qty}"
+                            />
+                            <field name="price_unit"/>
+                            <field name="price_subtotal"/>
+                        </tree>
+                    </field>
+                    <field name="note" class="oe_inline"
+                           placeholder="Setup default terms and conditions in your company settings."/>
+                    <div class="oe_clear"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

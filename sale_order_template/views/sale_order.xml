@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="view_sale_order_form_template_id">
+        <field name="name">view.sale.order.form.template.id</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="action_quotation_template" type="object" string="Create Template From Sale Order"/>
+                </xpath>
+                <xpath expr="//field[@name='client_order_ref']" position="before">
+                    <field name="template_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

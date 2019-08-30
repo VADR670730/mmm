@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- top menu bar -->
+    <template id="portal_my_home_menu_sale_vouchers" inherit_id="website_portal.portal_layout">
+        <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
+            <li>
+                <a href="/my/vouchers">Vouchers</a>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- summary on home page -->
+     <template id="portal_my_home_vouchers" name="Portal My Home : registration codes" inherit_id="website_portal.portal_my_home" priority="26">
+         <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
+            <h3 class="page-header">
+                <a href="/my/vouchers">Your Registration Codes
+                    <small class="ml8">
+                        <t t-if="voucher_count">
+                            <span class='badge'><t t-esc="voucher_count"/></span>
+                        </t>
+                        <t t-if="not voucher_count">
+                            There are currently no registration code for your account.
+                        </t>
+                    </small>
+                </a>
+            </h3>
+         </xpath>
+     </template>
+
+    <!-- vouchers listing page -->
+    <template id="portal_my_vouchers" name="My Vouchers for Sponsored Events">
+        <t t-call="website_portal.portal_layout">
+            <h3 class="page-header">Vouchers for Your Sponsored Events</h3>
+            <t t-if="not vouchers">
+                <p>There are currently no event vouchers for your account.</p>
+            </t>
+            <t t-if="vouchers">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="active">
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Event</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Discount</th>
+                            <th>Available</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="vouchers" t-as="voucher">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/my/vouchers/{{voucher.id}}?{{keep_query()}}">
+                                    <t t-esc="voucher.code"/>
+                                </a>
+                            </td>
+                            <td>
+                                <span t-field="voucher.name"/>
+                            </td>
+                            <td>
+                                <span t-field="voucher.event_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="voucher.event_id.address_id"/>
+                            </td>
+                            <td>
+                                <span t-field="voucher.event_id.date_begin"/>
+                            </td>
+                            <td>
+                                <span t-field="voucher.discount_rate"/>
+                            </td>
+                            <td>
+                                <span t-field="voucher.available_quota"/>
+                            </td>
+                            <td>
+                                <t t-if="voucher.state == 'confirmed' and voucher.available_quota > 0">
+                                    <span class="label label-info">
+                                        <i class="fa fa-fw fa-clock-o"/>
+                                        Running
+                                    </span>
+                                </t>
+                                <t t-if="voucher.state == 'confirmed' and voucher.available_quota  == 0">
+                                    <span class="label label-danger">
+                                        <i class="fa fa-fw fa-warning"/>
+                                        Expired
+                                    </span>
+                                </t>
+                                <t t-if="voucher.state == 'draft'">
+                                    <span class="label label-default">
+                                        <i class="fa fa-fw fa-edit"/>
+                                       Draft
+                                    </span>
+                                </t>
+                                <t t-if="voucher.state == 'cancel'">
+                                    <span class="label label-danger">
+                                        <i class="fa fa-fw fa-ban"/>
+                                       Cancelled
+                                    </span>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+                <div t-if="pager" class="o_portal_pager text-center">
+                    <t t-call="website.pager"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- voucher details page -->
+    <template id="vouchers_followup" name="Registration Codes">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ol class="breadcrumb mt8">
+                                    <li>
+                                        <a href="/my/home">
+                                            <i class="fa fa-home"/>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a t-attf-href="/my/vouchers?{{ keep_query()}}">My Vouchers</a>
+                                    </li>
+                                    <li>
+                                        <t t-esc="voucher.name"/>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="optional_placeholder"></div>
+                    <div class="container">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4><span t-esc="voucher.name"/></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <!-- <hr/> -->
+                                <div class="mb8">
+                                    <div class="col-md-2">
+                                        <strong>Date:</strong>
+                                        <span t-field="voucher.create_date" t-options='{"widget": "date"}'/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Code:</strong>
+                                        <span t-field="voucher.code"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Discount:</strong>
+                                        <span t-field="voucher.discount_rate"/>%
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>State:</strong>
+                                        <span t-field="voucher.state"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Available:</strong>
+                                        <span t-field="voucher.available_quota"/>
+                                    </div>
+                                </div>
+                                <!--div class="clearfix"/-->
+                                <div class="row">
+                                    <t t-if="voucher.state in ['confirmed','draft']">
+                                        <a t-attf-href="/my/vouchers/{{voucher.id}}/cancel">
+                                            <div style="padding-left: 30px;">
+                                                <button type="button" class="btn btn-default btn-danger pull-left mb32">Cancel Registration Code</button>
+                                            </div>
+                                        </a>
+                                    </t>
+                                </div>
+
+                                <hr/>
+
+                                <table class="table table-hover" id="attendees_table">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Attendee</th>
+                                            <th>Company</th>
+                                            <th>Email</th>
+                                            <th>State</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <t t-foreach="voucher.attendee_ids" t-as="ol">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="ol.name"/><![CDATA[&nbsp;]]><span t-field="ol.last_name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="ol.company"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="ol.email"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="ol.state == 'draft'">
+                                                        <span>Not Confirmed</span>
+                                                    </t>
+                                                    <t t-if="ol.state == 'open'">
+                                                        <span>Confirmed</span>
+                                                    </t>
+                                                    <t t-if="ol.state == 'cancel'">
+                                                        <span>Cancelled</span>
+                                                    </t>
+                                                    <t t-if="ol.state == 'done'">
+                                                        <span>Present</span>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <!-- Form to add manually an attendee -->
+                                <t t-if="voucher.state in ['confirmed'] and voucher.available_quota  > 0">
+                                    <t t-if="voucher.event_id.seats_available or voucher.event_id.seats_availability == 'unlimited'">
+                                        <h4>Add attendees using this sponsoring voucher</h4>
+                                        <t t-call="website_event_sale.registration_template" />
+                                    </t>
+                                </t>
+                                <span t-if="voucher.event_id.seats_availability == 'limited' and not voucher.event_id.seats_available">Sold Out</span>
+                                <!-- VT TODO : write the code in a view that inherits from this one, then pass this argument if exists to the register form then use it in the form and set the price to zero -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="registration_template_with_voucher_code" inherit_id="website_event_sale.registration_template">
+        <xpath expr="//div[@itemprop='name']" position="after">
+            <t t-if="voucher">
+                <input type="hidden" t-attf-id="registration_code-#{ticket.id}" t-attf-name="registration_code-#{ticket.id}" t-att-value="voucher.code"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- vouchers listing page -->
+    <template id="portal_request_vouchers" inherit_id="event_sponsoring.portal_my_vouchers" name="My Vouchers for Sponsored Events">
+        <xpath expr="//h3[@class='page-header']" position="after">
+            <div class="clearfix">
+                <form action="/my/vouchers/request" method="get">
+                    <button type="submit" class="btn btn-default btn-primary pull-left mb32 ">
+                        Request New Registration Code
+                    </button>
+                </form>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- voucher request page -->
+    <template id="vouchers_request_followup" name="Registration Codes Request Form">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ol class="breadcrumb mt8">
+                                    <li>
+                                        <a href="/my/home">
+                                            <i class="fa fa-home"/>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a t-attf-href="/my/vouchers?{{ keep_query()}}">
+                                            <span>My Vouchers</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <span>Registration Code Request</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <h1>Registration Code Request</h1>
+                    <form action="/my/vouchers/request/handle" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="row o_website_portal_details">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <!-- error message -->
+                                    <div class="col-md-12">
+                                        <div t-if="error_message" class="alert alert-danger">
+                                            <t t-foreach="error_message" t-as="err">
+                                                <t t-esc="err"/>
+                                                <br/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <!-- voucher name -->
+                                    <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                                        <label class="control-label" for="name">Registration Codes Name</label>
+                                        <input type="text" name="name" class="form-control" t-att-value="name or ''"/>
+                                    </div>
+                                    <!-- voucher linked event -->
+                                    <div t-attf-class="form-group #{error.get('event') and 'has-error' or ''} col-lg-6">
+                                        <label class="control-label" for="event_id">Event</label>
+                                        <select name="event_id" id="event_id" class="form-control">
+                                            <option value="">Select a Sponsored Event</option>
+                                            <t t-foreach="sponsoring" t-as="spon">
+                                                <t t-if="spon.state == 'open'">
+                                                    <t t-foreach="spon.sponsoring_line_ids" t-as="evt">
+                                                        <t t-if="evt.state == 'confirm'">
+                                                            <option t-attf-value="{{spon.id}}_{{evt.event_id.id}}">
+                                                                <t t-esc="evt.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="redirect" t-att-value="redirect"/>
+                                    <!-- voucher sponsor -->
+                                    <!-- discount rate -->
+                                    <div t-attf-class="form-group #{error.get('discount_rate') and 'has-error' or ''} col-lg-6">
+                                        <label class="control-label" for="discount_rate">Discount on Ticket Price (%)</label>
+                                        <input type="number" min="1" max="100" name="discount_rate" class="form-control" t-att-value="discount_rate or ''" />
+                                    </div>
+                                    <!-- vouchers available -->
+                                    <div t-attf-class="form-group #{error.get('available_quota') and 'has-error' or ''} col-lg-6">
+                                        <label class="control-label" for="name">Number of vouchers</label>
+                                        <input type="number" min="1" max="99" name="available_quota" class="form-control" t-att-value="available_quota or ''" />
+                                    </div>
+                                    <!-- misc -->
+                                    <div class="clearfix">
+                                        <button type="submit" class="btn btn-default btn-primary pull-right mb32 ">
+                                            Request
+                                            <span class="fa fa-long-arrow-right"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

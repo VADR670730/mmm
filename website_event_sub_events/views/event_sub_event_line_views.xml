@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <!-- Search view for Event Sub Event Line -->
+    <record id="event_sub_event_line_search" model="ir.ui.view">
+        <field name="name">event.sub.event.line.search</field>
+        <field name="model">event.sub.event.line</field>
+        <field name="arch" type="xml">
+            <search string="Sub Event">
+                <field name="event_id"/>
+                <field name="event_role_ids"/>
+                <group expand="1" string="Group By">
+                    <filter string="Products" name="product_id" context="{'group_by':'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree view for Event Sub Event Line -->
+    <record model="ir.ui.view" id="event_sub_event_line_tree">
+        <field name="name">event.sub.event.line.tree</field>
+        <field name="model">event.sub.event.line</field>
+        <field name="arch" type="xml">
+            <tree name="sub_event_tree" string="Sub Event">
+                <field name="sequence" invisible="1"/>
+                <field name="event_id"/>
+                <field name="product_id"/>
+                <field name="sale_price"/>
+                <field name="currency_id" invisible="True" />
+                <field name="event_role_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for Event Sub Event Line -->
+    <record model="ir.ui.view" id="event_sub_event_line_form">
+        <field name="name">event.sub.event.line.form</field>
+        <field name="model">event.sub.event.line</field>
+        <field name="arch" type="xml">
+            <form name="sub_event_form" string="Sub Event">
+                <sheet>
+                    <field name="sequence" widget="handle" invisible="1"/>
+                    <group name="sub_events_group" string="Sub Event">
+                        <group>
+                            <field name="event_id" required="1" options="{'no_create': True, 'no_open': True}" readonly="1" context="{'search_default_event_id': active_id}"/>
+                            <field name="product_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="sale_price" required="1"/>
+                            <field name="currency_id" invisible="True" />
+                            <field name="event_role_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" context="{'event_id': event_id}" groups="website_event_role.group_event_role_management"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Event Sub Event Line -->
+    <record model="ir.actions.act_window" id="action_event_sub_event_line">
+        <field name="name">Sub Events</field>
+        <field name="res_model">event.sub.event.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_event_id': active_id}</field>
+    </record>
+
+    <!-- Menu Item Action for Event Sub Event Line -->
+    <record id="menu_event_sub_events_lines_action" model="ir.actions.act_window">
+        <field name="name">Sub Events</field>
+        <field name="res_model">event.sub.event.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu for Event Sub Event Line -->
+    <menuitem name="Sub Events"
+            id="website_event_sub_events.menu_event_sub_events" parent="event.event_main_menu"
+            sequence="10" action="menu_event_sub_events_lines_action" />
+
+    </data>
+</odoo>

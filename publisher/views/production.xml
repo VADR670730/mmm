@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="production_sale_order_line_action" model="ir.actions.act_window">
+            <field name="name">Production Calendar</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('production_id', '=', context.get('production_id')), ('state', 'not in', ['draft', 'sent', 'option','cancel'])]</field>
+            <field name="view_id" ref="view_publisher_production_line_calendar" />
+        </record>
+
+        <record id="view_publisher_production_tree" model="ir.ui.view">
+            <field name="name">view_publisher_production_tree</field>
+            <field name="model">publisher.production</field>
+            <field name="arch" type="xml">
+                <tree string="Productions">
+                    <field name="name" />
+                    <field name="seq_number" />
+                    <field name="state" />
+                    <field name="production_type_id" />
+                    <field name="sale_lines_confirmed_count" />
+                    <field name="sale_lines_full_equipment_count" />
+                    <field name="date_full_equipment_limit" />
+                    <field name="turnover_delta" widget="monetary" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_production_form" model="ir.ui.view">
+            <field name="name">view_publisher_production_form</field>
+            <field name="model">publisher.production</field>
+            <field name="arch" type="xml">
+                <form string="Production">
+                    <header>
+                        <field name="invoice_status" invisible="1" />
+                        <field name="calendar_view" invisible="1" />
+                        <button string="Create invoices" class="btn-primary" type="object" name="create_invoices" attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}" groups="account.group_account_invoice" />
+                        <button string="Print Report" class="btn-primary" type="object" name="print_production" />
+                        <button string="Print Invoice Report" class="btn-primary" type="object" name="print_production_invoice_status" attrs="{'invisible': [('state', '=', 'draft')]}" />
+                        <button string="Download Attachments" class="btn-primary" type="object" name="download_attachments"  attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                        <button string="Download Attachments With Project" class="btn-primary" type="object" name="download_attachments_project"  attrs="{'invisible': ['|', ('state', '=', 'draft'), ('project_id', '=', False)]}"/>
+                        <button string="Calendar" class="btn-primary" type="action" name="%(production_sale_order_line_action)d" context="{'production_id': id}" attrs="{'invisible': [('calendar_view', '=', False)]}" />
+                        <field name="state" widget="statusbar" clickable="True" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_sale_order_line"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tasks"
+                                attrs="{'invisible': [('sale_lines_count', '=', 0)]}">
+                                <field name="sale_lines_count" widget="statinfo" string="Lines"/>
+                            </button>
+                            <button name="action_view_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                            <button name="action_view_purchase_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': [('purchase_invoice_count', '=', 0)]}">
+                                <field name="purchase_invoice_count" widget="statinfo" string="Purchase Invoices"/>
+                            </button>
+                            <button name="action_view_crm_leads"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-star"
+                                attrs="{'invisible': [('crm_lead_count', '=', 0)]}">
+                                <field name="crm_lead_count" widget="statinfo" string="Leads"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Production Name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="seq_number" required="1" />
+                                <field name="company_id" invisible="1" />
+                                <field name="date_blanco" />
+                                <field name="date_start" required="1" />
+                                <field name="date_end" />
+                                <field name="date_closing" />
+                                <field name="date_full_equipment_limit" />
+                                <!-- <field name="sale_lines_count"/> -->
+                                <field name="sale_lines_confirmed_count"/>
+                                <field name="sale_lines_full_equipment_count" />
+                            </group>
+                            <group>
+                                <field name="production_type_id" domain="[('company_id','=',company_id)]"/>
+                                <label for="project_id" attrs="{'invisible': [('project_id', '!=', False)]}" />
+                                <button name="action_create_project" type="object" string="Create" class="oe_edit_only" attrs="{'invisible': [('project_id', '!=', False)]}" />
+                                <field name="project_id" readonly="1" attrs="{'invisible': [('project_id', '=', False)]}" />
+                                <field name="themes" />
+                                <field name="invoicing_mode" />
+                                <label for="down_payment" attrs="{'invisible': [('invoicing_mode', '!=', 'both')]}" />
+                                <div attrs="{'invisible': [('invoicing_mode', '!=', 'both')]}">
+                                    <field name="down_payment" class="oe_inline" />
+                                    <label string="%%" class="oe_inline" />
+                                </div>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="expected_turnover" widget="monetary" />
+                                <field name="potential_turnover" widget="monetary" />
+                                <field name="actual_turnover" widget="monetary" />
+                                <label for="turnover_delta" />
+                                <div>
+                                    <field name="turnover_delta_sign" class="oe_inline" />
+                                    <field name="turnover_delta" widget="monetary" class="oe_inline" />
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Production Lines">
+                                <field name="sale_line_ids">
+                                    <tree name="Production Lines" create="false" delete="false" colors="
+                                        blue: state=='sale' and not full_equipment_received;
+                                        green: state=='sale' and full_equipment_received;
+                                        red: state!='sale' ">
+                                        <field name="state" invisible="1" />
+                                        <field name="product_id" />
+                                        <field name="name" />
+                                        <field name="order_partner_id" />
+                                        <field name="full_equipment_received" />
+                                        <field name="attachment_count" />
+                                        <field name="format_id" />
+                                        <field name="location_id" />
+                                        <field name="date_start" />
+                                        <field name="date_end" />
+                                        <field name="order_name" />
+                                        <field name="price_subtotal" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Purchase Lines">
+                                <field name="purchase_order_line_ids">
+                                    <tree name="Purchase Lines" create="false" delete="false">
+                                        <field name="product_id" />
+                                        <field name="order_id" />
+                                        <field name="partner_id" />
+                                        <field name="price_unit" />
+                                        <field name="price_total" />
+                                        <field name="product_qty" />
+                                        <field name="state" />
+                                    </tree>
+                                </field>
+                                <group>
+                                    <field string="Purchase Total" name="purchase_total" />
+                                </group>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="note" />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_publisher_production_graph" model="ir.ui.view">
+            <field name="name">view_publisher_production_graph</field>
+            <field name="model">publisher.production</field>
+            <field name="arch" type="xml">
+                <graph string="Productions">
+                    <field name="production_type_id" type="row" />
+                    <field name="name" type="row" />
+                    <field name="expected_turnover" type="measure" />
+                    <field name="potential_turnover" type="measure" />
+                    <field name="actual_turnover" type="measure" />
+                    <field name="turnover_delta" type="measure" />
+                </graph>
+            </field>
+        </record>
+    </data>
+</odoo>

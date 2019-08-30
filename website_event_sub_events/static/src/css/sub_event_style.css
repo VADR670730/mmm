@@ -1,0 +1,6 @@
+ul.subEventsCustom > li.disabled {
+        display: none;
+    }
+div.hide_sub_event{
+    display: none;
+}

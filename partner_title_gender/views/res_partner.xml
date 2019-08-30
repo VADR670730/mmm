@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <!-- main res.partner form -->
+        <record id="res_partner_form_gender" model="ir.ui.view">
+            <field name="name">res.partner.form.title.gender</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- keep allowed gender list nearby -->
+                <xpath expr="//field[@name='title']" position="after">
+                    <field name="title_gender_ids"  widget="many2many_tags" invisible="1"/>
+                </xpath>
+                <!-- remove options so we can edit title <-> gender(s) association -->
+                <xpath expr="//field[@name='title']" position="replace">
+                    <field name="title" attrs="{'invisible': [('is_company', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- add to Partner Title tree view -->
+        <record id="view_partner_title_gender_tree" model="ir.ui.view">
+            <field name="name">res.partner.title.tree</field>
+            <field name="model">res.partner.title</field>
+            <field name="inherit_id" ref="base.view_partner_title_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='shortcut']" position="after">
+                    <field name="gender_ids"  widget="many2many_tags" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- add to Partner Title creation form -->
+        <record id="view_partner_title_gender_form" model="ir.ui.view">
+            <field name="name">res.partner.title.form</field>
+            <field name="model">res.partner.title</field>
+             <field name="inherit_id" ref="base.view_partner_title_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='shortcut']" position="after">
+                    <field name="gender_ids"  widget="many2many_tags" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

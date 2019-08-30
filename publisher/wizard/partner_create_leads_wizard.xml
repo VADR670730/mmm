@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_partner_create_crm_lead" model="ir.actions.act_window">
+            <field name="name">Create Lead(s)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.create.crm.leads.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="partner_create_crm_lead_form" model="ir.ui.view">
+            <field name='name'>partner.create.crm.lead.form</field>
+            <field name='model'>partner.create.crm.leads.wizard</field>
+            <field name='arch' type='xml'>
+                <form string='Generate CRM Leads'>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="prefix" />
+                            </group>
+                            <group>
+                                <field name="production_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="partner_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="email" />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name='action_generate' string='Generate Lead'
+                            class='oe_highlight'
+                            type='object' />
+                        <span class="or_cancel">
+                            <button special="cancel" string="Close" type="object" class="oe_link oe_inline"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="action_partner_create_leads"
+            res_model="partner.create.crm.leads.wizard"
+            src_model="res.partner"
+            target="new"
+            multi="True"
+            key2="client_action_multi"
+            view_mode="form"
+            name="Create Lead(s)"/>
+    </data>
+</odoo>

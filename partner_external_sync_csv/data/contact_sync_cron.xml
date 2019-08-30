@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>        
+    <data noupdate="1">
+        <record forcecreate="True" id="ir_cron_contact_csv_sync" model="ir.cron">
+            <field name="name">Sync Contacts via FTP/CSV</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">24</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="model" eval="'res_partner_sync'" />
+            <field name="function" eval="'_cron_sync_contacts'" />
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_invoice_form_publisher" model="ir.ui.view">
+            <field name="name">view_invoice_form_publisher</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="attributes">
+                        <attribute name="string">Invoiced Partner</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="final_customer_id" />
+                    </xpath>
+                    <xpath expr="//field[@name='payment_term_id']" position="after">
+                        <field name="client_ref" />
+                        <field name="reference" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

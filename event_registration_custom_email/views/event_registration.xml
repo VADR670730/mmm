@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_event_registration_form_mail_sent" model="ir.ui.view">
+        <field name="name">view.event.registration.form.mail.sent</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+            <!-- view email sent status -->
+            <xpath expr="//field[@name='date_open']" position="before">
+                <field name="is_registration_mail_sent"/>
+            </xpath>
+            <!-- allow re-sending email after draft -->
+            <xpath expr="//header/button[@name='action_send_badge_email']" position="after">
+                <button name="confirm_registration" string="Re-send Email" states="open" type="object" class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sales_publisher_config" model="ir.ui.view">
+            <field name="name">company publisher settings</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Reports">
+                            <group>
+                                <group>
+                                    <label for="reports_logo" />
+                                    <div>
+                                        <field name="reports_logo" widget="image" />
+                                    </div>
+                                </group>
+                                <group>
+                                    <field name="bank_acc" domain="[('partner_id', '=', partner_id)]" context="{'default_partner_id': partner_id}" />
+                                </group>
+                            </group>
+                            <group>
+                                <field name="sfc_header" widget="html"/>
+                                <field name="sfc" widget="html"/>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

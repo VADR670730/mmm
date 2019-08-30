@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="production_type_production_action" model="ir.actions.act_window">
+            <field name="name">Productions</field>
+            <field name="res_model">publisher.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('production_type_id.id', '=', context.get('production_type_id'))]</field>
+        </record>
+
+        <record id="view_publisher_production_types_tree" model="ir.ui.view">
+            <field name="name">view_publisher_production_types_tree</field>
+            <field name="model">publisher.production.type</field>
+            <field name="arch" type="xml">
+                <tree string="Production Types">
+                    <field name="name" />
+                    <field name="product_category_id" />
+                    <field name="media_id" />
+                    <field name="invoicing_mode" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_production_types_form" model="ir.ui.view">
+            <field name="name">view_publisher_production_types_form</field>
+            <field name="model">publisher.production.type</field>
+            <field name="arch" type="xml">
+                <form string="Production Type">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="%(production_type_production_action)d" type="action" icon="fa-industry" context="{'production_type_id': id, 'default_production_type_id': id}">
+                                <field string="Productions" name="production_count" widget="statinfo" modifiers="{'readonly': true}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="active" />
+                                <field name="product_category_id" />
+                                <field name="sequence_id" />
+                            </group>
+                            <group>
+                                <field name="company_id" invisible="1" />
+                                <field name="media_id" />
+                                <field name="invoicing_mode" />
+                                <label for="down_payment" attrs="{'invisible': [('invoicing_mode', '!=', 'both')]}" />
+                                <div attrs="{'invisible': [('invoicing_mode', '!=', 'both')]}">
+                                    <field name="down_payment" class="oe_inline" />
+                                    <label string="%%" class="oe_inline" />
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

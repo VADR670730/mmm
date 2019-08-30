@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_publisher_location_tree" model="ir.ui.view">
+            <field name="name">view_publisher_location_tree</field>
+            <field name="model">publisher.location</field>
+            <field name="arch" type="xml">
+                <tree string="Locations">
+                    <field name="name" />
+                    <field name="media_ids" />
+                    <field name="unique" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_location_form" model="ir.ui.view">
+            <field name="name">view_publisher_location_form</field>
+            <field name="model">publisher.location</field>
+            <field name="arch" type="xml">
+                <form string="Location">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="unique" />
+                                <field name="unique_time_range" />
+                            </group>
+                            <group>
+                                <field name="active" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="media_ids" domain="[('location_needed', '=', True)]" widget="many2many_checkboxes" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

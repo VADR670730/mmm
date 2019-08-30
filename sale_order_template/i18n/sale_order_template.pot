@@ -1,0 +1,177 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_order_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20170719\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-03 14:54+0000\n"
+"PO-Revision-Date: 2017-08-03 14:54+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_template
+#: code:addons/sale_order_template/models/sale_order_template.py:48
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_form
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_tree
+#, python-format
+msgid "Create Quotation From Template"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_form_template_id
+msgid "Create Template From Quotation"
+msgstr ""
+
+#. module: sale_order_template
+#: code:addons/sale_order_template/models/sale_order.py:59
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_form_template_id
+#, python-format
+msgid "Create Template From Sale Order"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.actions.act_window,help:sale_order_template.action_order_templates
+msgid "Create a quotation template."
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_create_uid
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_create_date
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_name
+msgid "Description"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_display_name
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_order_template
+#: code:addons/sale_order_template/models/sale_order.py:64
+#, python-format
+msgid "From"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_id_5130
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_id
+msgid "ID"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template___last_update
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_write_uid
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_write_date
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_order_lines
+msgid "Order Lines"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_order_id
+msgid "Order Reference"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_product_id
+msgid "Product"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_product_uom_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model,name:sale_order_template.model_sale_order_template
+msgid "Quotation Template"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model,name:sale_order_template.model_sale_order_template_line
+msgid "Quotation Template Line"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_name
+msgid "Quotation Template Name"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.actions.act_window,name:sale_order_template.action_order_templates
+#: model:ir.ui.menu,name:sale_order_template.menu_sale_order_template
+msgid "Quotation Templates"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_form
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_tree
+msgid "Sale Order Template"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model,name:sale_order_template.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_form
+msgid "Sales Order Lines"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.ui.view,arch_db:sale_order_template.view_sale_order_template_form
+msgid "Setup default terms and conditions in your company settings."
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_price_subtotal
+msgid "Subtotal"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_id
+msgid "Template"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_note
+msgid "Terms and conditions"
+msgstr ""
+
+#. module: sale_order_template
+#: model:ir.model.fields,field_description:sale_order_template.field_sale_order_template_line_price_unit
+msgid "Unit Price"
+msgstr ""
+

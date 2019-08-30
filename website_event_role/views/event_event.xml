@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="inherit_event_event_form_view" model="ir.ui.view">
+            <field name="name">inherit.event.event.form.view</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="before">
+                  <field name="event_role_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags" groups="website_event_role.group_event_role_management" attrs="{'required': [('is_role_selection_mandatory', '=', True)]}"/>
+                    <field name="is_role_selection_mandatory" groups="website_event_role.group_event_role_management"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

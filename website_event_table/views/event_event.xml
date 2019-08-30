@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_event_form_event_table_toolbox" model="ir.ui.view">
+        <field name="name">view_event_form_event_table_toolbox</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="%(website_event_table.act_event_event_table)d" class="oe_stat_button" type="action" icon="fa-cubes">
+                    <field name="event_tables_number" widget="statinfo" string="Tables"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>

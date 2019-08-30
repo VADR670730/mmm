@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="partner_sync_form_view">
+            <field name="name">partner_sync_form_view</field>
+            <field name="model">res_partner_sync</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_sync" class="oe_highlight" type="object" string="Sync"/>
+                        <button name="action_test_ftp_server" class="oe_highlight" type="object" string="Test Connection"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="active" />
+                                <field name="passed_test" />
+                                <field name="is_test_mode" />
+                                <field name="test_mode_limit" attrs="{'invisible': [('is_test_mode', '=', False)]}" />
+                            </group>
+                            <group>
+                                <field name="company_id" />
+                                <field name="date_last_sync" />
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="ftp_url" />
+                                <field name="ftp_port" />
+                                <field name="ftp_folder" />
+                            </group>
+                            <group>
+                                <field name="ftp_user" />
+                                <field name="ftp_pass" />
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="companies_file_prefix" />
+                                <field name="contacts_file_prefix" />
+                                <field name="sectors_file_prefix" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="partner_sync_tree_view">
+            <field name="name">partner_sync_tree_view</field>
+            <field name="model">res_partner_sync</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="date_last_sync" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_partner_external_sync">
+            <field name="name">Partner External Sync</field>
+            <field name="res_model">res_partner_sync</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Partner External Sync" id="meuitem_partner_sync" action="action_partner_external_sync" parent="partner_sector.menu_contacts_settings"/>
+    </data>
+</odoo>

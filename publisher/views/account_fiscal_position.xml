@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_position_form_publisher" model="ir.ui.view">
+            <field name="name">view_account_position_form_publisher</field>
+            <field name="model">account.fiscal.position</field>
+            <field name="inherit_id" ref="account.view_account_position_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="invoice_display" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

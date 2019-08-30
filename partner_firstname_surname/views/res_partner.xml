@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="res_partner_form_gender" model="ir.ui.view">
+            <field name="name">res.partner.form.gender</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="firstname" placeholder="Firstname" class="oe_edit_only" attrs="{'invisible': [('is_company', '=', True)], 'required': [('is_company', '!=', True)]}" />
+                    <field name="surname" placeholder="Surname" class="oe_edit_only" attrs="{'invisible': [('is_company', '=', True)], 'required': [('is_company', '!=', True)]}" />
+                    <field name="computed_name" class="oe_read_only" attrs="{'invisible': [('is_company', '=', True)]}" />
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('is_company', '!=', True)], 'required': [('is_company', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='child_ids']//form//field[@name='name']" position="after">
+                    <field name="firstname" placeholder="Firstname" attrs="{'invisible': [('type', '!=', 'contact')], 'required': [('type', '=', 'contact')]}" />
+                    <field name="surname" placeholder="Surname" attrs="{'invisible': [('type', '!=', 'contact')], 'required': [('type', '=', 'contact')]}" />
+                </xpath>
+                <xpath expr="//field[@name='child_ids']//form//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

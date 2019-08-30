@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_publisher_crm_lead_production" model="ir.ui.view">
+            <field name="name">view.publisher.crm.lead.production</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="production_id" widget="many2many_tags" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

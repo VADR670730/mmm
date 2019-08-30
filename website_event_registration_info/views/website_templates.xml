@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Registration form -->
+        <template id="registration_attendee_details_more_fields" inherit_id="website_event.registration_attendee_details">
+            <xpath expr="//t[@t-foreach='tickets']" position="replace">
+                <t t-foreach="tickets" t-as="ticket">
+                    <h4 class="page-header mt16">
+                        <strong>
+                            Ticket Type #<t t-raw="counter_type"/>: <t t-esc="ticket['name']"/>
+                            <t t-if="ticket['price'] == 0">(Free)</t>
+                        </strong>
+                    </h4>
+                    <t t-foreach="range(1, ticket['quantity'] + 1)" t-as="att_counter" name="attendee_loop">
+                        <t t-set="counter" t-value="counter + 1"/>
+                        <div class="row">
+                            <t t-set="attendee_placeholder">Attendee #%s</t>
+                            <h5 class="mt16 col-md-10">
+                                <t t-esc="attendee_placeholder %counter" />
+                            </h5>
+                            
+                            <!-- Firstname -->
+                            <div class="col-md-5">
+                                <strong>Firstname</strong>
+                                <input class="form-control" type="text" t-attf-name="#{counter}-name" required="This field is required"/>
+                            </div>
+                            
+                            <!-- Lastname -->
+                            <div class="col-md-5">
+                                <strong>Lastname</strong>
+                                <input class="form-control" type="text" t-attf-name="#{counter}-last_name" required="This field is required"/>
+                            </div>
+                            
+                            <!-- Company -->
+                            <div class="col-md-5">
+                                <strong>Company</strong>
+                                <input class="form-control" type="text" t-attf-name="#{counter}-company" required="This field is required"/>
+                            </div>
+
+                            <!-- Function -->
+                            <div class="col-md-5">
+                                <strong>Function</strong>
+                                <input class="form-control" type="text" t-attf-name="#{counter}-function" required="This field is required"/>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="col-md-5">
+                                <strong>Email</strong>
+                                <input class="form-control" type="email" t-attf-name="#{counter}-email" required="This field is required"/>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-3">
+                                <strong>Phone</strong> <span class="text-muted">(Optional)</span>
+                                <input class="form-control" type="tel" t-attf-name="#{counter}-phone"/>
+                            </div>
+                            <!-- Language -->
+                            <div class="col-md-3">
+                                <strong>Language</strong> <span class="text-muted"></span>
+                                <select t-attf-name="#{counter}-lang_id" t-attf-id="#{counter}-lang_id" class="form-control" required="This field is required">
+                                    <t t-foreach="lang_ids" t-as="lang">
+                                        <option t-att-value="lang.id" t-esc="lang.name" t-att-id="lang.iso_code"/>
+                                    </t>
+                                </select>
+                                <script type="text/javascript">
+                                    var userLang = navigator.language || navigator.userLanguage;
+                                    $('select').find('option[id=' + userLang + ']').attr('selected','selected');
+                                </script>
+                            </div>
+                            <!-- Hidden -->
+                            <input class="hidden" type="text" t-attf-name="#{counter}-ticket_id" t-attf-value="#{ticket['id']}"/>
+                            <t t-set="counter_type" t-value="counter_type + 1"/>
+                        </div>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Registration confirmation -->
+        <template id="registration_complete_more_fields" inherit_id="website_event.registration_complete">
+            <xpath expr="//table" position="replace">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>E-mail</th>
+                            <th>Phone</th>
+                            <th>Language</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="attendees" t-as="attendee">
+                            <tr>
+                                <td>
+                                    <t t-esc="attendee.id"/>
+                                </td>
+                                <td>
+                                    <i class="fa fa-user"/>
+                                    <t t-if="attendee.name">
+                                        <t t-esc="attendee.name"/> <t t-esc="attendee.last_name"/>
+                                    </t>
+                                    <t t-if="not attendee.name">N/A</t>
+                                </td>
+                                <td>
+                                    <i class="fa fa-building"/>
+                                    <t t-if="attendee.company">
+                                        <t t-esc="attendee.company"/>
+                                    </t>
+                                    <t t-if="attendee.function"> - <t t-esc="attendee.function"/></t>
+                                    <t t-if="not attendee.function">N/A</t>
+                                </td>
+                                <td>
+                                    <i class="fa fa-envelope"/>
+                                    <t t-if="attendee.email"><t t-esc="attendee.email"/></t>
+                                    <t t-if="not attendee.email">N/A</t>
+                                </td>
+                                <td>
+                                    <i class="fa fa-phone"/>
+                                    <t t-if="attendee.phone"><t t-esc="attendee.phone"/></t>
+                                    <t t-if="not attendee.phone">N/A</t>
+                                </td>
+                                <td>
+                                    <i class="fa fa-globe"/>
+                                    <t t-if="attendee.lang_id.name"><t t-esc="attendee.lang_id.name"/></t>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</odoo>

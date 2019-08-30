@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_workflow_rights
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20170707\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-04 08:41+0000\n"
+"PO-Revision-Date: 2017-08-04 09:02+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:17
+#: selection:sale.order,state:0
+#, python-format
+msgid "Cancelled"
+msgstr "Annulée"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:12
+#: selection:sale.order,state:0
+#, python-format
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.sale_order_view_search_inherit_quotation_rename
+msgid "Draft Offers"
+msgstr "Offre brouillon"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:13
+#: selection:sale.order,state:0
+#, python-format
+msgid "Draft Sent"
+msgstr "Brouillon envoyé"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:16
+#: selection:sale.order,state:0
+#, python-format
+msgid "Locked"
+msgstr "Archivée"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sales_order_line_filter_rename
+msgid "My Sale Lines"
+msgstr "Mes lignes de vente"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_quotation_tree_rename
+msgid "Offers"
+msgstr "Offres"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:14
+#: selection:sale.order,state:0
+#, python-format
+msgid "Option"
+msgstr "Option"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_order_form_rename
+msgid "Sale"
+msgstr "Vente"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_order_form_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_order_line_tree_rename
+msgid "Sale Lines"
+msgstr "Lignes de vente"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_order_tree_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sale_order_calendar_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sale_order_graph_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sale_order_pivot_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sales_order_filter_rename
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: sale_workflow_rights
+#: model:ir.model,name:sale_workflow_rights.model_sale_order
+msgid "Sales Order"
+msgstr "Vente"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sales_order_filter_rename
+#: model:ir.ui.view,arch_db:sale_workflow_rights.view_sales_order_line_filter_rename
+msgid "Search Sales"
+msgstr "Rechercher les ventes"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.sale_order_view_search_inherit_quotation_rename
+msgid "Sent Offers"
+msgstr "Offres envoyées"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:15
+#: selection:sale.order,state:0
+#, python-format
+msgid "Signed"
+msgstr "Signée"
+
+#. module: sale_workflow_rights
+#: model:ir.ui.view,arch_db:sale_workflow_rights.sale_order_form_option_workflow
+msgid "Submit for validation"
+msgstr "Soumettre pour validation"
+
+#. module: sale_workflow_rights
+#: code:addons/sale_workflow_rights/models/sale_order.py:38
+#, python-format
+msgid "You are not allowed to edit the form, please ask a manager"
+msgstr "Vous n'êtes pas autorisé(e) à modifier le formulaire, veuillez contacter un manager"
+

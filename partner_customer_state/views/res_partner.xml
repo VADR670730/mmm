@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="res_partner_form_customer_state" model="ir.ui.view">
+        <field name="name">res.partner.form.customer.state</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="(//sheet)" position="before">
+                <header>
+                    <field name="state" widget="statusbar" clickable="True"
+                           attrs="{'invisible': [('customer', '=', False)]}"/>
+                </header>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="change_price" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script rel="text/javascript" src="/website_event_sub_events/static/src/js/change_event_price.js"></script>
+            <link rel="stylesheet" href="/website_event_sub_events/static/src/css/sub_event_style.css"/>
+        </xpath>
+
+    </template>
+
+    <template id="inherit_registration_attendee_details" inherit_id="website_event_role.registration_attende_details_add_roles">
+        <xpath expr="//div[@name='events_roles']" position="after">
+            <t t-set="default_sub_event_price" t-value="0.0"/>
+            <div t-if="ticket['sub_event_line_ids']" t-attf-class="#{ticket['hide_sub_event'] and 'col-md-12 hide_sub_event' or 'col-md-12'}" name="sub_events" t-attf-id="#{counter}-select_product" >
+                <strong>Sub Events</strong><span class="text-muted"></span>
+                <script type="text/javascript" src="/mmm_website_event_registration_fleet_manager/static/src/js/bootstrap-multiselect.js"/>
+
+                <!-- CSS -->
+                <link rel="stylesheet" href="/mmm_website_event_registration_fleet_manager/static/src/css/bootstrap-multiselect.css"/>
+                <script type="text/javascript">
+                    <![CDATA[
+                        $(function() {
+                            var i;
+                            $('.subevents').multiselect({
+                                includeSelectAllOption: true,
+                                templates: {
+                                    ul: '<ul class="multiselect-container subEventsCustom dropdown-menu"></ul>'
+                                }   
+                            });
+                        });
+                    ]]>
+                </script>
+                <select t-attf-class="form-control subevents #{counter}-subevents" multiple="multiple" t-attf-name="#{counter}-sub_event_line_ids" t-attf-id="#{counter}-sub_events_multiple"  t-att-data-ticket-price="ticket['price']" t-attf-data-cntr="#{counter}-cntr-subevents">
+                    <t t-foreach="ticket['sub_event_line_ids']" t-as="sub_event_id">
+                        <option t-att-value="sub_event_id.id" t-esc="sub_event_id.name" t-att-data-sub-event-id="sub_event_id.id" t-att-data-ticket-id="ticket['id']" 
+                        t-att-data-sub-event-ticket-price="sub_event_id.sale_price"
+                        t-att-data-sub-event-roles="sub_event_id.event_role_ids.ids"
+                        t-attf-class="#{len(sub_event_id.event_role_ids.ids)&gt;0 and 'disabled' or ''}"/>
+                    </t>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <strong>Total Price</strong><span class="text-muted"></span>
+                <!-- Total price without discount -->
+                <input class="form-control price" id="price" t-att-value="(ticket['price'] + default_sub_event_price) or '0.0'" t-attf-id="#{counter}-sub_events_multiple_total_price" t-attf-name="#{counter}-total_price" t-att-data-ticket_id="ticket['id']" type="text" readonly="This field is Readable only" style="display: none;"/>
+
+                <input class="form-control price" id="price_discounted" t-att-value="(ticket['price'] + default_sub_event_price) or '0.0'" t-attf-id="#{counter}-sub_events_multiple_total_price_discounted" t-attf-name="#{counter}-total_price_discounted" t-att-data-ticket_id="ticket['id']" type="text" readonly="This field is Readable only" t-options="{'widget': 'monetary', 'from_currency': website_sale_order.pricelist_id.currency_id, 'display_currency': website.currency_id}"/>
+            </div>
+        </xpath>
+        
+    </template>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_with_step_form">
+            <field name="name">publisher.production.wizard</field>
+            <field name="model">publisher.production.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Productions Global Status">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1" />
+                        </group>
+                        <group>
+                            <field name="date_to" required="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="hide_drafts" />
+                        <field name="export_format" widget="radio" />
+                    </group>
+
+                    <footer>
+                        <button name="action_report" string="Create Report" type="object" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

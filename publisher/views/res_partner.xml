@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_sale_order_line_action" model="ir.actions.act_window">
+            <field name="name">Production Lines</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['&amp;', ('production_id', '!=', False), '|', ('order_id.partner_id.id', '=', context.get('partner_id')), ('order_id.agency_id.id', '=', context.get('partner_id'))]</field>
+            <field name="view_id" ref="view_publisher_production_line_tree" />
+        </record>
+
+        <record id="product_template_subscription_shipped_action" model="ir.actions.act_window">
+            <field name="name">Shipped Subscriptions</field>
+            <field name="res_model">sale.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('recurring_invoice_line_ids.partner_shipping_id.id', '=', context.get('partner_id'))]</field>
+            <field name="view_id" ref="sale_contract.sale_subscription_view_list" />
+        </record>
+
+        <record id="view_partner_tree_publisher" model="ir.ui.view">
+            <field name="name">view_partner_tree_publisher</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='email']" position="after">
+                        <field name="create_date" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_partner_form_publisher" model="ir.ui.view">
+            <field name="name">view_partner_form_publisher</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@name='button_box']" position="inside">
+                        <button class="oe_stat_button" name="%(res_partner_sale_order_line_action)d" type="action" icon="fa-industry" context="{'partner_id': id}">
+                            <field string="Production Lines" name="production_line_count" widget="statinfo" modifiers="{'readonly': true}"/>
+                        </button>
+                        <button class="oe_stat_button" name="%(product_template_subscription_shipped_action)d" type="action" icon="fa-truck" context="{'partner_id': id}">
+                            <field string="Shipments" name="subscription_shipped_count" widget="statinfo" modifiers="{'readonly': true}"/>
+                        </button>
+                    </xpath>
+
+                    <xpath expr="//field[@name='category_id']" position="after">
+                        <field name="create_date" />
+                    </xpath>
+
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Publisher Options">
+                            <group>
+                                <field name="agency" />
+                                <field name="agency_ids" attrs="{'invisible': [('agency', '=', True)],}" nolabel="1">
+                                    <tree editable="top">
+                                        <field name="left_partner_id" domain="[('agency', '=', True)]" />
+                                        <field name="agency_comission" />
+                                    </tree>
+                                </field>
+                                <field name="managed_partner_ids" options="{'not_delete': True}" nolabel="1" attrs="{'invisible': [('agency', '=', False)],}">
+                                    <tree editable="top">
+                                        <field name="right_partner_id" domain="[('agency', '=', False)]"/>
+                                        <field name="agency_comission" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="invitation_ids" />
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

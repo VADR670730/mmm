@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_publisher_project_template_tree" model="ir.ui.view">
+            <field name="name">view_publisher_project_template_tree</field>
+            <field name="model">publisher.project.template</field>
+            <field name="arch" type="xml">
+                <tree string="Project Templates">
+                    <field name="name" />
+                    <field name="stage_ids" />
+                    <field name="is_default_template" />
+                    <field name="is_production_template" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_project_template_form" model="ir.ui.view">
+            <field name="name">view_publisher_project_template_form</field>
+            <field name="model">publisher.project.template</field>
+            <field name="arch" type="xml">
+                <form string="Project Template">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="active" />
+                                <field name="company_id" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="is_default_template" />
+                                <field name="is_production_template" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="stage_ids" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

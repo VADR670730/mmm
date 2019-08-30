@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_event_form_registration_portal" model="ir.ui.view">
+        <field name="name">view.event.form.registration.portal</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_begin']" position="before">
+                <field name="maximum_portal_edit_date" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

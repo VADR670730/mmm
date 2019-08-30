@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="partner_with_social_fields" model="ir.ui.view">
+            <field name="name">partner.with.social.fields</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//notebook)" position="inside">
+                    <page string="Social">
+                        <group>
+                            <group>
+                                <field name="facebook_link" widget="url" placeholder="e.g. www.facebook.com"/>
+                                <field name="twitter_link" widget="url" placeholder="e.g. www.twitter.com"/>
+                                <field name="instagram_link" widget="url" placeholder="e.g. www.instagr.am"/>
+                                <field name="snapchat_link" widget="url" placeholder="e.g. www.snpachat.com"/>
+                                <field name="linkedin_link" widget="url" placeholder="e.g. www.linkedin.com"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

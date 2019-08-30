@@ -1,0 +1,642 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* event_sponsoring
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20181130\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-12 09:23+0000\n"
+"PO-Revision-Date: 2019-04-12 09:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_event_registration_code_count
+msgid "# Codes"
+msgstr "# Codes"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "&amp;nbsp;"
+msgstr "&amp;nbsp;"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:255
+#, python-format
+msgid "--> Code OK, you are invited by: "
+msgstr "--> Code OK, you are invited by: "
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:247
+#, python-format
+msgid "--> Expired code"
+msgstr "--> Expired code"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:242
+#, python-format
+msgid "--> Invalid Code"
+msgstr "--> Invalid Code"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "<span class=\"label label-danger\">\n"
+"                                        <i class=\"fa fa-fw fa-ban\"/>\n"
+"                                       Cancelled\n"
+"                                    </span>"
+msgstr "<span class=\"label label-danger\">\n"
+"                                        <i class=\"fa fa-fw fa-ban\"/>\n"
+"                                       Cancelled\n"
+"                                    </span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "<span class=\"label label-danger\">\n"
+"                                        <i class=\"fa fa-fw fa-warning\"/>\n"
+"                                        Expired\n"
+"                                    </span>"
+msgstr "<span class=\"label label-danger\">\n"
+"                                        <i class=\"fa fa-fw fa-warning\"/>\n"
+"                                        Expired\n"
+"                                    </span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "<span class=\"label label-default\">\n"
+"                                        <i class=\"fa fa-fw fa-edit\"/>\n"
+"                                       Draft\n"
+"                                    </span>"
+msgstr "<span class=\"label label-default\">\n"
+"                                        <i class=\"fa fa-fw fa-edit\"/>\n"
+"                                       Draft\n"
+"                                    </span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "<span class=\"label label-info\">\n"
+"                                        <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                        Running\n"
+"                                    </span>"
+msgstr "<span class=\"label label-info\">\n"
+"                                        <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                        Running\n"
+"                                    </span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<span>Cancelled</span>"
+msgstr "<span>Cancelled</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<span>Confirmed</span>"
+msgstr "<span>Confirmed</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "<span>My Vouchers</span>"
+msgstr "<span>My Vouchers</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<span>Not Confirmed</span>"
+msgstr "<span>Not Confirmed</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<span>Present</span>"
+msgstr "<span>Present</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "<span>Registration Code Request</span>"
+msgstr "<span>Registration Code Request</span>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.registration_attendee_registration_code
+msgid "<strong style=\"font-style:italic\">Do you have a registration code ? If so apply it here.</strong>"
+msgstr "<strong style=\"font-style:italic\">Do you have a registration code ? If so apply it here.</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.registration_attendee_registration_code
+msgid "<strong style=\"font-style:italic\">Please enter here your registration code to go further.</strong>"
+msgstr "<strong style=\"font-style:italic\">Please enter here your registration code to go further.</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<strong>Available:</strong>"
+msgstr "<strong>Available:</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<strong>Code:</strong>"
+msgstr "<strong>Code:</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Datum:</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<strong>Discount:</strong>"
+msgstr "<strong>Discount:</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.registration_attendee_registration_code
+msgid "<strong>Registration code</strong>"
+msgstr "<strong>Registration code</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "<strong>State:</strong>"
+msgstr "<strong>Staat</strong>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Add attendees using this sponsoring voucher"
+msgstr "Add attendees using this sponsoring voucher"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_partner_id
+msgid "Associated Partner"
+msgstr "Associated Partner"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_sponsoring_id
+msgid "Associated Sponsoring"
+msgstr "Associated Sponsoring"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Attended the Event"
+msgstr "Was aanwezig bij dit evenement."
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_event_registration
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Attendee"
+msgstr "Deelnemer"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Attendees"
+msgstr "Deelnemers"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Available"
+msgstr "Available"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Cancel"
+msgstr "Annuleer"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Cancel Registration"
+msgstr "Inschrijving annuleren"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Cancel Registration Code"
+msgstr "Cancel Registration Code"
+
+#. module: event_sponsoring
+#: selection:event.registration.code,state:0
+msgid "Cancelled"
+msgstr "Cancelled"
+
+#. module: event_sponsoring
+#: selection:event.sponsoring,state:0
+msgid "Closed"
+msgstr "Closed"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_code
+#: model:ir.model.fields,field_description:event_sponsoring.field_sale_order_line_registration_code_id
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Code"
+msgstr "Code"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_registration_codes_ids
+msgid "Codes"
+msgstr "Codes"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Company"
+msgstr "Bedrijf"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Confirm"
+msgstr "Bevestigen"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Confirm Registration"
+msgstr "Bevestig inschrijving"
+
+#. module: event_sponsoring
+#: selection:event.registration.code,state:0
+msgid "Confirmed"
+msgstr "Confirmed"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_create_uid
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_create_uid
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_create_uid
+msgid "Created by"
+msgstr "Gemaakt door"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_create_date
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_create_date
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_create_date
+msgid "Created on"
+msgstr "Gemaakt op"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Date"
+msgstr "Datum"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Discount"
+msgstr "Korting"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:60
+#, python-format
+msgid "Discount Rate should be a number."
+msgstr "Discount Rate should be a number."
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Discount on Ticket Price (%)"
+msgstr "Discount on Ticket Price (%)"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_discount_rate
+msgid "Discount rate"
+msgstr "Discount rate"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:57
+#, python-format
+msgid "Discount rate should not exceed 100."
+msgstr "Discount rate should not exceed 100."
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_display_name
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_display_name
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: event_sponsoring
+#: selection:event.registration.code,state:0
+msgid "Draft"
+msgstr "Draft"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Email"
+msgstr "E-mail"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_event_event
+#: model:ir.ui.view,arch_db:event_sponsoring.partner_form_checked
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Event"
+msgstr "Evenement"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_sponsoring_form
+msgid "Event Codes"
+msgstr "Event Codes"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_name
+msgid "Event Name"
+msgstr "Naam evenement"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Event Registration"
+msgstr "Evenementregistratie"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_event_registration_code
+msgid "Event Registration Code"
+msgstr "Event Registration Code"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Event Registration Code Name"
+msgstr "Event Registration Code Name"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_sponsoring_form
+msgid "Event Sponsoring"
+msgstr "Event Sponsoring"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_event_sponsoring_line
+msgid "Event Sponsoring Line"
+msgstr "Event Sponsoring Line"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_sponsoring_form
+msgid "Event Sponsoring Name"
+msgstr "Event Sponsoring Name"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.partner_form_checked
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_sponsoring_form
+msgid "Events"
+msgstr "Evenementen"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:105
+#, python-format
+msgid "Hello %s, <br />A new registration code has been requested<br />for: %s<br />for event: %s<br /><br />See <a href=\"%s\">here</a> to validate it"
+msgstr "Hello %s, <br />A new registration code has been requested<br />for: %s<br />for event: %s<br /><br />See <a href=\"%s\">here</a> to validate it"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_id
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_id
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_id
+msgid "ID"
+msgstr "ID"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,help:event_sponsoring.field_event_sponsoring_line_state
+msgid "If event is created, the status is 'Draft'. If event is confirmed for the particular dates the status is set to 'Confirmed'. If the event is over, the status is set to 'Done'. If event is cancelled the status is set to 'Cancelled'."
+msgstr "Als evenement wordt gecreëerd, is de status 'Concept'. Als evenement wordt bevestigd voor de specifieke data wordt de status  ingesteld op 'Bevestigd'. Als het evenement voorbij is, wordt de status op 'Gereed' gezet. Als het evenement wordt geannuleerd zal de status ingesteld worden op 'Cancelled'."
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_res_partner_is_sponsor
+#: model:ir.model.fields,field_description:event_sponsoring.field_res_users_is_sponsor
+msgid "Is A Sponsor"
+msgstr "Is een sponsor"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code___last_update
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring___last_update
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line___last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_write_uid
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_write_uid
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_write_date
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_write_date
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_sponsoring_id
+msgid "Linked Sponsor"
+msgstr "Linked Sponsor"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_attendee_ids
+msgid "Linked attendees"
+msgstr "Linked attendees"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_event_id
+msgid "Linked event"
+msgstr "Linked event"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_sponsoring_line_ids
+msgid "Linked events"
+msgstr "Linked events"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Location"
+msgstr "Locatie"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "My Vouchers"
+msgstr "My Vouchers"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_name
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_name
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Name"
+msgstr "Naam"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/models/event_registration_code.py:22
+#: code:addons/event_sponsoring/models/event_registration_code.py:71
+#, python-format
+msgid "New"
+msgstr "New"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Number of vouchers"
+msgstr "Number of vouchers"
+
+#. module: event_sponsoring
+#: selection:event.sponsoring,state:0
+msgid "Open"
+msgstr "Open"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_res_partner
+msgid "Partner"
+msgstr "Relatie"
+
+#. module: event_sponsoring
+#: model:ir.actions.act_window,name:event_sponsoring.action_event_registration_code_from_event
+msgid "Registration Code"
+msgstr "Registration Code"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Registration Code Request"
+msgstr "Registration Code Request"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Registration Codes Name"
+msgstr "Registration Codes Name"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_registration_code
+msgid "Registration code"
+msgstr "Registration code"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_event_registration_code_ids
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_registration_codes_ids
+msgid "Registration codes"
+msgstr "Registration codes"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_event_registration_code_mandatory
+msgid "Registration via a code is mandatory"
+msgstr "Registration via a code is mandatory"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Request\n"
+"                                            <span class=\"fa fa-long-arrow-right\"/>"
+msgstr "Request\n"
+"                                            <span class=\"fa fa-long-arrow-right\"/>"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_request_vouchers
+msgid "Request New Registration Code"
+msgstr "Request New Registration Code"
+
+#. module: event_sponsoring
+#: model:ir.model,name:event_sponsoring.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Verkooporderlijn"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_request_followup
+msgid "Select a Sponsored Event"
+msgstr "Select a Sponsored Event"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_sequence
+msgid "Sequence"
+msgstr "Volgorde"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_registration_code_form
+msgid "Set To Draft"
+msgstr "Zet in concept"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Sold Out"
+msgstr "Uitverkocht"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:65
+#, python-format
+msgid "Some required fields are empty."
+msgstr "Some required fields are empty."
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_event_id
+msgid "Sponsored event"
+msgstr "Sponsored event"
+
+#. module: event_sponsoring
+#: model:ir.actions.act_window,name:event_sponsoring.action_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_event_sponsoring_ids
+#: model:ir.ui.menu,name:event_sponsoring.menu_action_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.view_event_sponsoring_from_event_form
+msgid "Sponsoring"
+msgstr "Sponsoring"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "State"
+msgstr "Status"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_state
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_line_state
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_state
+msgid "Status"
+msgstr "Status"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "There are currently no event vouchers for your account."
+msgstr "There are currently no event vouchers for your account."
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_home_vouchers
+msgid "There are currently no registration code for your account."
+msgstr "There are currently no registration code for your account."
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_res_users_total_due
+msgid "Total Due"
+msgstr "Total Due"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_used_codes_count
+msgid "Used codes count"
+msgstr "Used codes count"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.registration_attendee_registration_code
+msgid "VALIDATE"
+msgstr "VALIDATE"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_home_menu_sale_vouchers
+msgid "Vouchers"
+msgstr "Vouchers"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_available_quota
+msgid "Vouchers available"
+msgstr "Vouchers available"
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
+msgid "Vouchers for Your Sponsored Events"
+msgstr "Vouchers for Your Sponsored Events"
+
+#. module: event_sponsoring
+#: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_total_codes
+msgid "Vouchers total"
+msgstr "Vouchers total"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/models/event_registration_code.py:105
+#, python-format
+msgid "You can not delete a code linked to attendees."
+msgstr "You can not delete a code linked to attendees."
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/models/event_registration_code.py:103
+#, python-format
+msgid "You can not delete a non draft code."
+msgstr "You can not delete a non draft code."
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/models/event_sponsoring.py:25
+#, python-format
+msgid "You can not delete a sponsor linked to events or codes."
+msgstr "You can not delete a sponsor linked to events or codes."
+
+#. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.portal_my_home_vouchers
+msgid "Your Registration Codes"
+msgstr "Your Registration Codes"
+

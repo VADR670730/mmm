@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Registration form -->
+        <template id="registration_attendee_details_disclaimer" inherit_id="website_event.registration_attendee_details">
+            <xpath expr="//t[@t-foreach='tickets']" position="after">
+                <div class="row">
+                    <!-- Disclaimer -->
+                    <div class="col-md-12">
+                        <t t-if="event.disclaimer_registration != ''">
+                            <p><span t-esc="event.disclaimer_registration" /></p>
+                        </t>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

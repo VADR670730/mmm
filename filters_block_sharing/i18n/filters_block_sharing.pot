@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* filters_block_sharing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20170719\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-12 07:47+0000\n"
+"PO-Revision-Date: 2017-09-12 07:47+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: filters_block_sharing
+#: model:ir.model,name:filters_block_sharing.model_ir_filters
+msgid "Filters"
+msgstr ""
+
+#. module: filters_block_sharing
+#: code:addons/filters_block_sharing/models/ir_filters.py:14
+#, python-format
+msgid "You are not allowed to create a shared filter. Only personal filters are allowed."
+msgstr ""
+

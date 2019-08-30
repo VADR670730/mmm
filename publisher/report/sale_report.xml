@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_sale_order"
+            string="Quotation / Order"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="publisher.report_saleorder_publisher" 
+            name="publisher.report_saleorder_publisher"
+            paperformat="publisher.paperformat_lowmargin"
+        />
+
+        <report 
+            id="report_sale_order_noprice"
+            string="Quotation / Order (No Price Displayed)"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="publisher.report_saleorder_publisher_noprice"
+            name="publisher.report_saleorder_publisher_noprice"
+            paperformat="publisher.paperformat_lowmargin"
+        />
+
+        <report 
+            id="report_sale_order_final"
+            string="Final Price Quotation"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="publisher.report_saleorder_publisher_final"
+            name="publisher.report_saleorder_publisher_final"
+            paperformat="publisher.paperformat_lowmargin"
+        />
+    </data>
+</odoo>

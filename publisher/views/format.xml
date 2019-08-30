@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_publisher_format_tree" model="ir.ui.view">
+            <field name="name">view_publisher_format_tree</field>
+            <field name="model">publisher.format</field>
+            <field name="arch" type="xml">
+                <tree string="Formats">
+                    <field name="name" />
+                    <field name="media_ids" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_format_form" model="ir.ui.view">
+            <field name="name">view_publisher_format_form</field>
+            <field name="model">publisher.format</field>
+            <field name="arch" type="xml">
+                <form string="Format">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                                <field name="active" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="media_ids" domain="[('format_needed', '=', True)]" widget="many2many_checkboxes" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

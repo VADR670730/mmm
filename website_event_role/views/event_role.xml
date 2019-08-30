@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <record id="event_role_view_form" model="ir.ui.view">
+            <field name="name">event.role.form</field>
+            <field name="model">event.role</field>
+            <field name="arch" type="xml">
+                <form string="Event Roles">
+                    <sheet>
+                        <group name="role" >
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="event_role_tree" model="ir.ui.view">
+            <field name="name">event.role.tree</field>
+            <field name="model">event.role</field>
+            <field name="arch" type="xml">
+                <tree string="Event Role">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_event_role" model="ir.actions.act_window">
+            <field name="name">Event Roles</field>
+            <field name="res_model">event.role</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="event_role_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Event Roles.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_event_role"
+            id="menu_action_event_role"
+            groups="website_event_role.group_event_role_management"
+            parent="event.menu_event_configuration" sequence="20"/>
+    </data>
+</odoo>

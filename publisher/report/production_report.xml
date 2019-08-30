@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_production"
+            string="Production Report"
+            model="publisher.production" 
+            report_type="qweb-pdf"
+            file="publisher.report_production"
+            name="publisher.report_production_template"
+            paperformat="publisher.paperformat_lowmargin"
+        />
+
+        <report 
+            id="report_production_invoice_status"
+            string="Invoice Status Report"
+            model="publisher.production" 
+            report_type="qweb-pdf"
+            file="publisher.report_production_invoice_status"
+            name="publisher.report_production_invoice_status_template"
+            paperformat="publisher.paperformat_lowmargin"
+        />
+
+        <report 
+            id="report_production_global"
+            string="Productions Global Status Report in PDF"
+            model="publisher.production" 
+            report_type="qweb-pdf"
+            file="publisher.report_production_global"
+            name="publisher.report_production_global_template"
+            paperformat="publisher.paperformat_lowmargin"
+            menu="False"
+        />
+        
+        <report 
+            id="report_production_global_xlsx"
+            string="Productions Global Status Report in Excel"
+            model="publisher.production.wizard"
+            report_type="xlsx"
+            file="publisher.report_publisher_production.xlsx"
+            name="publisher.report_publisher_production.xlsx"
+            menu="False"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

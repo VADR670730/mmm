@@ -1,0 +1,158 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_event_registration_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20181130\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-18 14:20+0000\n"
+"PO-Revision-Date: 2019-03-18 15:35+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.vouchers_followup_sponsor_management
+msgid "/!\\ Anonymized |"
+msgstr "/!\\ Anonymisé |"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Company</strong>"
+msgstr "<strong>Entreprise</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Date :</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Email</strong>"
+msgstr "<strong>Courriel</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Event:</strong>"
+msgstr "<strong>Évenement:</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Firstname</strong>"
+msgstr "<strong>Prénom</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Function</strong>"
+msgstr "<strong>Fonction</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Lastname</strong>"
+msgstr "<strong>Nom</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Location:</strong>"
+msgstr "<strong>Location:</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Phone</strong>"
+msgstr "<strong>Phone</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Registration status:</strong>"
+msgstr "<strong>Statut d'enregistrement:</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Ticket:</strong>"
+msgstr "<strong>Ticket:</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "<strong>Title</strong>"
+msgstr "<strong>Titre</strong>"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.vouchers_followup_sponsor_management
+msgid "Actions"
+msgstr "Actions"
+
+#. module: website_event_registration_portal
+#: model:ir.model.fields,field_description:website_event_registration_portal.field_event_registration_code_allow_registration_change
+msgid "Allow registration change"
+msgstr "Autoriser la modification de participants"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "Anonymize"
+msgstr "Anonymiser"
+
+#. module: website_event_registration_portal
+#: model:ir.model.fields,field_description:website_event_registration_portal.field_event_registration_is_anonymized
+msgid "Anonymized"
+msgstr "Anonymisé"
+
+#. module: website_event_registration_portal
+#: model:ir.model,name:website_event_registration_portal.model_event_registration
+msgid "Attendee"
+msgstr "Participant"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.vouchers_followup_sponsor_management
+msgid "Details"
+msgstr "Détails"
+
+#. module: website_event_registration_portal
+#: model:ir.model,name:website_event_registration_portal.model_event_event
+msgid "Event"
+msgstr "Evènement"
+
+#. module: website_event_registration_portal
+#: model:ir.model,name:website_event_registration_portal.model_event_registration_code
+msgid "Event Registration Code"
+msgstr "Bon"
+
+#. module: website_event_registration_portal
+#: model:ir.model.fields,help:website_event_registration_portal.field_event_event_maximum_portal_edit_date
+msgid "Fill this date if you wanto to forbit attendees to edit their data on the portal beyond this date."
+msgstr "Remplissez cette date si vous voulez interdire aux participant de modifier leurs données sur le portail après cette date."
+
+#. module: website_event_registration_portal
+#: model:ir.model.fields,field_description:website_event_registration_portal.field_event_event_maximum_portal_edit_date
+msgid "Maximum portal edit date"
+msgstr "Date d'édition maximum sur le portail"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "My event registration"
+msgstr "Mon enregistrement d'événement"
+
+#. module: website_event_registration_portal
+#: model:ir.model.fields,field_description:website_event_registration_portal.field_event_registration_portal_update_token
+msgid "Portal update token"
+msgstr "Token de mise à jour du portail"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "Submit"
+msgstr "Soumettre"
+
+#. module: website_event_registration_portal
+#: model:ir.ui.view,arch_db:website_event_registration_portal.attendee_update_form
+msgid "Your details can not be modified now."
+msgstr "Vos informations ne peuvent pas être modifiée maintenant."

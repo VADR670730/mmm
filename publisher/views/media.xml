@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_publisher_media_tree" model="ir.ui.view">
+            <field name="name">view_publisher_media_tree</field>
+            <field name="model">publisher.media</field>
+            <field name="arch" type="xml">
+                <tree string="Medias">
+                    <field name="name" />
+                    <field name="format_needed" />
+                    <field name="location_needed" />
+                    <field name="date_start_needed" />
+                    <field name="date_end_needed" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_publisher_media_form" model="ir.ui.view">
+            <field name="name">view_publisher_media_form</field>
+            <field name="model">publisher.media</field>
+            <field name="arch" type="xml">
+                <form string="Media">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                                <field name="active" />
+                            </group>
+                        </group>
+                        <group string="Production item requirements">
+                            <group>
+                                <field name="format_needed" />
+                                <field name="location_needed" />
+                            </group>
+                            <group>
+                                <field name="date_start_needed" />
+                                <field name="date_end_needed" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

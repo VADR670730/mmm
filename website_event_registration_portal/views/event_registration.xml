@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_event_registration_form_token_portal" model="ir.ui.view">
+        <field name="name">view.event.registration.form.token.portal</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='event_id']" position="after">
+                <field name="portal_update_token" groups="base.group_no_one"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="is_anonymized" readonly="True" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

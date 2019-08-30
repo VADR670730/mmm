@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_so_with_signature_label" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <div id="so_signature_label" style="position: relative; float: right;">
+                <span>Signature for agreement and acceptance of the general conditions</span>
+            </div>
+        </xpath>
+    </template>
+</odoo>

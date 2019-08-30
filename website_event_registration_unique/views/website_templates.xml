@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Registration form -->
+        <template id="registration_template_single" inherit_id="website_event_sale.registration_template">
+            <xpath expr="//select[@t-attf-name='nb_register-#{ticket.id}']" position="replace">
+                <t t-if="ticket.single_registration==True">
+                    <select t-if="(event.seats_available or event.seats_availability == 'unlimited') and (ticket.seats_available or ticket.seats_availability == 'unlimited')" t-attf-name="nb_register-#{ticket.id}" class="form-control">
+                        <t t-foreach="range(0, 2)" t-as="nb">
+                            <option t-esc="nb"/>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="ticket.single_registration==False">
+                    <select t-if="(event.seats_available or event.seats_availability == 'unlimited') and (ticket.seats_available or ticket.seats_availability == 'unlimited')" t-attf-name="nb_register-#{ticket.id}" class="form-control">
+                        <t t-set="seats_max_ticket" t-value="(ticket.seats_availability == 'unlimited' or ticket.seats_available &gt; 9) and 10 or ticket.seats_available + 1"/>
+                        <t t-set="seats_max_event" t-value="(event.seats_availability == 'unlimited' or event.seats_available &gt; 9) and 10 or event.seats_available + 1"/>
+                        <t t-set="seats_max" t-value="min(seats_max_ticket, seats_max_event)"/>
+                        <t t-foreach="range(0, seats_max)" t-as="nb">
+                            <option t-esc="nb"/>
+                        </t>
+                    </select>
+                </t>
+            </xpath>
+        </template>
+        <template id="registration_js" inherit_id="website_event_sale.registration_template">
+            <xpath expr="//*[@id='registration_form']/table" position="before">
+                <script type="text/javascript">
+                    /* <![CDATA[ */
+jQuery(function($){
+
+$(calculateSum);
+
+function calculateSum() {
+	var sum = 0;
+    $(".form-control option:selected").each(function() {
+		var value = $(this).text();
+
+        if(!isNaN(value) && value.length != 0) {
+		    sum += parseFloat(value);
+	    }
+    });
+	if(sum>0){
+       $(':button[type="submit"]').attr('disabled',false);
+    } else {
+       $(':button[type="submit"]').attr('disabled',true);
+    }
+};
+
+$('select').on('change', function() {
+    $(calculateSum);
+});
+
+});
+                    /* ]]> */
+                </script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="partner_sector_external_sync_tree_view">
+            <field name="name">partner_sector_external.sync.id.tree.view</field>
+            <field name="model">res.partner.sector</field>
+            <field name="inherit_id" ref="partner_sector.res_partner_sector_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="fr_external_sync_id" readonly="True"/>
+                    <field name="nl_external_sync_id" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

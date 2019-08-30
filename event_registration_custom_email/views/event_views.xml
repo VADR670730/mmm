@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_event_registration_code_custom_email" model="ir.ui.view">
+        <field name="name">Event Registration Email</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="model">event.event</field>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="custom_email" string="Registration Email">
+                    <group>
+                        <field name="mail_header_logo" widget="image"
+                               help="picture 500px max"
+                               string="Registration Mail Header"
+                        />
+                    </group>
+                    <group>
+                        <field name="mail_custom_text" widget="html"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

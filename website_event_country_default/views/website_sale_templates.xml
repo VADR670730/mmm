@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Inherited Address Template -->
+    <template id="inherit_website_sale_address_template" inherit_id="website_sale.address">
+        <xpath expr="//form/div[10]" position="replace">
+        <!--Before selecting the country at the time of calling this template its goes to hide, 
+        to show country we have removed 'div_country' from the below div. -->
+            <div t-attf-class="form-group #{error.get('country_id') and 'has-error' or ''} col-md-6">
+                <label class="control-label" for="country_id">Country</label>
+                <select id="country_id" name="country_id" class="form-control">
+                    <t t-if="event_country_id">
+                        <option t-att-value="event_country_id.id" t-att-selected="event_country_id.id">
+                            <t t-esc="event_country_id.name"/>
+                        </option>
+                    </t>
+                    <t t-if="not event_country_id">
+                        <option value="">Country...</option>
+                    </t>
+                    <t t-foreach="countries" t-as="c">
+                        <option t-att-value="c.id" t-att-selected="c.id == (country and country.id or -1)">
+                            <t t-esc="c.name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+</odoo>

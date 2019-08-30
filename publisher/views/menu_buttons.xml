@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- PUBLISHER -->
+
+        <menuitem name="Publisher"
+            id="menu_sale_publisher"
+            sequence="20" web_icon="publisher,static/description/menu.png" />
+
+        <record id="menu_sale_publisher_productions_action" model="ir.actions.act_window">
+            <field name="name">Productions</field>
+            <field name="res_model">publisher.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+        </record>
+
+        <menuitem name="Productions"
+            id="menu_sale_publisher_productions" parent="menu_sale_publisher"
+            sequence="1" action="menu_sale_publisher_productions_action" />
+
+        <record id="menu_sale_publisher_production_lines_action" model="ir.actions.act_window">
+            <field name="name">Production Lines</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_publisher_production_line_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_publisher_production_line_form')})]"/>
+        </record>
+
+        <menuitem name="Production Lines"
+            id="menu_sale_publisher_production_lines" parent="menu_sale_publisher"
+            sequence="5" action="menu_sale_publisher_production_lines_action" />
+
+        <menuitem name="Settings"
+            id="menu_sale_publisher_settings" parent="menu_sale_publisher"
+            sequence="100"/>
+
+        <record id="menu_sale_publisher_settings_production_types_action" model="ir.actions.act_window">
+            <field name="name">Production Types</field>
+            <field name="res_model">publisher.production.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Production Types"
+            id="menu_sale_publisher_settings_production_types" parent="menu_sale_publisher_settings"
+            sequence="1" action="menu_sale_publisher_settings_production_types_action" />
+
+        <menuitem name="Media Options"
+            id="menu_sale_publisher_settings_media" parent="menu_sale_publisher_settings"
+            sequence="1"/>
+
+        <record id="menu_sale_publisher_settings_media_media_action" model="ir.actions.act_window">
+            <field name="name">Media</field>
+            <field name="res_model">publisher.media</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Media"
+            id="menu_sale_publisher_settings_media_media" parent="menu_sale_publisher_settings_media"
+            sequence="2" action="menu_sale_publisher_settings_media_media_action" />
+
+        <record id="menu_sale_publisher_settings_media_formats_action" model="ir.actions.act_window">
+            <field name="name">Formats</field>
+            <field name="res_model">publisher.format</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Formats"
+            id="menu_sale_publisher_settings_media_formats" parent="menu_sale_publisher_settings_media"
+            sequence="3" action="menu_sale_publisher_settings_media_formats_action" />
+
+        <record id="menu_sale_publisher_settings_media_locations_action" model="ir.actions.act_window">
+            <field name="name">Locations</field>
+            <field name="res_model">publisher.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Locations"
+            id="menu_sale_publisher_settings_media_locations" parent="menu_sale_publisher_settings_media"
+            sequence="4" action="menu_sale_publisher_settings_media_locations_action" />
+
+
+
+        <record id="production_wizard_action" model="ir.actions.act_window">
+            <field name="name">Productions Global Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">publisher.production.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Reporting"
+            id="menu_sale_publisher_reporting" parent="menu_sale_publisher"
+            sequence="10"/>
+
+        <menuitem name="Print Global Status"
+            id="menu_sale_publisher_reporting_global" parent="menu_sale_publisher_reporting"
+            sequence="1" action="production_wizard_action" />
+
+        <!-- PARTNER -->
+
+        <record id="menu_contacts_settings_partners_invitations_action" model="ir.actions.act_window">
+            <field name="name">Invitation Groups</field>
+            <field name="res_model">publisher.invitation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Invitation Groups"
+            id="menu_contacts_partners_invitations" parent="contacts.menu_contacts"
+            sequence="5" action="menu_contacts_settings_partners_invitations_action" />
+
+        <!-- PROJECT -->
+
+        <record id="menu_publisher_project_template_action" model="ir.actions.act_window">
+            <field name="name">Project Templates</field>
+            <field name="res_model">publisher.project.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Project Templates"
+            id="menu_publisher_project_template" parent="project.menu_project_config"
+            sequence="1" action="menu_publisher_project_template_action" />
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_event_form_disclaimer" model="ir.ui.view">
+            <field name="name">view_event_form_disclaimer</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_tz']" position="after">
+                    <field name="disclaimer_registration" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

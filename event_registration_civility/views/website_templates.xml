@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Registration form -->
+        <template id="registration_attendee_details_civility" inherit_id="website_event_registration_info.registration_attendee_details_more_fields">
+            <xpath expr="//t[@name='attendee_loop']/div/div[@class='col-md-5']" position="before">
+                <!-- Civility -->
+                <div class="col-md-2" style="clear: left;">
+                    <strong>Title</strong>
+                    <select class="form-control" t-attf-name="#{counter}-civility">
+                        <option value="" selected="selected">Select your title</option>
+                        <t t-foreach="titles" t-as="title">
+                            <option t-att-value="title.id" t-esc="title.name"/>
+                        </t>
+                    </select>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

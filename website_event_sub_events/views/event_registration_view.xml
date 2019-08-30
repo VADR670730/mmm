@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- Inherited Event Registration form view -->
+        <record id="inherit_event_registration_form" model="ir.ui.view">
+            <field name="name">event.registration.form</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='event_id']" position="after">
+                    <field name="sub_event_line_ids" widget="many2many_tags" domain="[('event_id', '=', event_id)]" attrs="{'invisible': [('event_id', '=', False)]}" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="total_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherited Event Registration Tree Table View -->
+        <record id="inherit_view_event_registration_tree_table" model="ir.ui.view">
+            <field name="name">inherit.event.registration.tree</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_event_registration_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='event_id']" position="after">
+                    <field name="sub_event_line_ids" widget="many2many_tags" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherited Event form view -->
+        <record id="inherit_registration_search" model="ir.ui.view">
+            <field name="name">inherit.registration.search</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref="event.view_registration_search"/>
+            <field name="arch" type="xml">
+                <field name="event_id" position="after">
+                    <field name="sub_event_line_ids"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

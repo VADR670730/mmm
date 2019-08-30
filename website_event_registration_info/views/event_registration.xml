@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_registration_form_more_fields" model="ir.ui.view">
+        <field name="name">view_event_registration_form_more_fields</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">First name</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="last_name"/>
+                <field name="function"/>
+                <field name="company"/>
+                <field name="lang_id"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group string="Poll">
+                    <field name="poll_url"/>
+                    <field name="poll_code"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_event_registration_tree_more_fields" model="ir.ui.view">
+        <field name="name">view_event_registration_tree_more_fields</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">First name</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="last_name"/>
+                <field name="function"/>
+                <field name="company"/>
+                <field name="lang_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

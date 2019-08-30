@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_event_registration_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180201\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-10 13:17+0000\n"
+"PO-Revision-Date: 2018-04-17 11:16+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.1\n"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "(Free)"
+msgstr "(Gratuit)"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Company</strong>"
+msgstr "<strong>Entreprise</strong>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Email</strong>"
+msgstr "<strong>Email</strong>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Firstname</strong>"
+msgstr "<strong>Prénom</strong>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Function</strong>"
+msgstr "<strong>Fonction</strong>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Language</strong> <span class=\"text-muted\"/>"
+msgstr "<strong>Langue</strong> <span class=\"text-muted\"/>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Lastname</strong>"
+msgstr "<strong>Nom</strong>"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "<strong>Phone</strong> <span class=\"text-muted\">(Optional)</span>"
+msgstr "<strong>Téléphone</strong> <span class=\"text-muted\">(Optionnel)</span>"
+
+#. module: website_event_registration_info
+#: model:ir.model,name:website_event_registration_info.model_event_registration
+msgid "Attendee"
+msgstr "Participant"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "Attendee #%s"
+msgstr "Participants #%s"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_company
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "Company"
+msgstr "Société"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "E-mail"
+msgstr "Courriel"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.view_event_registration_form_more_fields
+#: model:ir.ui.view,arch_db:website_event_registration_info.view_event_registration_tree_more_fields
+msgid "First name"
+msgstr "Prénom"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_function
+msgid "Function"
+msgstr "Fonction"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_lang_id
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "Language"
+msgstr "Langue"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_last_name
+msgid "Last name"
+msgstr "Nom"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "N/A"
+msgstr "N/D"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "Phone"
+msgstr "Téléphone"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.view_event_registration_form_more_fields
+msgid "Poll"
+msgstr "Sondage"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_poll_code
+msgid "Poll code"
+msgstr "Code pour le sondage"
+
+#. module: website_event_registration_info
+#: model:ir.model.fields,field_description:website_event_registration_info.field_event_registration_poll_url
+msgid "Poll url"
+msgstr "URL pour le sondage"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_complete_more_fields
+msgid "Reference"
+msgstr "Référence"
+
+#. module: website_event_registration_info
+#: model:ir.ui.view,arch_db:website_event_registration_info.registration_attendee_details_more_fields
+msgid "Ticket Type #"
+msgstr "Type de billet #"

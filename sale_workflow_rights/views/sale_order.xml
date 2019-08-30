@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+                 
+        <record id="sale_order_form_option_workflow" model="ir.ui.view">
+            <field name="name">sale.order.form.option.workflow</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//button[@name='action_confirm'])" position="before">
+                    <button name="action_option" string="Submit for validation" states="draft" type="object" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="(//button[@name='action_confirm' and @states='draft'])" position="replace" />
+
+                <xpath expr="(//button[@name='print_quotation'])" position="before">
+                    <button name="action_option" string="Submit for validation" states="sent" type="object" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+
+                <xpath expr="(//button[@name='action_draft'])" position="attributes">
+                    <attribute name="states">option,cancel</attribute>
+                </xpath>
+                <xpath expr="(//button[@name='action_confirm' and @states='sent'])" position="attributes">
+                    <attribute name="states">option</attribute>
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
+                <xpath expr="(//button[@name='action_cancel'])" position="attributes">
+                    <attribute name="states">draft,sent,option,sale</attribute>
+                </xpath>
+                <xpath expr="(//button[@name='print_quotation' and @states='sent,sale'])" position="attributes">
+                    <attribute name="states">sent,option,sale</attribute>
+                </xpath>
+                <xpath expr="(//button[@name='action_quotation_send' and @states='sent,sale'])" position="attributes">
+                    <attribute name="states">sent,option,sale</attribute>
+                </xpath>
+
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,sent, option,sale</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Rename -->
+
+        <record id="view_quotation_tree_rename" model="ir.ui.view">
+            <field name="name">view_quotation_tree_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//tree)" position="attributes">
+                    <attribute name="string">Draft Offer</attribute>
+                </xpath>
+
+                <xpath expr="(//tree//field[@name='name'])" position="attributes">
+                    <attribute name="string">Draft Offer Number</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_rename" model="ir.ui.view">
+            <field name="name">view_order_form_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//button[@name='action_draft'])" position="attributes">
+                    <attribute name="string">Set to Draft Offer</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_view_search_inherit_quotation_rename" model="ir.ui.view">
+            <field name="name">sale_order_view_search_inherit_quotation_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//filter[@name='draft'])" position="attributes">
+                    <attribute name="string">Draft Offers</attribute>
+                </xpath>
+
+                <xpath expr="(//filter[@name='sent'])" position="attributes">
+                    <attribute name="string">Sent Offers</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Offers</field>
+        </record>
+
+        <record id="sale.action_order_report_quotation_salesteam" model="ir.actions.act_window">
+            <field name="name">Draft Offers Analysis</field>
+        </record>
+
+        <record id="view_sale_order_calendar_rename" model="ir.ui.view">
+            <field name="name">view_sale_order_calendar_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//calendar)" position="attributes">
+                    <attribute name="string">Sales</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_graph_rename" model="ir.ui.view">
+            <field name="name">view_sale_order_graph_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_graph"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//graph)" position="attributes">
+                    <attribute name="string">Sales</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_pivot_rename" model="ir.ui.view">
+            <field name="name">view_sale_order_pivot_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_pivot"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//pivot)" position="attributes">
+                    <attribute name="string">Sales</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_tree_rename" model="ir.ui.view">
+            <field name="name">view_order_tree_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//tree)" position="attributes">
+                    <attribute name="string">Sales</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_quotation_tree_rename" model="ir.ui.view">
+            <field name="name">view_quotation_tree_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//tree)" position="attributes">
+                    <attribute name="string">Offers</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_rename" model="ir.ui.view">
+            <field name="name">view_order_form_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//form)" position="attributes">
+                    <attribute name="string">Sale</attribute>
+                </xpath>
+
+                <xpath expr="(//form//notebook/page)" position="attributes">
+                    <attribute name="string">Sale Lines</attribute>
+                </xpath>
+
+                <xpath expr="(//field[@name='order_line']//form)" position="attributes">
+                    <attribute name="string">Sale Lines</attribute>
+                </xpath>
+                <xpath expr="(//field[@name='order_line']//tree)" position="attributes">
+                    <attribute name="string">Sale Lines</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_order_filter_rename" model="ir.ui.view">
+            <field name="name">view_sales_order_filter_rename</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//search)" position="attributes">
+                    <attribute name="string">Search Sales</attribute>
+                </xpath>
+
+                <xpath expr="(//search//field[@name='name'])" position="attributes">
+                    <attribute name="string">Sales</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Sales</field>
+        </record>
+
+        <record id="view_order_line_tree_rename" model="ir.ui.view">
+            <field name="name">view_order_line_tree_rename</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//tree)" position="attributes">
+                    <attribute name="string">Sale Lines</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_order_line_filter_rename" model="ir.ui.view">
+            <field name="name">view_sales_order_line_filter_rename</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//search)" position="attributes">
+                    <attribute name="string">Search Sales</attribute>
+                </xpath>
+
+                <xpath expr="(//search//filter[2])" position="attributes">
+                    <attribute name="string">My Sale Lines</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale.action_product_sale_list" model="ir.actions.act_window">
+            <field name="name">Sale Lines</field>
+        </record>
+
+        <record id="sale.action_orders_salesteams" model="ir.actions.act_window">
+            <field name="name">Sales</field>
+        </record>
+
+        <record model="ir.ui.menu" id="sale.menu_sale_quotations">
+            <field name="name">Offers</field>
+        </record>
+
+        <record model="ir.ui.menu" id="sale.menu_sale_order">
+            <field name="name">Sales</field>
+        </record>
+
+    </data>
+</odoo>
