@@ -12,7 +12,7 @@ class EventRegistrationCode(models.Model):
     _inherit = 'mail.thread'
     _name = 'event.registration.code'
     _description = 'Event Registration Code'
-    _order = "state desc"
+    _order = "name"
 
     QUOTA_AVAILABLE = 0
     QUOTA_REACHED = -1
