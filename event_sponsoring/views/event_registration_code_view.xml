@@ -52,7 +52,7 @@
                     </group>
                     <notebook>
                         <page string="Attendees">
-                            <field name="attendee_ids">
+                            <field name="attendee_ids" context="{'default_event_id': event_id, 'default_registration_code': active_id}">
                                 <tree>
                                     <field name="create_date"/>
                                     <field name="partner_id"/>
