@@ -68,3 +68,10 @@ class WebsiteSaleEventMultiCompant(WebsiteSale):
                 'company_id': request.website.sale_get_order().company_id.id})
 
         return partner_id.id
+
+    # Only require vat and company name if the current order total > 0
+    def _get_mandatory_billing_fields(self):
+        order = request.website.sale_get_order()
+        if order and order.amount_total > 0:
+            return ["name", "email", "company_name", "vat", "street", "city", "country_id"]
+        return ["name", "email", "street", "city", "country_id"]

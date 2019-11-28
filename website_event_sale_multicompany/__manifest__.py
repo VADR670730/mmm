@@ -10,6 +10,8 @@
 
     This module changes the behavior of the created SO on the sold ticket for events and associates them to the company linked to the event and not to the website.
 
+    It also forced the vat and company name on address creation when the order total is > 0
+
         This module has been developed by Valentin THIRION @ AbAKUS it-solutions.
     """,
 
