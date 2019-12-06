@@ -49,7 +49,7 @@ class EventRegistrationPrint(models.Model):
             c.translate(mm, mm)
 
             # Get the badge background image
-            (badge_container_x, badge_container_y) = (7 * mm, 7 * mm)
+            (badge_container_x, badge_container_y) = (7 * mm, 5 * mm)
             badge_container_img_path = dir_path + "/img/badge_fa2018.png"
             if badge.event_id.badge_container_img:
                 badge_container_data = base64.decodestring(badge.event_id.badge_container_img)
