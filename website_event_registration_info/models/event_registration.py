@@ -31,7 +31,7 @@ class EventRegistrationMoreInfo(models.Model):
                 res = order_by_elements
                 for i, el in enumerate(res):
                     order_list = el.split(' ')
-                    if "date" not in el or not all(i.isdigit() for i in el[0]):
+                    if "date" not in el and order_list and order_list[0] == 'name':
                         order_by_elements[i] = "LOWER(" + order_list[0] + ") " + order_list[1] if len(order_list) > 1 else "LOWER(" + order_list[0] + ")"
                 order_by_clause = ",".join(order_by_elements)
 
