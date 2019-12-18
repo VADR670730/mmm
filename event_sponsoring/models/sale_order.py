@@ -82,6 +82,6 @@ class SaleOrderLine(models.Model):
     def _prepare_invoice_line(self, qty):
         """ Override this to add registration code info from SOL to invoice (if any)"""
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        if self.registration_code_info:
-            res.update({'name': res['name'] + ' - ' + self.registration_code_info})
+        if self.registration_code_id:
+            res.update({'name': res['name'] + ' - ' + self.registration_code_id.name})
         return res
