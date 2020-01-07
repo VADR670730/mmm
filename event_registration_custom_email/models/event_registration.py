@@ -29,8 +29,10 @@ class EventRegistration(models.Model):
             self.set_mail_set_false()
             super(EventRegistration, self).confirm_registration()
             self.is_registration_mail_sent = True
-    
+
+    @api.one
     def set_mail_set_false(self):
+        self.ensure_one()
         mail_scheduler = self.env['event.mail'].search([('event_id', '=', self.event_id.id), ('interval_type', '=', 'after_sub')], limit=1)
         mail_to_sent = mail_scheduler.mail_registration_ids.filtered(lambda m: m.registration_id.id == self.id)
         if mail_to_sent.mail_sent:
