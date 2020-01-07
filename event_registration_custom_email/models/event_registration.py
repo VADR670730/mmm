@@ -35,5 +35,6 @@ class EventRegistration(models.Model):
         self.ensure_one()
         mail_scheduler = self.env['event.mail'].search([('event_id', '=', self.event_id.id), ('interval_type', '=', 'after_sub')], limit=1)
         mail_to_sent = mail_scheduler.mail_registration_ids.filtered(lambda m: m.registration_id.id == self.id)
-        if mail_to_sent.mail_sent:
-            mail_to_sent.mail_sent = False
+        for mail in mail_to_sent:
+            if mail.mail_sent:
+                mail.mail_sent = False
