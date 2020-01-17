@@ -118,22 +118,19 @@
                         <notebook>
                             <page string="Production Lines">
                                 <field name="sale_line_ids">
-                                    <tree name="Production Lines" create="false" delete="false" colors="
-                                        blue: state=='sale' and not full_equipment_received;
-                                        green: state=='sale' and full_equipment_received;
-                                        red: state!='sale' ">
-                                        <field name="state" invisible="1" />
-                                        <field name="product_id" />
-                                        <field name="name" />
-                                        <field name="order_partner_id" />
-                                        <field name="full_equipment_received" />
-                                        <field name="attachment_count" />
-                                        <field name="format_id" />
-                                        <field name="location_id" />
-                                        <field name="date_start" />
-                                        <field name="date_end" />
-                                        <field name="order_name" />
-                                        <field name="price_subtotal" />
+                                    <tree name="Production Lines" create="false" delete="false" colors="                                         blue: state=='sale' and not full_equipment_received;                                         green: state=='sale' and full_equipment_received;                                         red: state!='sale' ">
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="order_partner_id"/>
+                                        <field name="full_equipment_received"/>
+                                        <field name="invoice_status" />
+                                        <field name="format_id"/>
+                                        <field name="location_id"/>
+                                        <field name="date_start"/>
+                                        <field name="date_end"/>
+                                        <field name="order_name"/>
+                                        <field name="price_subtotal"/>
                                     </tree>
                                 </field>
                             </page>
