@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_so_with_product_image" inherit_id="publisher.report_saleorder_publisher_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <t t-set="display_image" t-value="any([l.product_id.image for l in doc.order_line])"/>
+        </xpath>
+
+        <xpath expr="//table[@class='table table-condensed']/thead/tr/th[1]" position="before">
+            <th t-if="display_image" class="text-right">
+                Image
+            </th>
+        </xpath>
+
+        <xpath expr="//tbody[@class='sale_tbody']/t/t[2]/tr/td[1]" position="before">
+            <td t-if="display_image" class="text-right">
+                <img t-if="l.product_id.image" t-attf-src="data:image/*;base64,{{l.product_id.image}}" style="max-height:40px;max-width:40px"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>
