@@ -6,9 +6,7 @@
         </xpath>
 
         <xpath expr="//table[@class='table table-condensed']/thead/tr/th[1]" position="before">
-            <th t-if="display_image" class="text-right">
-                Image
-            </th>
+            <th t-if="display_image" class="text-right"></th>
         </xpath>
 
         <xpath expr="//tbody[@class='sale_tbody']/t/t[2]/tr/td[1]" position="before">
@@ -24,9 +22,7 @@
         </xpath>
 
         <xpath expr="//table[@class='table table-condensed']/thead/tr/th[1]" position="before">
-            <th t-if="display_image_invoice" class="text-right">
-                Image
-            </th>
+            <th t-if="display_image_invoice" class="text-right"></th>
         </xpath>
 
         <xpath expr="//tbody[@class='invoice_tbody']/tr[1]/td[1]" position="before">
