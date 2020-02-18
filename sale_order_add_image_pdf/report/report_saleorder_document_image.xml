@@ -18,7 +18,7 @@
         </xpath>
     </template>
 
-    <template id="report_inv_with_product_image" inherit_id="account.report_invoice_document">
+    <template id="report_inv_with_product_image" inherit_id="publisher.report_invoice_document_publisher">
         <xpath expr="//div[@class='row mt32 mb32']" position="after">
             <t t-set="display_image_invoice" t-value="any([l.product_id.image for l in o.invoice_line_ids])"/>
         </xpath>
