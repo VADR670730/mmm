@@ -1,0 +1,7 @@
+<odoo>
+    <template id="inherit_hide_confirmation_status" inherit_id="website_sale.confirmation">
+        <xpath expr="//div[@class='oe_website_sale_tx_status']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+</odoo>

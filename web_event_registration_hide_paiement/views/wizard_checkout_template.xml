@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="wizard_checkout_inherit_hide_paiement" inherit_id="website_sale.wizard_checkout">
+        <xpath expr="//li[@id='step40']" position="replace">
+            
+        </xpath>
+    </template>
+</odoo>
