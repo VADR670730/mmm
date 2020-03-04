@@ -489,7 +489,7 @@ class Production(models.Model):
                             #'date_invoice' : now.strftime('%Y-%m-%d'),
                             'state' : 'draft',
                             'reference_type' : 'none',
-                            'fiscal_position_id' : sale_id.fiscal_position_id.id or partner_invoice_id.property_account_position_id.id,
+                            'fiscal_position_id' : partner_invoice_id.property_account_position_id.id or sale_id.fiscal_position_id.id,
                             'payment_term_id' : sale_id.payment_term_id.id,
                             'account_id' : partner_invoice_id.property_account_receivable_id.id,
                             'user_id': sale_id.user_id and sale_id.user_id.id,
