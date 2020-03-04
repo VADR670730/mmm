@@ -32,7 +32,7 @@ class SaleOrder(models.Model):
         Trigger the change of fiscal position when the invoice address is modified.
         """
 
-        partner_to_use = self.agency_id if self.agency_id else self.partner_id
+        partner_to_use = self.onchange_partner_invoice_id if self.onchange_partner_shipping_id else (self.agency_id if self.agency_id else (self.agency_id if self.agency_id else self.partner_id))
 
         self.update({
             'pricelist_id': partner_to_use.property_product_pricelist and partner_to_use.property_product_pricelist.id or False,
