@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
             partner_to_use = order.partner_id
             if order.agency_id:
                 partner_to_use = order.agency_id
-            elif order.partner_invoice_id:
+            if order.partner_invoice_id:
                 partner_to_use = order.partner_invoice_id
 
             order.update({
