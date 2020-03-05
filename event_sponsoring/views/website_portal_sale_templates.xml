@@ -188,6 +188,7 @@
                                             <th>Attendee</th>
                                             <th>Company</th>
                                             <th>Email</th>
+                                            <th>Table</th>
                                             <th>State</th>
                                         </tr>
                                     </thead>
@@ -203,6 +204,11 @@
                                                 </td>
                                                 <td>
                                                     <span t-field="ol.email"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="ol.table_id">
+                                                        <span t-field="ol.table_id.name"/> - <span t-field="ol.table_id.table_number"/>
+                                                    </t>
                                                 </td>
                                                 <td>
                                                     <t t-if="ol.state == 'draft'">

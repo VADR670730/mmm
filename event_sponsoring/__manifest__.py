@@ -10,7 +10,8 @@
     'depends': [
         'event',
         'website_event_registration_info',
-        'website_event_sub_events'
+        'website_event_sub_events',
+        'website_event_table',
     ],
     'category': 'Sale',
     'data': [
