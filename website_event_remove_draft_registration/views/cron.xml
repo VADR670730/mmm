@@ -1,0 +1,12 @@
+<odoo>
+    <record id='move_draft_offers_after_24_hours' model="ir.cron">
+        <field name="name">Remove Draft Offers after 24 hours</field>
+        <field name="function">remove_draft_sale_orders</field>
+        <field name="model">sale.order</field>
+        <field name="active" eval="False"></field>
+        <field name="interval_type">work_days</field>
+        <field name="interval_number">1</field>
+        <field name="numbercall">-1</field>
+        <field name="priority">5</field>
+    </record>
+</odoo>
