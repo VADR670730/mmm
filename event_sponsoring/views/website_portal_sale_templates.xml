@@ -178,6 +178,11 @@
                                             </div>
                                         </a>
                                     </t>
+                                    <a t-attf-href="/my/vouchers/{{voucher.id}}/download_csv">
+                                        <div style="padding-left: 30px;">
+                                            <button type="button" class="btn btn-default pull-left mb32">Download CSV</button>
+                                        </div>
+                                    </a>
                                 </div>
 
                                 <hr/>
