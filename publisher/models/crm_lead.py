@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 class CRMLead(models.Model):
     _inherit = 'crm.lead'
 
-    production_id = fields.Many2many('publisher.media', string="Media")
+    production_id = fields.Many2many('publisher.production', string="Production")
 
     @api.model
     def create(self, values):
