@@ -97,8 +97,19 @@ class Production(models.Model):
 
     @api.model
     def create(self, vals):
+        production_type_id = self.env['publisher.production.type'].search([('id', '=', vals['production_type_id'])])
         if vals.get('seq_number', _('New')) == _('New'):
-            vals['seq_number'] = self.env['publisher.production.type'].search([('id', '=', vals['production_type_id'])]).sequence_id.next_by_id() or _('New')
+            vals['seq_number'] = production_type_id.sequence_id.next_by_id() or _('New')
+
+        if 'project_id' not in vals and production_type_id.project_template_id:
+
+            new_project_id = production_type_id.project_template_id.copy({
+                'name': vals['name'],
+                'is_template': False,
+            })
+            vals.update({
+                'project_id': new_project_id.id,
+            })
 
         return super(Production, self).create(vals)
 

@@ -9,6 +9,7 @@
                 <data>
                     <xpath expr="//kanban" position="inside">
                         <field name="production_id" />
+                        <field name="is_template" />
                     </xpath>
 
                     <xpath expr="//div[@class='o_primary']" position="after">
@@ -41,6 +42,20 @@
 
                     <xpath expr="//field[@name='user_id']" position="after">
                         <field name="production_id" readonly="1" attrs="{'invisible': [('production_id', '=', False)]}" />
+                        <field name="is_template" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="project.view_project_project_filter_publisher" model="ir.ui.view">
+            <field name="name">project.view_project_project_filter_publisher</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="after">
+                        <filter string="Templates" domain="[('is_template', '=', True')]" />
                     </xpath>
                 </data>
             </field>

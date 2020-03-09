@@ -14,6 +14,7 @@ class Project(models.Model):
 
     production_id = fields.Many2one('publisher.production', string="Production")
     export_file = fields.Binary(attachment=True, help="This field holds the attachments export file.", readonly=True)
+    is_template = fields.Boolean(string="This Project is a Template", help="This project will be selectable in the Production Types")
 
     def project_project_production_action(self):
         return {
