@@ -20,5 +20,18 @@
                 </data>
             </field>
         </record>
+
+        <record id="account.invoice_tree_publisher" model="ir.ui.view">
+            <field name="name">account.invoice_tree_piblisher</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="final_customer_id" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
     </data>
 </odoo>
