@@ -42,7 +42,6 @@ class WebSiteEventSaleController(WebsiteEventSaleController):
                     'invoice_status': so_line.invoice_status,
                     'product_id': so_line.product_id.id,
                     'production_id': so_line.production_id.id,
-                    'discount_base': so_line.discount_base,
                     'commission': so_line.commission,
                     'tax_id': so_line.tax_id.id,
                     'price_unit': so_line.price_unit,
