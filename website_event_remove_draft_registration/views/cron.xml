@@ -3,7 +3,7 @@
         <field name="name">Remove Draft Offers after 24 hours</field>
         <field name="function">remove_draft_sale_orders</field>
         <field name="model">sale.order</field>
-        <field name="active" eval="False"></field>
+        <field name="active" eval="True"></field>
         <field name="interval_type">work_days</field>
         <field name="interval_number">1</field>
         <field name="numbercall">-1</field>
