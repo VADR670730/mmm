@@ -16,7 +16,6 @@
         'purchase',
         'crm',
         'report_xlsx',
-        'event',
     ],
     'data': [
         'views/media.xml',
@@ -36,7 +35,6 @@
         'views/account_fiscal_position.xml',
         'views/purchase_order_line.xml',
         'views/crm_lead.xml',
-        'views/event.xml',
 
         'views/menu_buttons.xml',
         'views/company_config.xml',

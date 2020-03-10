@@ -21,4 +21,3 @@ from . import account_fiscal_position
 from . import purchase_order_line
 from . import crm_lead
 from . import publisher_production_report_xlsx
-from . import event
