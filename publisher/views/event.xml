@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="(//group/group)[1]" position="inside">
-                        <field name="production_id" />
+                        <field name="production_id" domain="[('state', '!=', 'archived')]" />
                     </xpath>
                 </data>
             </field>
