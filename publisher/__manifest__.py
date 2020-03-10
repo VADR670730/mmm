@@ -16,6 +16,7 @@
         'purchase',
         'crm',
         'report_xlsx',
+        'event',
     ],
     'data': [
         'views/media.xml',
