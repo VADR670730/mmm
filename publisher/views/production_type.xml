@@ -50,6 +50,9 @@
                                     <label string="%%" class="oe_inline" />
                                 </div>
                             </group>
+                            <group>
+                                <field name="project_template_id" />
+                            </group>
                         </group>
                     </sheet>
                 </form>
