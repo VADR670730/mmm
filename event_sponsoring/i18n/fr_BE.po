@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e-20181130\n"
+"Project-Id-Version: Odoo Server 10.0+e-20191126\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-12 09:18+0000\n"
-"PO-Revision-Date: 2019-04-12 11:23+0200\n"
+"POT-Creation-Date: 2020-03-09 11:26+0000\n"
+"PO-Revision-Date: 2020-03-09 12:26+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: fr_BE\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. module: event_sponsoring
 #: model:ir.model.fields,field_description:event_sponsoring.field_event_event_registration_code_count
@@ -28,19 +28,19 @@ msgid "&amp;nbsp;"
 msgstr "&amp;nbsp;"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:255
+#: code:addons/event_sponsoring/controllers/main.py:279
 #, python-format
 msgid "--> Code OK, you are invited by: "
 msgstr "--> Code OK, vous êtres invités par : "
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:247
+#: code:addons/event_sponsoring/controllers/main.py:271
 #, python-format
 msgid "--> Expired code"
 msgstr "--> Code expiré"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:242
+#: code:addons/event_sponsoring/controllers/main.py:266
 #, python-format
 msgid "--> Invalid Code"
 msgstr "--> Code invalide"
@@ -188,8 +188,10 @@ msgid "Attended the Event"
 msgstr "Présent à l'évènement"
 
 #. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:137
 #: model:ir.model,name:event_sponsoring.model_event_registration
 #: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+#, python-format
 msgid "Attendee"
 msgstr "Participant"
 
@@ -241,7 +243,9 @@ msgid "Codes"
 msgstr "Codes"
 
 #. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:137
 #: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+#, python-format
 msgid "Company"
 msgstr "Société"
 
@@ -285,7 +289,7 @@ msgid "Discount"
 msgstr "Remise"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:60
+#: code:addons/event_sponsoring/controllers/main.py:61
 #, python-format
 msgid "Discount Rate should be a number."
 msgstr "La valeur de la Remise doit être un chiffre."
@@ -301,7 +305,7 @@ msgid "Discount rate"
 msgstr "Taux de Remise"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:57
+#: code:addons/event_sponsoring/controllers/main.py:58
 #, python-format
 msgid "Discount rate should not exceed 100."
 msgstr "Le taux de Remise ne doit pas dépasser 100."
@@ -314,12 +318,19 @@ msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: event_sponsoring
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+msgid "Download CSV"
+msgstr "Télécharger en CSV"
+
+#. module: event_sponsoring
 #: selection:event.registration.code,state:0
 msgid "Draft"
 msgstr "Brouillon"
 
 #. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:137
 #: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+#, python-format
 msgid "Email"
 msgstr "Email"
 
@@ -379,7 +390,7 @@ msgid "Events"
 msgstr "Évènements"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:105
+#: code:addons/event_sponsoring/controllers/main.py:106
 #, python-format
 msgid "Hello %s, <br />A new registration code has been requested<br />for: %s<br />for event: %s<br /><br />See <a href=\"%s\">here</a> to validate it"
 msgstr "Hello %s, <br />A new registration code has been requested<br />for: %s<br />for event: %s<br /><br />See <a href=\"%s\">here</a> to validate it"
@@ -553,7 +564,7 @@ msgid "Sold Out"
 msgstr "Complet"
 
 #. module: event_sponsoring
-#: code:addons/event_sponsoring/controllers/main.py:65
+#: code:addons/event_sponsoring/controllers/main.py:66
 #, python-format
 msgid "Some required fields are empty."
 msgstr "Des champs requis sont vides."
@@ -572,8 +583,10 @@ msgid "Sponsoring"
 msgstr "Sponsoring"
 
 #. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:137
 #: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
 #: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+#, python-format
 msgid "State"
 msgstr "État"
 
@@ -583,6 +596,13 @@ msgstr "État"
 #: model:ir.model.fields,field_description:event_sponsoring.field_event_sponsoring_state
 msgid "Status"
 msgstr "Statut"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:137
+#: model:ir.ui.view,arch_db:event_sponsoring.vouchers_followup
+#, python-format
+msgid "Table"
+msgstr "Table"
 
 #. module: event_sponsoring
 #: model:ir.ui.view,arch_db:event_sponsoring.portal_my_vouchers
@@ -597,7 +617,7 @@ msgstr "Il n'existe actuellement aucun code d'enregistrement pour votre compte."
 #. module: event_sponsoring
 #: model:ir.model.fields,field_description:event_sponsoring.field_res_users_total_due
 msgid "Total Due"
-msgstr "Total Due"
+msgstr "Total Dû"
 
 #. module: event_sponsoring
 #: model:ir.model.fields,field_description:event_sponsoring.field_event_registration_code_used_codes_count
@@ -651,3 +671,9 @@ msgstr "Vous ne pouvez pas supprimer un sponsors lié à un évènement ou des c
 #: model:ir.ui.view,arch_db:event_sponsoring.portal_my_home_vouchers
 msgid "Your Registration Codes"
 msgstr "Vos codes d'inscription"
+
+#. module: event_sponsoring
+#: code:addons/event_sponsoring/controllers/main.py:149
+#, python-format
+msgid "attendees"
+msgstr "participants"
