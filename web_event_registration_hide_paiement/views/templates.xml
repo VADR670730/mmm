@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="wizard_checkout_inherit_hide_paiement" inherit_id="website_sale.wizard_checkout">
+        <xpath expr="//li[@id='step40']" position="replace">
+            
+        </xpath>
+    </template>
+
+    <template id="payment_hide_paiment_button" inherit_id="website_sale.payment">
+        <xpath expr="//form[@action='/shop/payment/validate']/a" position="after">
+            <a class="btn btn-primary a-submit">
+                <span>Confirm Order <span class="fa fa-long-arrow-right"></span></span>
+            </a>
+        </xpath>
+    </template>
+</odoo>

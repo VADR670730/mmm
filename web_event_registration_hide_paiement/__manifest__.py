@@ -24,7 +24,7 @@
     ],
 
     'data': [
-        'views/wizard_checkout_template.xml',
+        'views/templates.xml',
         'views/checkout_template.xml',
         'views/confirmation_template.xml',
     ],
