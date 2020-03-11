@@ -190,10 +190,9 @@ class Production(models.Model):
     @api.multi
     @api.depends('crm_lead_ids')
     def _compute_crm_lead_count(self):
-        self.crm_lead_ids = None
-        for pt in self.production_type_id:
-            self.crm_lead_ids |= self.env['crm.lead'].search([('production_id', 'in', pt.media_id.id)])
-        self.crm_lead_count = len(self.crm_lead_ids)
+        for production in self:
+            production.crm_lead_ids |= self.env['crm.lead'].search([('production_id', 'in', production.id)])
+            production.crm_lead_count = len(production.crm_lead_ids)
 
     @api.one
     @api.depends('sale_line_ids')
