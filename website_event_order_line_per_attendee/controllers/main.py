@@ -7,10 +7,11 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class WebSiteEventSaleController(WebsiteEventSaleController):
+class WebsiteEventSaleOrderLinePerAttendeeController(WebsiteEventSaleController):
 
     @http.route(['/event/<model("event.event"):event>/registration/confirm'], type='http', auth="public", methods=['POST'], website=True)
     def registration_confirm(self, event, **post):
+        _logger.debug("\n\n Registration confirm")
         # This is a copy of the registration_confirm method in webSiteEventSaleController with some modificatition
         # It creates order lines per attendee and delete the previous order line created
         order = request.website.sale_get_order(force_create=1)
@@ -24,8 +25,11 @@ class WebSiteEventSaleController(WebsiteEventSaleController):
             # From here we get the so_line for the attendees, duplicate it (with different name) and remove it
             so_line = None
             for attendee_id in attendee_ids:
+                _logger.debug("\n\n")
+                _logger.debug(attendee_id.id)
                 attendee = request.env['event.registration'].sudo().browse([attendee_id])
                 so_line = attendee.sale_order_line_id
+                new_so_line_name = "["+attendee_id.event_id.name+"]\n"+so_line.product_id.name+"\n"+attendee_id.last_name+" "+attendee_id.name+" ("+attendee_id.email+")\n"+attendee_id.company
                 so_line_copy = request.env['sale.order.line'].sudo().create({
                     'product_uom': 1,
                     'product_uom_qty': 1,
@@ -33,7 +37,7 @@ class WebSiteEventSaleController(WebsiteEventSaleController):
                     'event_ok': so_line.event_ok,
                     'company_id': so_line.company_id.id,
                     'discount_base': so_line.discount_base,
-                    'name': attendee.name,
+                    'name': new_so_line_name,
                     'display_name': attendee.display_name,
                     'product_tmpl_id': so_line.product_tmpl_id.id,
                     'event_ticket_id': so_line.event_ticket_id.id,
@@ -63,4 +67,4 @@ class WebSiteEventSaleController(WebsiteEventSaleController):
                 'event': event,
             })
 
-        return request.redirect("/shop/checkout") 
+        return request.redirect("/shop/checkout")
