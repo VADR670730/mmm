@@ -31,7 +31,7 @@ class Production(models.Model):
         ('archived', 'Archived')
         ], string='State', default='draft', required=True, track_visibility='always')
     production_type_id = fields.Many2one('publisher.production.type', string='Production Type', required=True, readonly=True, states={'draft': [('readonly', False)]})
-    project_id = fields.Many2one('project.project', string="Project", track_visibility='always');
+    project_id = fields.Many2one('project.project', string="Project", track_visibility='always')
     date_start = fields.Date(string='Publication Date / Event', required=True, readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_end = fields.Date(string='End Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_closing = fields.Date(string='Closing Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
