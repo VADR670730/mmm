@@ -15,7 +15,7 @@
         'sale',
     ],
     'data': [
-        "views/cron.xml",
+        "data/cron.xml",
     ],
 
     'application': True,
