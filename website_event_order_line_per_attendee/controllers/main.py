@@ -11,7 +11,6 @@ class WebsiteEventSaleOrderLinePerAttendeeController(WebsiteEventSaleController)
 
     @http.route(['/event/<model("event.event"):event>/registration/confirm'], type='http', auth="public", methods=['POST'], website=True)
     def registration_confirm(self, event, **post):
-        _logger.debug("\n\n Registration confirm")
         # This is a copy of the registration_confirm method in webSiteEventSaleController with some modificatition
         # It creates order lines per attendee and delete the previous order line created
         order = request.website.sale_get_order(force_create=1)
@@ -25,8 +24,6 @@ class WebsiteEventSaleOrderLinePerAttendeeController(WebsiteEventSaleController)
             # From here we get the so_line for the attendees, duplicate it (with different name) and remove it
             so_line = None
             for attendee_id in attendee_ids:
-                _logger.debug("\n\n")
-                _logger.debug(attendee_id.id)
                 attendee = request.env['event.registration'].sudo().browse([attendee_id])
                 so_line = attendee.sale_order_line_id
                 new_so_line_name = "["+attendee_id.event_id.name+"]\n"+so_line.product_id.name+"\n"+attendee_id.last_name+" "+attendee_id.name+" ("+attendee_id.email+")\n"+attendee_id.company
