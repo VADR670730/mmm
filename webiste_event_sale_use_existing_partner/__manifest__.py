@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Use existing partner on sale orders",
+    'description':"This module will use existing partners if they exists when an user register for an event",
     'author': "ABAKUS IT-SOLUTIONS",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'Sale',
