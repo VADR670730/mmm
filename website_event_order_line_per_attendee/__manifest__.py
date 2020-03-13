@@ -9,7 +9,7 @@
     'description': """
         Event one Order Line per Attendee
 
-    This module will create one order line per attendee on a sale order.
+    This module will create one order line per attendee, for an event, on a sale order.
 
     """,
 
