@@ -1,33 +1,26 @@
 # -*- coding: utf-8 -*-
 
 from odoo import http, _
-from odoo.addons.website_event_sale.controllers.main import WebsiteEventSaleController
+from odoo.addons.website_event.controllers.main import WebsiteEventController
 from odoo.http import request
 import logging
 
 _logger = logging.getLogger(__name__)
 
-class WebsiteEventSaleOrderLinePerAttendeeController(WebsiteEventSaleController):
+class WebsiteEventControllerInherit(WebsiteEventController):
 
     @http.route(['/event/<model("event.event"):event>/registration/confirm'], type='http', auth="public", methods=['POST'], website=True)
     def registration_confirm(self, event, **post):
-        # This is a copy of the registration_confirm method in webSiteEventSaleController with some modificatition
-        # It creates order lines per attendee and delete the previous order line created
         order = request.website.sale_get_order(force_create=1)
-        attendee_ids = set()
+        res = super(WebsiteEventControllerInherit, self).registration_confirm(event, **post)
 
-        registrations = self._process_registration_details(post)
-        for registration in registrations:
-            ticket = request.env['event.event.ticket'].sudo().browse(int(registration['ticket_id']))
-            cart_values = order.with_context(event_ticket_id=ticket.id, fixed_price=True)._cart_update(product_id=ticket.product_id.id, add_qty=1, registration_data=[registration])
-            attendee_ids |= set(cart_values.get('attendee_ids', []))
-            # From here we get the so_line for the attendees, duplicate it (with different name) and remove it
-            so_line = None
-            for attendee_id in attendee_ids:
-                attendee = request.env['event.registration'].sudo().browse([attendee_id])
+        if order:
+            order_line = order.order_line
+            attendees = request.env['event.registration'].sudo().search([('sale_order_line_id', '=', order_line.id)])
+            for attendee in attendees:
                 so_line = attendee.sale_order_line_id
-                new_so_line_name = "["+attendee_id.event_id.name+"]\n"+so_line.product_id.name+"\n"+attendee_id.last_name+" "+attendee_id.name+" ("+attendee_id.email+")\n"+attendee_id.company
-                so_line_copy = request.env['sale.order.line'].sudo().create({
+                new_so_line_name = "["+attendee.event_id.name+"]\n"+so_line.product_id.name+"\n"+attendee.last_name+" "+attendee.name+" ("+attendee.email+")\n"+attendee.company
+                values = {
                     'product_uom': 1,
                     'product_uom_qty': 1,
                     'currency_id': so_line.currency_id.id,
@@ -44,24 +37,19 @@ class WebsiteEventSaleOrderLinePerAttendeeController(WebsiteEventSaleController)
                     'product_id': so_line.product_id.id,
                     'production_id': so_line.production_id.id,
                     'commission': so_line.commission,
-                    'tax_id': so_line.tax_id.id,
-                    'price_unit': so_line.price_unit,
-                    'full_equipment_received': so_line.full_equipment_received,
-                    'invoice_lines': so_line.invoice_lines
-                })
-                attendee.sudo().write({'sale_order_line_id': so_line_copy.id})
-            if so_line:
-                so_line.sudo().unlink()
+                    'tax_id': so_line.tax_id
+                }
+                if so_line.price_unit:
+                    values['price_unit'] = so_line.price_unit
+                if so_line.full_equipment_received:
+                    values['full_equipment_received'] = so_line.full_equipment_received
+                if so_line.invoice_lines:
+                    values['invoice_lines'] = so_line.invoice_lines
                 
-        # free tickets -> order with amount = 0: auto-confirm, no checkout
-        if not order.amount_total:
-            order.action_confirm()  # tde notsure: email sending ?
-            attendees = request.env['event.registration'].browse(list(attendee_ids)).sudo()
-            # clean context and session, then redirect to the confirmation page
-            request.website.sale_reset()
-            return request.render("website_event.registration_complete", {
-                'attendees': attendees,
-                'event': event,
-            })
+                so_line_copy = request.env['sale.order.line'].sudo().create(values)
+                attendee.sudo().write({'sale_order_line_id': so_line_copy.id})
+            if order_line.state == 'sale' or order_line.state == "done":
+                order_line.sudo().write({'state': 'draft'})
+            order_line.sudo().unlink()
 
-        return request.redirect("/shop/checkout")
+        return res
