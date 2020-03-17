@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inherit_checkout_confirm_without_paiement" inherit_id="website_sale.checkout">
+        <xpath expr="//a[contains(@href,'/shop/confirm_order')]" position="replace">
+            <a class="btn btn-default btn-primary pull-right mb32 " href="/shop/payment">Confirm <span class="fa fa-long-arrow-right" /></a>
+        </xpath>
+    </template>
+</odoo>
