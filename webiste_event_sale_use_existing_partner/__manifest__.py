@@ -8,9 +8,11 @@
     'version': '10.0.1.0',
     'depends': [
         'sale',
+        'website_sale',
+        'website_event_country_default',
     ],
     'data': [
-
+        "views/templates.xml",
     ],
 
     'application': True,

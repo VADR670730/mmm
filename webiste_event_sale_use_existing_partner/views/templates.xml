@@ -1,0 +1,28 @@
+<odoo>
+    <template id="address_existing_partner" inherit_id="website_sale.address" name="Address Management Existing Partner">
+        <xpath expr="//input[@name='name']" position="replace">
+            <input class="form-control" name="name" t-att-value="address_patner.name" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='email']" position="replace">
+            <input class="form-control" name="email" t-att-value="address_patner.email" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='company_name']" position="replace">
+            <input class="form-control" name="company_name" t-att-value="address_patner.company_name" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='phone']" position="replace">
+            <input class="form-control" name="phone" t-att-value="address_patner.phone" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='vat']" position="replace">
+            <input class="form-control" name="vat" t-att-value="address_patner.vat" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='street']" position="replace">
+            <input class="form-control" name="street" t-att-value="address_patner.street" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='zip']" position="replace">
+            <input class="form-control" name="zip" t-att-value="address_patner.zip" type="text"/>
+        </xpath>
+        <xpath expr="//input[@name='city']" position="replace">
+            <input class="form-control" name="city" t-att-value="address_patner.city" type="text"/>
+        </xpath>
+    </template>
+</odoo>
