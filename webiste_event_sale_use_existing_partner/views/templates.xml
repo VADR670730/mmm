@@ -14,6 +14,9 @@
                 <t t-elif="address_partner.parent_id">
                     <input class="form-control" name="company_name" t-att-value="address_partner.parent_id.name" type="text"/>
                 </t>
+                <t t-else="">
+                    <input class="form-control" name="company_name" type="text"/>
+                </t>
             </xpath>
             <xpath expr="//input[@name='phone']" position="replace">
                 <input class="form-control" name="phone" t-att-value="address_partner.phone" type="text"/>
