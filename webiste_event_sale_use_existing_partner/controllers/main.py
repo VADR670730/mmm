@@ -16,9 +16,7 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
     @http.route()
     def address(self, **kw):
         first_attendee_email = request.session['1-email']
-        address_patner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
-        if address_patner.parent_id:
-            address_patner = address_patner.parent_id
+        address_partner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
 
         address_data = super(WebsiteEventCountryControllerInherit, self).address(**kw)
         """override this controller to get the default country of event when and set while rendoring address details"""
@@ -93,7 +91,7 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
             int(values['country_id']))
         country = country and country.exists() or def_country_id
         render_values = {
-            'address_patner': address_patner,
+            'address_partner': address_partner,
             'partner_id': partner_id,
             # Get country from order line or sale order
             'event_country_id': order.order_line and order.order_line[0].event_id.address_id.country_id,
