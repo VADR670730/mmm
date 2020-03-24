@@ -101,16 +101,6 @@ class Production(models.Model):
         if vals.get('seq_number', _('New')) == _('New'):
             vals['seq_number'] = production_type_id.sequence_id.next_by_id() or _('New')
 
-        if 'project_id' not in vals and production_type_id.project_template_id:
-
-            new_project_id = production_type_id.project_template_id.copy({
-                'name': vals['name'],
-                'is_template': False,
-            })
-            vals.update({
-                'project_id': new_project_id.id,
-            })
-
         return super(Production, self).create(vals)
 
 
@@ -300,8 +290,8 @@ class Production(models.Model):
 
     @api.one
     def write(self, values):
+        # Forbit reset to draft when there are already sale lines
         if values.get('state') and values['state'] == 'draft' and len(self.sale_line_all_ids) > 0:
-
             sales = []
             for line in self.sale_line_all_ids:
                 if line.order_id not in sales:
@@ -309,6 +299,16 @@ class Production(models.Model):
 
             raise exceptions.ValidationError(_("Production can't be set to draft if sale lines are still linked (in ") + ', '.join(sale.name for sale in sales) + ").")
             return False
+
+        # Create a project when confirming the production
+        if (values.get('state') and values['state'] == 'confirmed') and ('project_id' not in values and self.production_type_id.project_template_id):
+            new_project_id = self.production_type_id.project_template_id.copy({
+                'name': self.name,
+                'is_template': False,
+            })
+            values.update({
+                'project_id': new_project_id.id,
+            })
 
         return super(Production, self).write(values)
 
