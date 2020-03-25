@@ -15,12 +15,9 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
 
     @http.route()
     def address(self, **kw):
-        _logger.debug(request.session)
         if request.session.session_token:
-            _logger.debug(kw)
             return super(WebsiteEventCountryControllerInherit, self).address(**kw)
 
-        _logger.debug("\n\n Override")
         first_attendee_email = request.session['1-email']
         address_partner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
 
@@ -116,11 +113,12 @@ class WebsiteEventUseExistingPartner(WebsiteEventController):
 
     @http.route()
     def registration_confirm(self, event, **post):
-
+        order = request.website.sale_get_order(force_create=1)
         res = super(WebsiteEventUseExistingPartner, self).registration_confirm(event, **post)
-
         request.session["1-email"] = post['1-email']
-
+        if request.session.session_token:
+            if order.partner_id.parent_id:
+                order.sudo().write({'partner_invoice_id': order.partner_id.parent_id.id})
         return res
 
 
@@ -128,15 +126,10 @@ class WebsiteSaleController(WebsiteSale):
 
     @http.route(['/shop/checkout'], type='http', auth="public", website=True)
     def checkout(self, **post):
-        _logger.debug("\n\n Shop Checloiut")
-        _logger.debug(post)
         sale_order = request.website.sale_get_order()
-        _logger.debug(sale_order)
-        _logger.debug(request.session)
         res = super(WebsiteSaleController, self).checkout(**post)
 
-        if not post:
-            _logger.debug("\n\n No Override")
+        if request.session.session_token:
             return res
 
         if sale_order and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email:
