@@ -15,6 +15,12 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
 
     @http.route()
     def address(self, **kw):
+        _logger.debug(request.session)
+        if request.session.session_token:
+            _logger.debug(kw)
+            return super(WebsiteEventCountryControllerInherit, self).address(**kw)
+
+        _logger.debug("\n\n Override")
         first_attendee_email = request.session['1-email']
         address_partner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
 
@@ -122,9 +128,16 @@ class WebsiteSaleController(WebsiteSale):
 
     @http.route(['/shop/checkout'], type='http', auth="public", website=True)
     def checkout(self, **post):
+        _logger.debug("\n\n Shop Checloiut")
+        _logger.debug(post)
         sale_order = request.website.sale_get_order()
-
+        _logger.debug(sale_order)
+        _logger.debug(request.session)
         res = super(WebsiteSaleController, self).checkout(**post)
+
+        if not post:
+            _logger.debug("\n\n No Override")
+            return res
 
         if sale_order and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email:
             sale_order_partner = sale_order.partner_id
