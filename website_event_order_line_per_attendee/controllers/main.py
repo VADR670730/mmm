@@ -50,6 +50,7 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                 
                 so_line_copy = request.env['sale.order.line'].sudo().create(values)
                 attendee.sudo().write({'sale_order_line_id': so_line_copy.id})
+                so_line_copy._compute_tax_id()
             if order_line.state == 'sale' or order_line.state == "done":
                 order_line.sudo().write({'state': 'draft'})
             order_line.sudo().unlink()
