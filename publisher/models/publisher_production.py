@@ -137,9 +137,9 @@ class Production(models.Model):
     @api.depends('sale_line_ids', 'sale_line_ids.price_subtotal', 'sale_line_ids.order_id.state')
     def _compute_actual_turnover(self):
         self.actual_turnover = 0
-        for line in self.sale_line_ids:
-            if line.order_id.state in ['sale', 'done']:
-                self.actual_turnover += line.price_subtotal
+        for invoice in self.invoice_ids:
+            if invoice.state in ['open', 'paid']:
+                self.actual_turnover += invoice.amount_total
 
 
     @api.one
