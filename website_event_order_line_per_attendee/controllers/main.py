@@ -27,6 +27,8 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                     'event_ok': so_line.event_ok,
                     'company_id': so_line.company_id.id,
                     'discount_base': so_line.discount_base,
+                    'discount': so_line.discount,
+                    'commission': so_line.commission,
                     'name': new_so_line_name,
                     'display_name': attendee.display_name,
                     'product_tmpl_id': so_line.product_tmpl_id.id,
