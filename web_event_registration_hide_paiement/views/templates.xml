@@ -14,4 +14,14 @@
             </button>
         </xpath>
     </template>
+
+    <template id="payment_replace_payment_button_cart" inherit_id="website_sale.cart">
+        <xpath expr="//a[@href='/shop/checkout']" position="replace">
+            <a t-if="not optional_products and website_sale_order and website_sale_order.website_order_line" class="btn btn-primary pull-right mb32" href="/shop/checkout">
+                <span class="hidden-xs">Confirm Order</span>
+                <span class="visible-xs-inline">Order</span>
+                <span class="fa fa-long-arrow-right"/>
+            </a>
+        </xpath>
+    </template>
 </odoo>
