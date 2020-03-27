@@ -6,7 +6,7 @@
         </xpath>
     </template>
 
-    <template id="payment_hide_paiment_button" inherit_id="payment_transfer.transfer_acquirer_button">
+    <template id="payment_hide_paiment_transfer_acquirer_button" inherit_id="payment_transfer.transfer_acquirer_button">
         <xpath expr="//form/button[@type='submit']" position="replace">
             <button type="submit" width="100px" t-att-class="submit_class">
                 <img t-if="not submit_txt" src="/payment_transfer/static/src/img/transfer_icon.png"/>
