@@ -14,6 +14,7 @@ class WebsiteEventSaleConfirm(WebsiteSale):
 
         sale_order.sudo().action_option()
         sale_order.sudo().action_confirm()
+        sale_order.sudo().action_invoice_create(final=True)
 
         return res
 
