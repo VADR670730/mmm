@@ -15,6 +15,9 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
 
     @http.route()
     def address(self, **kw):
+        if request.session.session_token:
+            return super(WebsiteEventCountryControllerInherit, self).address(**kw)
+
         first_attendee_email = request.session['1-email']
         address_partner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
 
@@ -110,11 +113,12 @@ class WebsiteEventUseExistingPartner(WebsiteEventController):
 
     @http.route()
     def registration_confirm(self, event, **post):
-
+        order = request.website.sale_get_order(force_create=1)
         res = super(WebsiteEventUseExistingPartner, self).registration_confirm(event, **post)
-
         request.session["1-email"] = post['1-email']
-
+        if request.session.session_token:
+            if order.partner_id.parent_id:
+                order.sudo().write({'partner_invoice_id': order.partner_id.parent_id.id})
         return res
 
 
@@ -123,8 +127,10 @@ class WebsiteSaleController(WebsiteSale):
     @http.route(['/shop/checkout'], type='http', auth="public", website=True)
     def checkout(self, **post):
         sale_order = request.website.sale_get_order()
-
         res = super(WebsiteSaleController, self).checkout(**post)
+
+        if request.session.session_token:
+            return res
 
         if sale_order and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email:
             sale_order_partner = sale_order.partner_id
@@ -157,6 +163,7 @@ class WebsiteSaleController(WebsiteSale):
                         'city': sale_order_partner.city,
                         'zip': sale_order_partner.zip,
                         'country_id': sale_order_partner.country_id.id,
+                        'company_id': sale_order_partner.company_id.id,
                         'vat': sale_order_partner.vat,
                     })
                 new_partner = request.env['res.partner'].sudo().create({
@@ -170,6 +177,7 @@ class WebsiteSaleController(WebsiteSale):
                     'city': sale_order_partner.city,
                     'zip': sale_order_partner.zip,
                     'country_id': sale_order_partner.country_id.id,
+                    'company_id': sale_order_partner.company_id.id,
                     'child_ids': sale_order_partner.child_ids
                 })
                 sale_order.sudo().write({'partner_id': new_partner.id, 'partner_invoice_id': new_partner.parent_id.id, 'partner_shipping_id': new_partner.id})

@@ -27,6 +27,8 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                     'event_ok': so_line.event_ok,
                     'company_id': so_line.company_id.id,
                     'discount_base': so_line.discount_base,
+                    'discount': so_line.discount,
+                    'commission': so_line.commission,
                     'name': new_so_line_name,
                     'display_name': attendee.display_name,
                     'product_tmpl_id': so_line.product_tmpl_id.id,
@@ -36,8 +38,8 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                     'invoice_status': so_line.invoice_status,
                     'product_id': so_line.product_id.id,
                     'production_id': so_line.production_id.id,
-                    'commission': so_line.commission,
-                    'tax_id': so_line.tax_id
+                    'tax_id': so_line.tax_id,
+                    'event_id': so_line.event_id.id,
                 }
                 if so_line.price_unit:
                     values['price_unit'] = so_line.price_unit
@@ -48,6 +50,7 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                 
                 so_line_copy = request.env['sale.order.line'].sudo().create(values)
                 attendee.sudo().write({'sale_order_line_id': so_line_copy.id})
+                so_line_copy._compute_amount()
             if order_line.state == 'sale' or order_line.state == "done":
                 order_line.sudo().write({'state': 'draft'})
             order_line.sudo().unlink()
