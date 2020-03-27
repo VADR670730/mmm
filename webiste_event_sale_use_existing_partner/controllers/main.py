@@ -163,6 +163,7 @@ class WebsiteSaleController(WebsiteSale):
                         'city': sale_order_partner.city,
                         'zip': sale_order_partner.zip,
                         'country_id': sale_order_partner.country_id.id,
+                        'company_id': sale_order_partner.company_id.id,
                         'vat': sale_order_partner.vat,
                     })
                 new_partner = request.env['res.partner'].sudo().create({
@@ -176,6 +177,7 @@ class WebsiteSaleController(WebsiteSale):
                     'city': sale_order_partner.city,
                     'zip': sale_order_partner.zip,
                     'country_id': sale_order_partner.country_id.id,
+                    'company_id': sale_order_partner.company_id.id,
                     'child_ids': sale_order_partner.child_ids
                 })
                 sale_order.sudo().write({'partner_id': new_partner.id, 'partner_invoice_id': new_partner.parent_id.id, 'partner_shipping_id': new_partner.id})
