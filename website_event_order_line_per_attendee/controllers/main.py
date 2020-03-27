@@ -38,7 +38,6 @@ class WebsiteEventControllerInherit(WebsiteEventController):
                     'invoice_status': so_line.invoice_status,
                     'product_id': so_line.product_id.id,
                     'production_id': so_line.production_id.id,
-                    'commission': so_line.commission,
                     'tax_id': so_line.tax_id
                 }
                 if so_line.price_unit:
