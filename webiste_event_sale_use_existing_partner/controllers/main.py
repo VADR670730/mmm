@@ -149,6 +149,10 @@ class WebsiteSaleController(WebsiteSale):
                 #sale_order.sudo().write({'partner_shipping_id': existing_partner.id})
                 sale_order_partner_shipping.sudo().unlink()
                 sale_order_partner.sudo().unlink()
+
+                # To be sure to remove the shipping partner.
+                request.env['res.partner'].sudo().search([('type', '=', 'delivery'), ('email', '=', existing_partner.email)]).unlink()
+
             else:
                 company_id = None
                 existing_company = request.env['res.partner'].sudo().search([('name', '=ilike', sale_order_partner.company_name), ('is_company','=', True)])
@@ -183,5 +187,8 @@ class WebsiteSaleController(WebsiteSale):
                 sale_order.sudo().write({'partner_id': new_partner.id, 'partner_invoice_id': new_partner.parent_id.id, 'partner_shipping_id': new_partner.id})
                 sale_order_partner_shipping.sudo().unlink()
                 sale_order_partner.sudo().unlink()
+
+                # To be sure to remove the shipping partner.
+                request.env['res.partner'].sudo().search([('type', '=', 'delivery'), ('email', '=', new_partner.email)]).unlink()
 
         return res
