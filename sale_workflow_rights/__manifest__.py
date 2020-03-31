@@ -20,7 +20,9 @@
     'category': 'Sale',
     'version': '10.0.1.0',
 
-    'depends': ['base', 'sale'],
+    'depends': [
+        'sale'
+    ],
 
     'data': [
         'views/sale_order.xml'
