@@ -171,7 +171,8 @@ class WebsiteSaleController(WebsiteSale):
                         'vat': sale_order_partner.vat,
                     })
                 new_partner = request.env['res.partner'].sudo().create({
-                    'name': sale_order_partner.name,
+                    'firstname': sale_order_partner.firstname,
+                    'surname':sale_order_partner.surname,
                     'phone': sale_order_partner.phone,
                     'email': sale_order_partner.email,
                     'lang': sale_order_partner.lang,
