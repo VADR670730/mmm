@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import openerp
+import odoo
 import ftplib
 import os
 import re
 import pickle
-import cStringIO
 import tempfile
+import base64
+import mimetypes
+import shutil
+import json
 
 from os import listdir
 from os.path import isfile, join
-from openerp import fields, models, api, exceptions
-from openerp.tools.translate import _
+from odoo import fields, models, api, exceptions
+from odoo.tools.translate import _
 from datetime import datetime
 from datetime import date, timedelta
 
@@ -27,8 +30,31 @@ no_pydrive = False
 try:
     from pydrive.auth import GoogleAuth
     from pydrive.drive import GoogleDrive
+    from pydrive.files import GoogleDriveFile
+
+    def SetContentFile2(self, content, filename):
+        self.content = content
+        if self.get('title') is None:
+            self['title'] = filename
+        if self.get('mimeType') is None:
+            self['mimeType'] = mimetypes.guess_type(filename)[0]
+
+    GoogleDriveFile.SetContentFile2 = SetContentFile2
+
 except ImportError:
     no_pydrive = True
+
+no_pysftp = False
+try:
+    import pysftp
+except ImportError:
+    no_pysftp = True
+
+no_boto3 = False
+try:
+    import boto3
+except ImportError:
+    no_boto3 = True
 
 
 class AutomaticBackup(models.Model):
@@ -58,6 +84,55 @@ class AutomaticBackup(models.Model):
     delete_days = fields.Integer(string='Delete backups older than [days]', default=30)
 
 
+def dump_db_manifest(cr):
+    pg_version = "%d.%d" % divmod(cr._obj.connection.server_version / 100, 100)
+    cr.execute("SELECT name, latest_version FROM ir_module_module WHERE state = 'installed'")
+    modules = dict(cr.fetchall())
+    manifest = {
+        'odoo_dump': '1',
+        'db_name': cr.dbname,
+        'version': odoo.release.version,
+        'version_info': odoo.release.version_info,
+        'major_version': odoo.release.major_version,
+        'pg_version': pg_version,
+        'modules': modules,
+    }
+    return manifest
+
+
+def dump_db(db_name, stream, backup_format='zip'):
+    cmd = ['pg_dump', '--no-owner']
+    cmd.append(db_name)
+    if backup_format == 'zip':
+        with odoo.tools.osutil.tempdir() as dump_dir:
+            filestore = odoo.tools.config.filestore(db_name)
+            if os.path.exists(filestore):
+                shutil.copytree(filestore, os.path.join(dump_dir, 'filestore'))
+            with open(os.path.join(dump_dir, 'manifest.json'), 'w') as fh:
+                db = odoo.sql_db.db_connect(db_name)
+                with db.cursor() as cr:
+                    json.dump(dump_db_manifest(cr), fh, indent=4)
+            cmd.insert(-1, '--file=' + os.path.join(dump_dir, 'dump.sql'))
+            odoo.tools.exec_pg_command(*cmd)
+            if stream:
+                odoo.tools.osutil.zip_dir(dump_dir, stream, include_dir=False, fnct_sort=lambda file_name: file_name != 'dump.sql')
+            else:
+                t=tempfile.TemporaryFile()
+                odoo.tools.osutil.zip_dir(dump_dir, t, include_dir=False, fnct_sort=lambda file_name: file_name != 'dump.sql')
+                t.seek(0)
+                return t
+    else:
+        cmd.insert(-1, '--format=c')
+        stdin, stdout = odoo.tools.exec_pg_command_pipe(*cmd)
+        if stream:
+            shutil.copyfileobj(stdout, stream)
+        else:
+            return stdout
+
+
+odoo.service.db.dump_db = dump_db
+
+
 class Cron(models.Model):
 
     _inherit = 'ir.cron'
@@ -69,10 +144,12 @@ class Cron(models.Model):
         if 'backup_type' in vals:
             vals['name'] = 'Backup ' + vals['backup_type'] + ' ' + vals['backup_destination']
             vals['numbercall'] = -1
-            vals['model'] = 'ir.cron'
-            vals['function'] = 'database_backup_cron_action'
+            vals['state'] = 'code'
+            vals['code'] = ''
+            vals['model_id'] = self.env['ir.model'].search([('model', '=', 'ir.cron')]).id
         output = super(Cron, self).create(vals)
-        output.args = ({'id': output.id},)
+        if 'backup_type' in vals:
+            output.code = 'env[\'ir.cron\'].database_backup_cron_action(' + str(output.id) + ')'
         return output
 
     @api.one
@@ -80,6 +157,13 @@ class Cron(models.Model):
         if 'dropbox_authorize_url_rel' in vals:
             vals['dropbox_authorize_url'] = vals['dropbox_authorize_url_rel']
         return super(Cron, self).write(vals)
+
+    @api.one
+    def unlink(self):
+        # delete flow/auth files
+        self.env['ir.attachment'].browse(self.dropbox_flow).unlink()
+        output = super(Cron, self).unlink()
+        return output
 
     @api.model
     def search(self, args, offset=0, limit=None, order=None, count=False):
@@ -94,6 +178,15 @@ class Cron(models.Model):
 
     @api.onchange('backup_destination')
     def onchange_backup_destination(self):
+        if self.backup_destination == 'ftp':
+            self.ftp_port = 21
+
+        if self.backup_destination == 'sftp':
+            self.ftp_port = 22
+            if no_pysftp:
+                raise exceptions.Warning(_('Missing required pysftp python package\n'
+                                           'https://pypi.python.org/pypi/pysftp'))
+
         if self.backup_destination == 'dropbox':
             if no_dropbox:
                 raise exceptions.Warning(_('Missing required dropbox python package\n'
@@ -101,7 +194,14 @@ class Cron(models.Model):
             flow = dropbox.DropboxOAuth2FlowNoRedirect('jqurrm8ot7hmvzh', '7u0goz5nmkgr1ot')
             self.dropbox_authorize_url = flow.start()
             self.dropbox_authorize_url_rel = self.dropbox_authorize_url
-            self.dropbox_flow = pickle.dumps(flow)
+
+            self.dropbox_flow = self.env['ir.attachment'].create(dict(
+                datas=base64.b64encode(pickle.dumps(flow)),
+                name='dropbox_flow',
+                datas_fname='dropbox_flow',
+                description='Automatic Backup File'
+            )).id
+
         if self.backup_destination == 'google_drive':
             if no_pydrive:
                 raise exceptions.Warning(_('Missing required PyDrive python package\n'
@@ -112,59 +212,51 @@ class Cron(models.Model):
             gauth = GoogleAuth()
             self.dropbox_authorize_url = gauth.GetAuthUrl()
             self.dropbox_authorize_url_rel = self.dropbox_authorize_url
-            self.dropbox_flow = pickle.dumps(gauth)
+            self.dropbox_flow = self.dropbox_flow = self.env['ir.attachment'].create(dict(
+                datas=base64.b64encode(pickle.dumps(gauth)),
+                name='dropbox_flow',
+                datas_fname='dropbox_flow',
+                description='Automatic Backup File'
+            )).id
 
     @api.one
     @api.constrains('backup_destination', 'dropbox_authorization_code', 'dropbox_flow')
     def constrains_dropbox(self):
+        if self.backup_destination == 'sftp':
+            if no_pysftp:
+                raise exceptions.Warning(_('Missing required pysftp python package\n'
+                                           'https://pypi.python.org/pypi/pysftp'))
+
         if self.backup_destination == 'dropbox':
             if no_dropbox:
                 raise exceptions.Warning(_('Missing required dropbox python package\n'
                                            'https://pypi.python.org/pypi/dropbox'))
-            flow = pickle.loads(self.dropbox_flow)
+
+            ia = self.env['ir.attachment'].browse(self.dropbox_flow)
+            ia.res_model = 'ir.cron'
+            ia.res_id = self.id
+
+            flow = pickle.loads(base64.b64decode(ia.datas))
             result = flow.finish(self.dropbox_authorization_code.strip())
-            if isinstance(result, tuple):
-                # dropbox python package old version
-                self.dropbox_access_token, self.dropbox_user_id = result
-            else:
-                # dropbox python package new version
-                self.dropbox_access_token = result.access_token
-                self.dropbox_user_id = result.user_id
+            self.dropbox_access_token = result.access_token
+            self.dropbox_user_id = result.user_id
+
         if self.backup_destination == 'google_drive':
             if no_pydrive:
                 raise exceptions.Warning(_('Missing required PyDrive python package\n'
                                            'https://pypi.python.org/pypi/PyDrive'))
-            gauth = pickle.loads(self.dropbox_flow)
+
+            ia = self.env['ir.attachment'].browse(self.dropbox_flow)
+            ia.res_model = 'ir.cron'
+            ia.res_id = self.id
+            gauth = pickle.loads(base64.b64decode(ia.datas))
             gauth.Auth(self.dropbox_authorization_code)
-            self.google_auth = pickle.dumps(gauth)
+            ia.datas = base64.b64encode(pickle.dumps(gauth))
 
-    automatic_backup_id = fields.Many2one('automatic.backup')
-
-    backup_type = fields.Selection([('dump', 'Database Only'),
-                                    ('zip', 'Database and Filestore')],
-                                   string='Backup Type')
-    backup_destination = fields.Selection([('folder', 'Folder'),
-                                           ('ftp', 'FTP'),
-                                           ('dropbox', 'Dropbox'),
-                                           ('google_drive', 'Google Drive')],
-                                          string='Backup Destionation')
-
-    folder_path = fields.Char(string='Folder Path')
-
-    ftp_address = fields.Char(string='FTP Adress')
-    ftp_port = fields.Integer(string='FTP Port', default=21)
-    ftp_login = fields.Char(string='FTP Login')
-    ftp_password = fields.Char(string='FTP Password')
-    ftp_path = fields.Char(string='FTP Path')
-
-    dropbox_authorize_url = fields.Char(string='Authorize URL')
-    dropbox_authorize_url_rel = fields.Char()
-    dropbox_authorization_code = fields.Char(string='Authorization Code')
-    dropbox_flow = fields.Text()
-    dropbox_access_token = fields.Char()
-    dropbox_user_id = fields.Char()
-
-    google_auth = fields.Char()
+        if self.backup_destination == 's3':
+            if no_boto3:
+                raise exceptions.Warning(_('Missing required boto3 python package\n'
+                                           'https://pypi.python.org/pypi/boto3'))
 
     @api.one
     def check_settings(self):
@@ -193,11 +285,16 @@ class Cron(models.Model):
     def create_backup(self, check=False):
         filename = ''
         if check is False:
-            backup_binary = openerp.service.db.dump_db(self.env.cr.dbname, None, self.backup_type)
+            backup_binary = odoo.service.db.dump_db(self.env.cr.dbname, None, self.backup_type)
         else:
-            backup_binary = cStringIO.StringIO()
-            backup_binary.write('Dummy File')
+            backup_binary = tempfile.TemporaryFile()
+            backup_binary.write(str.encode('Dummy File'))
             backup_binary.seek(0)
+        backup_size = os.stat(backup_binary.name).st_size
+
+        # delete unused flow/auth files
+        self.env['ir.attachment'].search([('description', '=', 'Automatic Backup File'), ('res_id', '=', False)]).unlink()
+
         if self.backup_destination == 'folder':
             filename = self.folder_path + os.sep + self.automatic_backup_id.filename + '_' + \
                        str(datetime.now()).split('.')[0].replace(':', '_') + '.' + self.backup_type
@@ -210,11 +307,14 @@ class Cron(models.Model):
                 files = [f for f in listdir(self.folder_path) if isfile(join(self.folder_path, f))]
                 for backup in files:
                     if re.match(backup_pattern, backup) is not None:
-                        px = len(backup.split('_')[0])
+                        px = len(backup) - 24
+                        if backup.endswith('.dump'):
+                            px -= 1
                         filedate = date(int(backup[px+1:px+5]), int(backup[px+6:px+8]), int(backup[px+9:px+11]))
                         if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
                             os.remove(self.folder_path + os.sep + backup)
                             self.file_delete_message(backup)
+
         if self.backup_destination == 'ftp':
             filename = self.automatic_backup_id.filename + '_' + str(datetime.now()).split('.')[0].replace(':', '_') \
                        + '.' + self.backup_type
@@ -228,66 +328,152 @@ class Cron(models.Model):
             if self.automatic_backup_id.delete_old_backups:
                 for backup in ftp.nlst():
                     if re.match(backup_pattern, backup) is not None:
-                        px = len(backup.split('_')[0])
+                        px = len(backup) - 24
+                        if backup.endswith('.dump'):
+                            px -= 1
                         filedate = date(int(backup[px + 1:px + 5]), int(backup[px + 6:px + 8]), int(backup[px + 9:px + 11]))
                         if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
                             ftp.delete(backup)
                             self.file_delete_message(backup)
+
+        if self.backup_destination == 'sftp':
+            filename = self.automatic_backup_id.filename + '_' + str(datetime.now()).split('.')[0].replace(':', '_') \
+                       + '.' + self.backup_type
+
+            cnopts = pysftp.CnOpts()
+            cnopts.hostkeys = None
+            sftp = pysftp.Connection(self.ftp_address, username=self.ftp_login, password=self.ftp_password,
+                                     cnopts=cnopts, port=self.ftp_port)
+            sftp.putfo(backup_binary, self.ftp_path + '/' + filename)
+            if check is True:
+                sftp.remove(self.ftp_path + '/' + filename)
+            if self.automatic_backup_id.delete_old_backups:
+                for backup in sftp.listdir(self.ftp_path):
+                    if re.match(backup_pattern, backup) is not None:
+                        px = len(backup) - 24
+                        if backup.endswith('.dump'):
+                            px -= 1
+                        filedate = date(int(backup[px + 1:px + 5]), int(backup[px + 6:px + 8]),
+                                        int(backup[px + 9:px + 11]))
+                        if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
+                            sftp.remove(self.ftp_path + '/' + backup)
+                            self.file_delete_message(backup)
+
         if self.backup_destination == 'dropbox':
             filename = self.automatic_backup_id.filename + '_' + str(datetime.now()).split('.')[0].replace(':', '_') \
                        + '.' + self.backup_type
-            client = dropbox.client.DropboxClient(self.dropbox_access_token)
-            client.put_file('/' + filename, backup_binary)
+            client = dropbox.Dropbox(self.dropbox_access_token)
+
+            CHUNK_SIZE = 4 * 1024 * 1024
+            file_chunk_data = backup_binary.read(CHUNK_SIZE)
+            offset = len(file_chunk_data)
+            upload_session_start_result = client.files_upload_session_start(file_chunk_data)
+            cursor = dropbox.files.UploadSessionCursor(session_id=upload_session_start_result.session_id,
+                                                       offset=offset)
+            commit = dropbox.files.CommitInfo(path='/' + filename)
+
+            if backup_size <= CHUNK_SIZE:
+                CHUNK_SIZE = int(backup_size * 0.6)
+            while True:
+                if (backup_size - offset) <= CHUNK_SIZE:
+                    client.files_upload_session_finish(backup_binary.read(CHUNK_SIZE), cursor, commit)
+                    break
+                else:
+                    file_chunk_data = backup_binary.read(CHUNK_SIZE)
+                    offset += len(file_chunk_data)
+                    client.files_upload_session_append(file_chunk_data, cursor.session_id, cursor.offset)
+                    cursor.offset = offset
+
             if check is True:
-                client.file_delete('/' + filename)
+                client.files_delete_v2('/' + filename)
             if self.automatic_backup_id.delete_old_backups:
-                folder = client.metadata('/')
-                for f in folder['contents']:
-                    if f['is_dir'] is True:
-                        continue
-                    if re.match(backup_pattern, f['path']) is not None:
-                        px = len(f['path'].split('_')[0])
-                        filedate = date(int(f['path'][px + 1:px + 5]), int(f['path'][px + 6:px + 8]), int(f['path'][px + 9:px + 11]))
+                for f in client.files_list_folder('').entries:
+                    if re.match(backup_pattern, f.name) is not None:
+                        px = len(f.name) - 24
+                        if f.name.endswith('.dump'):
+                            px -= 1
+                        filedate = date(int(f.name[px + 1:px + 5]), int(f.name[px + 6:px + 8]), int(f.name[px + 9:px + 11]))
                         if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
-                            client.file_delete(f['path'])
-                            self.file_delete_message(f['path'][1:])
+                            client.files_delete_v2('/' + f.name)
+                            self.file_delete_message(f.name[1:])
+
         if self.backup_destination == 'google_drive':
             filename = self.automatic_backup_id.filename + '_' + str(datetime.now()).split('.')[0].replace(':', '_') \
                        + '.' + self.backup_type
-            gauth = pickle.loads(self.google_auth)
+
+            ia = self.env['ir.attachment'].browse(self.dropbox_flow)
+            gauth = pickle.loads(base64.b64decode(ia.datas))
             drive = GoogleDrive(gauth)
 
-            def getFolderID():
-                file_list = drive.ListFile({'q': "'root' in parents and trashed=false and mimeType='application/vnd.google-apps.folder'"
-                                                 "and title='Odoo Automatic Backups'"}).GetList()
+            def getFolderID(folder_id, parent):
+                file_list = drive.ListFile(
+                    {'q': "'" + parent + "' in parents and trashed=false and mimeType='application/vnd.google-apps.folder'"
+                          "and title='" + folder_id + "'"}).GetList()
                 for file1 in file_list:
-                    if file1['title'] == 'Odoo Automatic Backups':
+                    if file1['title'] == folder_id:
                         return file1['id']
-                folder_metadata = {'title': 'Odoo Automatic Backups', 'mimeType': 'application/vnd.google-apps.folder'}
+                folder_metadata = {'title': folder_id,
+                                   'mimeType': 'application/vnd.google-apps.folder',
+                                   'parents': [{'id': parent}]}
                 folder = drive.CreateFile(folder_metadata)
                 folder.Upload()
                 return folder['id']
 
-            folderid = getFolderID()
+            def getFolderFromPath(path):
+                folder_id = 'root'
+                for p in path.split('/'):
+                    if not p:
+                        continue
+                    folder_id = getFolderID(p, folder_id)
+                return folder_id
 
-            tf = tempfile.NamedTemporaryFile()
-            tf.write(backup_binary.read())
-            tf.seek(0)
+            folderid = getFolderFromPath(self.dropbox_path)
             file1 = drive.CreateFile({'title': filename, 'parents': [{'kind': 'drive#fileLink', 'id': folderid}]})
-            file1.SetContentFile(tf.name)
-            file1.Upload()
-            tf.close()
+
+            if self.backup_type == 'dump':
+                # TODO: problems with to big files
+                # _io.BufferedReader
+                tmp_attachment = self.env['ir.attachment'].create({
+                    'datas': base64.b64encode(backup_binary.read()),
+                    'name': 'doc.dump',
+                    'datas_fname': 'doc.dump'
+                })
+                file1.SetContentFile(tmp_attachment._filestore() + os.sep + tmp_attachment.store_fname)
+                file1.Upload()
+                tmp_attachment.unlink()
+            else:
+                file1.SetContentFile2(backup_binary, 'binary.zip')
+                file1.Upload()
+
             if check is True:
                 file1.Delete()
             if self.automatic_backup_id.delete_old_backups:
                 file_list = drive.ListFile({'q': "'" + folderid + "' in parents and trashed=false"}).GetList()
                 for gfile in file_list:
                     if re.match(backup_pattern, gfile['title']) is not None:
-                        px = len(gfile['title'].split('_')[0])
+                        px = len(gfile['title']) - 24
+                        if gfile['title'].endswith('.dump'):
+                            px -= 1
                         filedate = date(int(gfile['title'][px + 1:px + 5]), int(gfile['title'][px + 6:px + 8]), int(gfile['title'][px + 9:px + 11]))
                         if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
                             drive.CreateFile({'id': gfile['id']}).Delete()
                             self.file_delete_message(gfile['title'])
+
+        if self.backup_destination == 's3':
+            filename = self.automatic_backup_id.filename + '_' + str(datetime.now()).split('.')[0].replace(':', '_') \
+                       + '.' + self.backup_type
+            s3 = boto3.resource('s3', aws_access_key_id=self.s3_access_key, aws_secret_access_key=self.s3_access_key_secret)
+            s3.Bucket(self.s3_bucket_name).put_object(Key='Odoo Automatic Backup/' + filename, Body=backup_binary)
+            if self.automatic_backup_id.delete_old_backups:
+                for o in s3.Bucket(self.s3_bucket_name).objects.all():
+                    if o.key.startswith('Odoo Automatic Backup/'):
+                        px = len(o.key) - 24
+                        if o.key.endswith('.dump'):
+                            px -= 1
+                        filedate = date(int(o.key[px + 1:px + 5]), int(o.key[px + 6:px + 8]), int(o.key[px + 9:px + 11]))
+                        if filedate + timedelta(days=self.automatic_backup_id.delete_days) < date.today():
+                            self.file_delete_message(o.key)
+                            o.delete()
 
         backup_binary.close()
         if check is True:
@@ -347,15 +533,15 @@ class Cron(models.Model):
             )).send()
 
     @api.model
-    def database_backup_cron_action(self, args):
+    def database_backup_cron_action(self, *args):
         backup_rule = False
         try:
-            if len(args) != 1 or isinstance(args['id'], int) is False:
+            if len(args) != 1 or isinstance(args[0], int) is False:
                 raise exceptions.ValidationError(_('Wrong method parameters'))
-            rule_id = args['id']
+            rule_id = args[0]
             backup_rule = self.browse(rule_id)
             backup_rule.create_backup()
-        except Exception, e:
+        except Exception as e:
             msg = _('Automatic backup failed!') + '<br/>'
             msg += _('Backup Type: ') + backup_rule.get_selection_field_value('backup_type', backup_rule.backup_type) + '<br/>'
             msg += _('Backup Destination: ') + backup_rule.get_selection_field_value('backup_destination', backup_rule.backup_destination) + '<br/>'
@@ -379,3 +565,32 @@ class Cron(models.Model):
                     email_from=self.env['res.users'].browse(self.env.uid).email,
                     email_to=backup_rule.automatic_backup_id.failed_backup_notify_emails,
                 )).send()
+
+    automatic_backup_id = fields.Many2one('automatic.backup')
+    backup_type = fields.Selection([('dump', 'Database Only'),
+                                    ('zip', 'Database and Filestore')],
+                                   string='Backup Type')
+    backup_destination = fields.Selection([('folder', 'Folder'),
+                                           ('ftp', 'FTP'),
+                                           ('sftp', 'SFTP'),
+                                           ('dropbox', 'Dropbox'),
+                                           ('google_drive', 'Google Drive'),
+                                           ('s3', 'Amazon S3')],
+                                          string='Backup Destionation')
+    folder_path = fields.Char(string='Folder Path')
+    ftp_address = fields.Char(string='URL')
+    ftp_port = fields.Integer(string='Port')
+    ftp_login = fields.Char(string='Login')
+    ftp_password = fields.Char(string='Password')
+    ftp_path = fields.Char(string='Path')
+    dropbox_authorize_url = fields.Char(string='Authorize URL')
+    dropbox_authorize_url_rel = fields.Char()
+    dropbox_authorization_code = fields.Char(string='Authorization Code')
+    dropbox_flow = fields.Integer()
+    dropbox_access_token = fields.Char()
+    dropbox_user_id = fields.Char()
+    dropbox_path = fields.Char(default='/Odoo Automatic Backups/', string='Backup Path')
+    s3_bucket_name = fields.Char(string='Bucket name')
+    s3_username = fields.Char(string='Username')
+    s3_access_key = fields.Char(string='Access key')
+    s3_access_key_secret = fields.Char(string='Acces key secret')

@@ -1,1 +1,1 @@
-import automatic_backup
+from . import automatic_backup
