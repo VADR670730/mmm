@@ -32,7 +32,7 @@ class EventRegistrationMoreInfo(models.Model):
                 for i, el in enumerate(res):
                     order_list = el.split(' ')
                     if "date" not in el and "sequence" not in el and "id" not in el and order_list and not all(c.isdigit() for c in order_list[0]):
-                        order_by_elements[i] = "LOWER(" + order_list[0] + ") " + order_list[1] if len(order_list) > 1 else "LOWER(" + order_list[0] + ")"
+                        order_by_elements[i] = "LOWER(" + order_list[0] + ") " + 'COLLATE "C" '  + order_list[1] if len(order_list) > 1 else "LOWER(" + order_list[0] + ') COLLATE "C"'
                 order_by_clause = ",".join(order_by_elements)
 
-        return order_by_clause and (' ORDER BY %s ' % order_by_clause) or ''
+        return order_by_clause and (' ORDER BY %s' % order_by_clause) or ''
