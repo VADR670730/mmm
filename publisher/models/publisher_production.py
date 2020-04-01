@@ -37,7 +37,7 @@ class Production(models.Model):
     date_closing = fields.Date(string='Closing Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_full_equipment_limit = fields.Date(string='Full Equipment Limit Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     sale_line_all_ids = fields.One2many('sale.order.line', 'production_id', string='All Production Lines')
-    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done'])])
+    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done', 'cancel'])])
     expected_turnover = fields.Monetary(string="Expected Turnover", readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     invoicing_mode = fields.Selection([
         ('before', 'Before Publication'),
@@ -133,13 +133,17 @@ class Production(models.Model):
         self.potential_turnover = sum([line.price_subtotal for line in self.sale_line_ids])
 
 
-    @api.one
-    @api.depends('sale_line_ids', 'sale_line_ids.price_subtotal', 'sale_line_ids.order_id.state')
+    @api.multi
+    @api.depends('invoice_ids')
     def _compute_actual_turnover(self):
-        self.actual_turnover = 0
-        for invoice in self.invoice_ids:
-            if invoice.state in ['open', 'paid']:
-                self.actual_turnover += invoice.amount_total
+        for production in self:
+            actual_turnover = 0
+            for invoice in production.invoice_ids:
+                if invoice.state in ['open', 'paid']:
+                    actual_turnover += invoice.amount_total_signed
+            production.write({
+                'actual_turnover': actual_turnover,
+            })
 
 
     @api.one
@@ -178,6 +182,7 @@ class Production(models.Model):
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):
         self.invoice_count = len(self.invoice_ids)
+        self._compute_actual_turnover()
 
     @api.one
     def _compute_purchase_invoice_ids(self):
