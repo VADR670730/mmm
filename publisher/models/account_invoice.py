@@ -32,6 +32,8 @@ class AccountInvoice(models.Model):
                 for line in origin_invoice_id.invoice_line_ids:
                     if len(line.sale_line_ids) > 0:
                         production_id = line.sale_line_ids[0].production_id if line.sale_line_ids[0].production_id else False
+                        # Cancel the origin SO
+                        line.sale_line_ids[0].order_id.action_cancel()
             for line in invoice.invoice_line_ids:
                 line.production_id = production_id
 
