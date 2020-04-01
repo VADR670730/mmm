@@ -132,7 +132,7 @@ class WebsiteSaleController(WebsiteSale):
         if request.session.session_token:
             return res
 
-        if sale_order and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email:
+        if sale_order and sale_order.partner_id.name and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email and "processed_so" in request.session and sale_order.id not in request.session['processed_so']:
             sale_order_partner = sale_order.partner_id
             sale_order_partner_shipping = sale_order.partner_shipping_id
             #sale_order_partner_invoice = sale_order.partner_invoice_id
@@ -155,12 +155,18 @@ class WebsiteSaleController(WebsiteSale):
 
             else:
                 company_id = None
-                existing_company = request.env['res.partner'].sudo().search([('name', '=ilike', sale_order_partner.company_name), ('is_company','=', True)])
+                company_name = None
+                if sale_order_partner.company_name:
+                    company_name = sale_order_partner.company_name
+                elif sale_order_partner.parent_id:
+                    company_name = sale_order_partner.parent_id.name
+                existing_company = request.env['res.partner'].sudo().search([('name', '=ilike', company_name), ('is_company','=', True)])
+                _logger.debug(sale_order_partner.parent_id.name)
                 if existing_company:
                     company_id = existing_company
                 else:
                     company_id = request.env['res.partner'].sudo().create({
-                        'name': sale_order_partner.company_name,
+                        'name': company_name,
                         'is_company': True,
                         'lang': sale_order_partner.lang,
                         'street': sale_order_partner.street,
@@ -192,5 +198,6 @@ class WebsiteSaleController(WebsiteSale):
 
                 # To be sure to remove the shipping partner.
                 request.env['res.partner'].sudo().search([('type', '=', 'delivery'), ('email', '=', new_partner.email)]).unlink()
+            request.session["processed_so"] = [sale_order.id, request.session["processed_so"]]
 
         return res
