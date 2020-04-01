@@ -178,7 +178,7 @@ class WebsiteSaleController(WebsiteSale):
                     'email': sale_order_partner.email,
                     'lang': sale_order_partner.lang,
                     'parent_id': company_id.id,
-                    'type': 'other',
+                    'type': 'contact',
                     'street': sale_order_partner.street,
                     'city': sale_order_partner.city,
                     'zip': sale_order_partner.zip,
