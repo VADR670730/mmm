@@ -60,6 +60,7 @@
                                     <field name="last_name"/>
                                     <field name="email"/>
                                     <field name="event_id"/>
+                                    <field name="table_id"/>
                                     <field name="state"/>
                                     <field name="message_needaction" invisible="1"/>
                                     <button name="confirm_registration" string="Confirm Registration" states="draft"

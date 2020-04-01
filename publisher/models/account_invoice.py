@@ -21,6 +21,24 @@ class AccountInvoice(models.Model):
         self.sent = True
         return self.env['report'].get_action(self, 'publisher.report_invoice_publisher')
 
+    @api.model
+    def create(self, vals):
+        invoice = super(AccountInvoice, self).create(vals)
+        # If this is a refund, then set the production if that was in the sales order lines linked to the origin invoice
+        if 'refund_invoice_id' in vals:
+            origin_invoice_id = self.env['account.invoice'].search([('id', '=', vals.get('refund_invoice_id'))])
+            production_id = False
+            if origin_invoice_id:
+                for line in origin_invoice_id.invoice_line_ids:
+                    if len(line.sale_line_ids) > 0:
+                        production_id = line.sale_line_ids[0].production_id if line.sale_line_ids[0].production_id else False
+                        # Cancel the origin SO
+                        line.sale_line_ids[0].order_id.action_cancel()
+            for line in invoice.invoice_line_ids:
+                line.production_id = production_id
+
+        return invoice
+
 
 class AccountInvoiceReport(models.AbstractModel):
     _name = 'report.publisher.report_invoice_publisher'

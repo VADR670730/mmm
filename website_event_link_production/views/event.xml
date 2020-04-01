@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="view_event_from_production" model="ir.ui.view">
+            <field name="name">view_event_from_production</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="(//group/group)[1]" position="inside">
+                        <field name="production_id" domain="[('state', '!=', 'archived')]" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -22,6 +22,7 @@ class ProductionType(models.Model):
     sequence_id = fields.Many2one('ir.sequence', string="Sequence", required=True)
     production_count = fields.Integer(string="Production Count", compute='_compute_production_count')
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env['res.company']._company_default_get('publisher.production.type'))
+    project_template_id = fields.Many2one('project.project', domain="[('is_template', '=', True')]", string="Project Template", help="When creating a new production for this type, this project will be copied to a new one (including tasks and stages).")
     
     @api.one
     def _compute_production_count(self):

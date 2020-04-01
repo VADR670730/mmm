@@ -154,14 +154,14 @@ class SaleOrderLine(models.Model):
     @api.onchange('product_id', 'production_id', 'format_id', 'location_id', 'date_start', 'date_end')
     def _compute_name(self):
         name = u''
+        if self.production_id:
+            name += _('Production/Event: ') + self.production_id.name
         if self.product_id:
-            name += _('Product: ') + self.product_id.name
+            name += _('\nProduct: ') + self.product_id.name
         if self.format_id:
             name += _('\nFormat: ') + self.format_id.name
         if self.location_id:
             name += _('\nLocation: ') + self.location_id.name
-        if self.production_id:
-            name += _('\nProduction/Event: ') + self.production_id.name
         if self.date_start:
             name += _('\nStart: ') + datetime.datetime.strptime(self.date_start, '%Y-%m-%d').strftime('%d/%m/%Y')
         if self.date_end:

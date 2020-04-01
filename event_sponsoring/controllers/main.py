@@ -6,6 +6,7 @@ from odoo.exceptions import AccessError
 from odoo.http import request
 from odoo.addons.website_portal.controllers.main import website_account
 from odoo.addons.website_event.controllers.main import WebsiteEventController
+import csv
 
 _logger = logging.getLogger(__name__)
 
@@ -123,6 +124,29 @@ class WebsiteAccountRegistrationCode(website_account):
         })
 
         return request.render("event_sponsoring.vouchers_request_followup", values)
+
+    @http.route(['/my/vouchers/<int:voucher>/download_csv'],
+                type='http', auth="public", website=True)
+    def generate_csv(self, voucher=None, **kw):
+        event_registration_code = request.env['event.registration.code'].sudo().browse([voucher])
+        if event_registration_code:
+            fileContent = None
+            with open('/tmp/tmp.csv', 'w+') as csvfile:
+                filewriter = csv.writer(csvfile, delimiter = ";", quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                event_registration_code = request.env['event.registration.code'].sudo().browse([voucher])
+                filewriter.writerow([_('Attendee'), _('Company'), _('Email'), _('Table'), _('State')])
+                for attendee in event_registration_code.attendee_ids:
+                    filewriter.writerow([(attendee.last_name + ' ' + attendee.name).encode('utf-8'), 
+                    (attendee.company).encode("utf-8"), 
+                    (attendee.email).encode('utf-8'),
+                    (str(attendee.table_id.name) + " - " + str(attendee.table_id.table_number)).encode('utf-8'),
+                    (attendee.state).encode('utf-8')] )
+            
+            with open('/tmp/tmp.csv', 'r') as csvfile:
+                fileContent = csvfile.read()
+                
+            return request.make_response(fileContent, [('Content-Type', 'application/octet-stream'),
+                                ('Content-Disposition', 'attachment; filename=%s.csv'% _('attendees'))])
 
     @http.route()
     def account(self, **kw):

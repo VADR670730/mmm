@@ -31,20 +31,20 @@ class Production(models.Model):
         ('archived', 'Archived')
         ], string='State', default='draft', required=True, track_visibility='always')
     production_type_id = fields.Many2one('publisher.production.type', string='Production Type', required=True, readonly=True, states={'draft': [('readonly', False)]})
-    project_id = fields.Many2one('project.project', string="Project", track_visibility='always');
+    project_id = fields.Many2one('project.project', string="Project", track_visibility='always')
     date_start = fields.Date(string='Publication Date / Event', required=True, readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_end = fields.Date(string='End Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_closing = fields.Date(string='Closing Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_full_equipment_limit = fields.Date(string='Full Equipment Limit Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     sale_line_all_ids = fields.One2many('sale.order.line', 'production_id', string='All Production Lines')
-    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done'])])
+    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done', 'cancel'])])
     expected_turnover = fields.Monetary(string="Expected Turnover", readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     invoicing_mode = fields.Selection([
         ('before', 'Before Publication'),
         ('after', 'After Publication'),
         ('both', 'Before & After Publication')
-        ], string='Invoicing Mode', default='before', required=True, readonly=True, states={'draft': [('readonly', False)]})
-    down_payment = fields.Float(string='Down Payment', default=0, readonly=True, states={'draft': [('readonly', False)]})
+        ], string='Invoicing Mode', default='before', required=True, readonly=True, states={'draft': [('readonly', False)], 'confirmed':[('readonly', False)]})
+    down_payment = fields.Float(string='Down Payment', default=0, readonly=True, states={'draft': [('readonly', False)],'confirmed':[('readonly', False)]})
     seq_number = fields.Char(string="Sequence Number", required=True, readonly=True, copy=False, track_visibility='always', states={'draft': [('readonly', False)]}, index=True, default=lambda self: _('New'))
     date_blanco = fields.Date(string='Blanco Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     note = fields.Text(string="Notes")
@@ -97,8 +97,9 @@ class Production(models.Model):
 
     @api.model
     def create(self, vals):
+        production_type_id = self.env['publisher.production.type'].search([('id', '=', vals['production_type_id'])])
         if vals.get('seq_number', _('New')) == _('New'):
-            vals['seq_number'] = self.env['publisher.production.type'].search([('id', '=', vals['production_type_id'])]).sequence_id.next_by_id() or _('New')
+            vals['seq_number'] = production_type_id.sequence_id.next_by_id() or _('New')
 
         return super(Production, self).create(vals)
 
@@ -132,13 +133,17 @@ class Production(models.Model):
         self.potential_turnover = sum([line.price_subtotal for line in self.sale_line_ids])
 
 
-    @api.one
-    @api.depends('sale_line_ids', 'sale_line_ids.price_subtotal', 'sale_line_ids.order_id.state')
+    @api.multi
+    @api.depends('invoice_ids')
     def _compute_actual_turnover(self):
-        self.actual_turnover = 0
-        for line in self.sale_line_ids:
-            if line.order_id.state in ['sale', 'done']:
-                self.actual_turnover += line.price_subtotal
+        for production in self:
+            actual_turnover = 0
+            for invoice in production.invoice_ids:
+                if invoice.state in ['open', 'paid']:
+                    actual_turnover += invoice.amount_total_signed
+            production.write({
+                'actual_turnover': actual_turnover,
+            })
 
 
     @api.one
@@ -162,16 +167,22 @@ class Production(models.Model):
     @api.one
     def _compute_invoice_ids(self):
         invoice_ids_id = []
+        # Add invoices that are linked to the sale order lines
         for line in self.sale_line_ids:
             for invoice_line in line.invoice_lines:
                 if not invoice_line.invoice_id.id in invoice_ids_id:
                     invoice_ids_id.append(invoice_line.invoice_id.id)
+        # Add invoices that have invoice lines linked to this production
+        refund_line_ids = self.env['account.invoice.line'].search([('production_id', '=', self.id)])
+        for line in refund_line_ids:
+            invoice_ids_id.append(line.invoice_id.id)
         self.invoice_ids = self.env['account.invoice'].search([('id', 'in', invoice_ids_id)])
 
     @api.one
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):
         self.invoice_count = len(self.invoice_ids)
+        self._compute_actual_turnover()
 
     @api.one
     def _compute_purchase_invoice_ids(self):
@@ -190,10 +201,9 @@ class Production(models.Model):
     @api.multi
     @api.depends('crm_lead_ids')
     def _compute_crm_lead_count(self):
-        self.crm_lead_ids = None
-        for pt in self.production_type_id:
-            self.crm_lead_ids |= self.env['crm.lead'].search([('production_id', 'in', pt.media_id.id)])
-        self.crm_lead_count = len(self.crm_lead_ids)
+        for production in self:
+            production.crm_lead_ids |= self.env['crm.lead'].search([('production_id', 'in', production.id)])
+            production.crm_lead_count = len(production.crm_lead_ids)
 
     @api.one
     @api.depends('sale_line_ids')
@@ -285,8 +295,8 @@ class Production(models.Model):
 
     @api.one
     def write(self, values):
+        # Forbit reset to draft when there are already sale lines
         if values.get('state') and values['state'] == 'draft' and len(self.sale_line_all_ids) > 0:
-
             sales = []
             for line in self.sale_line_all_ids:
                 if line.order_id not in sales:
@@ -294,6 +304,16 @@ class Production(models.Model):
 
             raise exceptions.ValidationError(_("Production can't be set to draft if sale lines are still linked (in ") + ', '.join(sale.name for sale in sales) + ").")
             return False
+
+        # Create a project when confirming the production
+        if (values.get('state') and values['state'] == 'confirmed') and ('project_id' not in values and self.production_type_id.project_template_id):
+            new_project_id = self.production_type_id.project_template_id.copy({
+                'name': self.name,
+                'is_template': False,
+            })
+            values.update({
+                'project_id': new_project_id.id,
+            })
 
         return super(Production, self).write(values)
 
@@ -489,7 +509,7 @@ class Production(models.Model):
                             #'date_invoice' : now.strftime('%Y-%m-%d'),
                             'state' : 'draft',
                             'reference_type' : 'none',
-                            'fiscal_position_id' : sale_id.fiscal_position_id.id or partner_invoice_id.property_account_position_id.id,
+                            'fiscal_position_id' : partner_invoice_id.property_account_position_id.id or sale_id.fiscal_position_id.id,
                             'payment_term_id' : sale_id.payment_term_id.id,
                             'account_id' : partner_invoice_id.property_account_receivable_id.id,
                             'user_id': sale_id.user_id and sale_id.user_id.id,
@@ -500,14 +520,9 @@ class Production(models.Model):
 
                     description = '\n'.join(filter(None, [
                         line.name,
-                        self.name,
                         _('Unit Price : ')+str(line.price_unit)+self.currency_id.symbol if line.product_uom_qty != 1 or quantity != line.product_uom_qty else '',
                         _('Quantity : ')+str(line.product_uom_qty) if line.product_uom_qty != 1 else '',
                         _('Invoiced Percentage : ')+str(round(quantity / line.product_uom_qty * 100, 2))+' %' if quantity != line.product_uom_qty else '',
-                        ', '.join(filter(None, [
-                            _('Format : ')+line.format_id.name if line.format_id else '',
-                            _('Location : ')+line.location_id.name if line.location_id else '',
-                        ])),
                         _('Your Customer : ')+sale_id.partner_id.name if sale_id.agency_id else '',
                         _('Price : ')+str(quantity*line.price_unit)+self.currency_id.symbol+(' - '+str(line.discount_base)+_(' % customer discount') if line.discount_base>0 else '')+(' = '+str(quantity*line.price_unit*(1-line.discount_base/100))+self.currency_id.symbol if line.discount_base>0 and line.commission>0 else '')+(' - '+str(line.commission)+_(' % agency commission') if line.commission>0 else ''),
                     ]))
