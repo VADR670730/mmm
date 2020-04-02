@@ -1,23 +1,30 @@
 <odoo>
     <data>
         <template id="address_existing_partner" inherit_id="website_sale.address" name="Address Management Existing Partner">
-            <xpath expr="//input[@name='name']" position="replace">
-                <input t-if="address_partner and address_partner.name" class="form-control" name="name" t-att-value="address_partner.name" type="text"/>
-                <input t-else="" type="text" name="name" class="form-control" t-att-value="'name' in checkout and checkout['name']" />
+            <xpath expr="(//form/div)[1]" position="replace">
+                <div t-attf-class="form-group #{error.get('firstname') and 'has-error' or ''} col-md-6 div_name">
+                    <label class="control-label" for="firstname">Firstname</label>
+                    <input t-if="address_partner and address_partner.firstname" class="form-control" name="firstname" t-att-value="address_partner.firstname" type="text"/>
+                    <input t-else="" type="text" name="firstname" class="form-control" t-att-value="'firstname' in checkout and checkout['firstname']"/>
+                </div>
+                <div t-attf-class="form-group #{error.get('surname') and 'has-error' or ''} col-md-6 div_name">
+                    <label class="control-label" for="surname">Surname</label>
+                    <input t-if="address_partner and address_partner.surname" class="form-control" name="surname" t-att-value="address_partner.surname" type="text"/>
+                    <input t-else="" type="text" name="surname" class="form-control" t-att-value="'surname' in checkout and checkout['surname']"/>
+                </div>
             </xpath>
             <xpath expr="//input[@name='email']" position="replace">
                 <input t-if="address_partner and address_partner.email" class="form-control" name="email" t-att-value="address_partner.email" type="text"/>
                 <input t-else="" type="email" name="email" class="form-control" t-att-value="'email' in checkout and checkout['email']" />
             </xpath>
-            <xpath expr="//input[@name='company_name']" position="replace">
-                <t t-if="address_partner">
-                    <input t-if="address_partner.company_name" class="form-control" name="company_name" t-att-value="address_partner.company_name" type="text"/>
-                    <input t-elif="address_partner.parent_id" class="form-control" name="company_name" t-att-value="address_partner.parent_id.name" type="text"/>
-                    <input t-else="" class="form-control" name="company_name" t-att-value="address_partner.name" type="text"/>
-                </t>
-                <t t-else="">
-                    <input type="text" name="company_name" class="form-control" t-att-value="'company_name' in checkout and checkout['company_name']" />
-                </t>
+            <xpath expr="//input[@name='email']" position="before">
+                <input t-if="address_partner and address_partner.parent_id" hidden="1" id="company_name_hidden" name="company_name_hidden" t-att-value="address_partner.parent_id.name"/>
+                <script type="text/javascript">
+                    setTimeout(function() {
+                        let company_name = document.getElementById("company_name_hidden").value;
+                        document.getElementsByName("company_name")[0].value = company_name;
+                    }, 100);
+                </script>
             </xpath>
             <xpath expr="//input[@name='phone']" position="replace">
                 <input t-if="address_partner and address_partner.phone" class="form-control" name="phone" t-att-value="address_partner.phone" type="text"/>
