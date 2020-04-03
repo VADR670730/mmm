@@ -30,6 +30,9 @@
                     <xpath expr="//field[@name='partner_id']" position="after">
                         <field name="final_customer_id" />
                     </xpath>
+                    <xpath expr="//field[@name='amount_total_signed']" position="before">
+                        <field name="amount_untaxed_signed" string="Total Untaxed" sum="Total Untaxed" />
+                    </xpath>
                 </data>
             </field>
         </record>

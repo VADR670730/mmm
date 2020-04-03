@@ -105,14 +105,16 @@
                                     <label string="%%" class="oe_inline" />
                                 </div>
                                 <field name="currency_id" invisible="1"/>
-                                <field name="expected_turnover" widget="monetary" />
-                                <field name="potential_turnover" widget="monetary" />
-                                <field name="actual_turnover" widget="monetary" />
+                                <field name="turnover_expected" widget="monetary" />
+                                <field name="turnover_draft" widget="monetary" />
+                                <field name="turnover_potential" widget="monetary" />
+                                <field name="turnover_confirmed" widget="monetary" />
                                 <label for="turnover_delta" />
                                 <div>
                                     <field name="turnover_delta_sign" class="oe_inline" />
                                     <field name="turnover_delta" widget="monetary" class="oe_inline" />
                                 </div>
+                                <field name="turnover_invoiced" widget="monetary" />
                             </group>
                         </group>
                         <notebook>
@@ -130,7 +132,25 @@
                                         <field name="date_start"/>
                                         <field name="date_end"/>
                                         <field name="order_name"/>
-                                        <field name="price_subtotal"/>
+                                        <field name="price_subtotal" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Production Lines (all)">
+                                <field name="sale_line_all_ids">
+                                    <tree name="Production Lines (all)" create="false" delete="false" colors="                                         blue: state=='sale' and not full_equipment_received;                                         green: state=='sale' and full_equipment_received;                                         red: state!='sale' ">
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="order_partner_id"/>
+                                        <field name="full_equipment_received"/>
+                                        <field name="invoice_status" />
+                                        <field name="format_id"/>
+                                        <field name="location_id"/>
+                                        <field name="date_start"/>
+                                        <field name="date_end"/>
+                                        <field name="order_name"/>
+                                        <field name="price_subtotal" sum="Total"/>
                                     </tree>
                                 </field>
                             </page>
@@ -170,9 +190,10 @@
                 <graph string="Productions">
                     <field name="production_type_id" type="row" />
                     <field name="name" type="row" />
-                    <field name="expected_turnover" type="measure" />
-                    <field name="potential_turnover" type="measure" />
-                    <field name="actual_turnover" type="measure" />
+                    <field name="turnover_expected" type="measure" />
+                    <field name="turnover_potential" type="measure" />
+                    <field name="turnover_confirmed" type="measure" />
+                    <field name="turnover_invoiced" type="measure" />
                     <field name="turnover_delta" type="measure" />
                 </graph>
             </field>
