@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e-20191126\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 15:32+0000\n"
-"PO-Revision-Date: 2020-03-09 16:36+0100\n"
+"POT-Creation-Date: 2020-04-03 13:39+0000\n"
+"PO-Revision-Date: 2020-04-03 15:45+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: fr_BE\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: publisher
 #: code:addons/publisher/models/sale_order_line.py:168
@@ -28,7 +28,7 @@ msgstr ""
 "Fin : "
 
 #. module: publisher
-#: code:addons/publisher/models/sale_order_line.py:160
+#: code:addons/publisher/models/sale_order_line.py:162
 #, python-format
 msgid ""
 "\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Format : "
 
 #. module: publisher
-#: code:addons/publisher/models/sale_order_line.py:162
+#: code:addons/publisher/models/sale_order_line.py:164
 #, python-format
 msgid ""
 "\n"
@@ -48,14 +48,14 @@ msgstr ""
 "Emplacement : "
 
 #. module: publisher
-#: code:addons/publisher/models/sale_order_line.py:164
+#: code:addons/publisher/models/sale_order_line.py:160
 #, python-format
 msgid ""
 "\n"
-"Production/Event: "
+"Product: "
 msgstr ""
 "\n"
-"Production/Evènement : "
+"Produit : "
 
 #. module: publisher
 #: code:addons/publisher/models/sale_order_line.py:166
@@ -68,14 +68,14 @@ msgstr ""
 "Début : "
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:523
+#: code:addons/publisher/models/publisher_production.py:515
 #: code:addons/publisher/models/sale_order_line.py:203
 #, python-format
 msgid " % agency commission"
 msgstr " % commission agence"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:523
+#: code:addons/publisher/models/publisher_production.py:515
 #: code:addons/publisher/models/sale_order_line.py:203
 #: code:addons/publisher/models/sale_subscription.py:36
 #, python-format
@@ -83,15 +83,15 @@ msgid " % customer discount"
 msgstr " % remise client"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:418
+#: code:addons/publisher/models/publisher_production.py:415
 #, python-format
 msgid " & Project"
 msgstr " & Projet"
 
 #. module: publisher
 #: code:addons/publisher/models/project_project.py:89
-#: code:addons/publisher/models/publisher_production.py:391
-#: code:addons/publisher/models/publisher_production.py:418
+#: code:addons/publisher/models/publisher_production.py:388
+#: code:addons/publisher/models/publisher_production.py:415
 #, python-format
 msgid " (Attachments).zip"
 msgstr " (Fichiers joints).zip"
@@ -251,12 +251,9 @@ msgstr "Réel"
 
 #. module: publisher
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:38
-#: model:ir.model.fields,field_description:publisher.field_publisher_production_actual_turnover
-#: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
-#: model:ir.ui.view,arch_db:publisher.report_production_template_document
 #, python-format
 msgid "Actual Turnover"
-msgstr "Chiffre d'affaires réel"
+msgstr "CA réel"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.view_publisher_production_line_form
@@ -378,8 +375,8 @@ msgid "Calendar"
 msgstr "Calendrier"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:38
-#: code:addons/publisher/models/account_invoice.py:63
+#: code:addons/publisher/models/account_invoice.py:56
+#: code:addons/publisher/models/account_invoice.py:81
 #, python-format
 msgid "Cancelled Invoice"
 msgstr "Facture annulée"
@@ -439,6 +436,11 @@ msgid "Company"
 msgstr "Société"
 
 #. module: publisher
+#: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
+msgid "Compute"
+msgstr "Compute"
+
+#. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 msgid "Confirmation Date"
@@ -457,14 +459,16 @@ msgid "Confirmed Lines"
 msgstr "Lignes confirmées"
 
 #. module: publisher
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_confirmed
+#: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
+#: model:ir.ui.view,arch_db:publisher.report_production_template_document
+msgid "Confirmed Turnover"
+msgstr "CA confirmé"
+
+#. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_partner_create_crm_leads_wizard_partner_ids
 msgid "Contacts"
 msgstr "Contacts"
-
-#. module: publisher
-#: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
-msgid "Create"
-msgstr "Créer"
 
 #. module: publisher
 #: model:ir.actions.act_window,name:publisher.action_partner_create_crm_lead
@@ -551,6 +555,11 @@ msgid "Date Ordered:"
 msgstr "Date de commande :"
 
 #. module: publisher
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_delta
+msgid "Delta Confirmed / Expected Turnover"
+msgstr "Diff CA confirmé / CA attendu"
+
+#. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_invoice_document_publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
@@ -563,11 +572,6 @@ msgstr "Description"
 #, python-format
 msgid "Detail: production line waiting for signature"
 msgstr "Précision: Bons de commande en attente de signature"
-
-#. module: publisher
-#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_delta
-msgid "Diff. Actual / Expected Turnover"
-msgstr "Diff. Chiffre d'affaires Réel / Prévu"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_global_template
@@ -647,8 +651,8 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:37
-#: code:addons/publisher/models/account_invoice.py:62
+#: code:addons/publisher/models/account_invoice.py:55
+#: code:addons/publisher/models/account_invoice.py:80
 #, python-format
 msgid "Draft Invoice"
 msgstr "Facture brouillon"
@@ -664,7 +668,13 @@ msgid "Draft Invoice:"
 msgstr "Facture brouillon :"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:59
+#: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
+#: model:ir.ui.view,arch_db:publisher.report_production_template_document
+msgid "Draft Turnover"
+msgstr "CA non confirmé"
+
+#. module: publisher
+#: code:addons/publisher/models/account_invoice.py:77
 #, python-format
 msgid "Duplicate "
 msgstr "Duplicata "
@@ -706,6 +716,11 @@ msgid "Equipment set as not received"
 msgstr "Matériel déclaré non reçu"
 
 #. module: publisher
+#: model:ir.model,name:publisher.model_event_event
+msgid "Event"
+msgstr "Evènement"
+
+#. module: publisher
 #: selection:publisher.production.wizard,export_format:0
 msgid "Excel"
 msgstr "Excel"
@@ -717,12 +732,12 @@ msgstr "Attendu"
 
 #. module: publisher
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:38
-#: model:ir.model.fields,field_description:publisher.field_publisher_production_expected_turnover
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_expected
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 #, python-format
 msgid "Expected Turnover"
-msgstr "Chiffre d'affaires prévu"
+msgstr "CA attendu"
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_wizard_export_format
@@ -760,12 +775,6 @@ msgstr "Position fiscale"
 #: model:ir.ui.view,arch_db:publisher.view_publisher_production_line_filter
 msgid "Format"
 msgstr "Format"
-
-#. module: publisher
-#: code:addons/publisher/models/publisher_production.py:519
-#, python-format
-msgid "Format : "
-msgstr "Format : "
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_media_format_needed
@@ -824,7 +833,7 @@ msgid "Global Productions"
 msgstr "Publications globales"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:581
+#: code:addons/publisher/models/publisher_production.py:573
 #, python-format
 msgid "Global Status"
 msgstr "Etat global"
@@ -893,8 +902,8 @@ msgid "Invited Contacts"
 msgstr "Contacts invités"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:35
-#: code:addons/publisher/models/account_invoice.py:60
+#: code:addons/publisher/models/account_invoice.py:53
+#: code:addons/publisher/models/account_invoice.py:78
 #: model:ir.model,name:publisher.model_account_invoice
 #, python-format
 msgid "Invoice"
@@ -913,6 +922,11 @@ msgid "Invoice Count"
 msgstr "Nombre de factures"
 
 #. module: publisher
+#: model:ir.model,name:publisher.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: publisher
 #: model:ir.ui.view,arch_db:publisher.view_order_form_publisher
 msgid "Invoice Lines"
 msgstr "Lignes de factures"
@@ -923,7 +937,7 @@ msgid "Invoice Mode"
 msgstr "Mode de facturation"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:598
+#: code:addons/publisher/models/publisher_production.py:590
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_invoice_status
 #, python-format
 msgid "Invoice Status"
@@ -951,7 +965,7 @@ msgid "Invoiced Partner"
 msgstr "Partenaire facturé"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:517
+#: code:addons/publisher/models/publisher_production.py:513
 #: code:addons/publisher/models/sale_order_line.py:201
 #, python-format
 msgid "Invoiced Percentage : "
@@ -961,6 +975,13 @@ msgstr "Part facturée : "
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 msgid "Invoiced Proportion"
 msgstr "Proportion facturée"
+
+#. module: publisher
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_invoiced
+#: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
+#: model:ir.ui.view,arch_db:publisher.report_production_template_document
+msgid "Invoiced Turnover"
+msgstr "CA facturé"
 
 #. module: publisher
 #: model:ir.actions.report.xml,name:publisher.account_invoices
@@ -1120,12 +1141,6 @@ msgid "Location"
 msgstr "Lieu"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:520
-#, python-format
-msgid "Location : "
-msgstr "Emplacement : "
-
-#. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_media_location_needed
 #: model:ir.model.fields,field_description:publisher.field_sale_order_line_location_needed
 msgid "Location Needed"
@@ -1151,7 +1166,6 @@ msgstr "Clients gérés"
 
 #. module: publisher
 #: model:ir.actions.act_window,name:publisher.menu_sale_publisher_settings_media_media_action
-#: model:ir.model.fields,field_description:publisher.field_crm_lead_production_id
 #: model:ir.model.fields,field_description:publisher.field_partner_create_crm_leads_wizard_production_ids
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_type_media_id
 #: model:ir.model.fields,field_description:publisher.field_sale_order_line_media_id
@@ -1187,15 +1201,15 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:48
-#: code:addons/publisher/models/publisher_production.py:101
-#: code:addons/publisher/models/publisher_production.py:102
+#: code:addons/publisher/models/publisher_production.py:47
+#: code:addons/publisher/models/publisher_production.py:104
+#: code:addons/publisher/models/publisher_production.py:105
 #, python-format
 msgid "New"
 msgstr "Nouveau"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:557
+#: code:addons/publisher/models/publisher_production.py:549
 #, python-format
 msgid "Not any line to invoice, make sure the sale orders are confirmed and the production publication date / invoicing mode are ok."
 msgstr "Not any line to invoice, make sure the sale orders are confirmed and the production publication date / invoicing mode are ok."
@@ -1219,7 +1233,7 @@ msgstr "Option"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:38
 #, python-format
 msgid "Optional Turnover"
-msgstr "C.A. en option"
+msgstr "CA en option"
 
 #. module: publisher
 #: code:addons/publisher/models/sale_order.py:152
@@ -1244,8 +1258,8 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:36
-#: code:addons/publisher/models/account_invoice.py:61
+#: code:addons/publisher/models/account_invoice.py:54
+#: code:addons/publisher/models/account_invoice.py:79
 #, python-format
 msgid "PRO-FORMA"
 msgstr "PRO-FORMA"
@@ -1277,23 +1291,23 @@ msgid "Partners"
 msgstr "Partenaires"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:443
+#: code:addons/publisher/models/publisher_production.py:440
 #, python-format
 msgid "Please define an accounting sale journal for this company."
 msgstr "Veuillez définir un journal comptable de vente pour cette société."
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:528
+#: code:addons/publisher/models/publisher_production.py:520
 #, python-format
 msgid "Please define income account for this product: \"%s\" (id:%d) - or for its category: \"%s\"."
 msgstr "Veuillez définir le compte de revenu pour ce produit : \"%s\" (id:%d) - ou pour sa catégorie : \"%s\"."
 
 #. module: publisher
-#: model:ir.model.fields,field_description:publisher.field_publisher_production_potential_turnover
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_potential
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 msgid "Potential Turnover"
-msgstr "Chiffre d'affaires potentiel"
+msgstr "CA potentiel"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_saleorder_publisher_document
@@ -1301,7 +1315,7 @@ msgid "Price"
 msgstr "Prix"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:523
+#: code:addons/publisher/models/publisher_production.py:515
 #: code:addons/publisher/models/sale_order_line.py:203
 #: code:addons/publisher/models/sale_subscription.py:36
 #, python-format
@@ -1346,13 +1360,10 @@ msgid "Product Template"
 msgstr "Modèle d'article"
 
 #. module: publisher
-#: code:addons/publisher/models/sale_order_line.py:158
-#, python-format
-msgid "Product: "
-msgstr "Article : "
-
-#. module: publisher
 #: code:addons/publisher/models/project_project.py:21
+#: model:ir.model.fields,field_description:publisher.field_account_invoice_line_production_id
+#: model:ir.model.fields,field_description:publisher.field_crm_lead_production_id
+#: model:ir.model.fields,field_description:publisher.field_event_event_production_id
 #: model:ir.model.fields,field_description:publisher.field_project_project_production_id
 #: model:ir.model.fields,field_description:publisher.field_purchase_order_line_production_id
 #: model:ir.model.fields,field_description:publisher.field_sale_order_line_production_id
@@ -1404,6 +1415,11 @@ msgid "Production Lines"
 msgstr "Lignes de production"
 
 #. module: publisher
+#: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
+msgid "Production Lines (all)"
+msgstr "Production Lines (all)"
+
+#. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_sale_lines_count
 msgid "Production Lines Count"
 msgstr "Nombre de lignes de production"
@@ -1444,7 +1460,7 @@ msgid "Production Types"
 msgstr "Types de production"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:306
+#: code:addons/publisher/models/publisher_production.py:293
 #, python-format
 msgid "Production can't be set to draft if sale lines are still linked (in "
 msgstr "La production ne peut pas être mise en brouillon s'il y a encore des lignes de vente liées (dans "
@@ -1455,10 +1471,16 @@ msgid "Production item requirements"
 msgstr "Besoins d'une production"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:403
+#: code:addons/publisher/models/publisher_production.py:400
 #, python-format
 msgid "Production/"
 msgstr "Production/"
+
+#. module: publisher
+#: code:addons/publisher/models/sale_order_line.py:158
+#, python-format
+msgid "Production/Event: "
+msgstr "Production/Event: "
 
 #. module: publisher
 #: model:ir.actions.act_window,name:publisher.menu_sale_publisher_productions_action
@@ -1517,7 +1539,7 @@ msgid "Project Templates"
 msgstr "Modèles de projet"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:404
+#: code:addons/publisher/models/publisher_production.py:401
 #, python-format
 msgid "Project/"
 msgstr "Projet/"
@@ -1586,7 +1608,7 @@ msgid "Quantity"
 msgstr "Quantité"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:516
+#: code:addons/publisher/models/publisher_production.py:512
 #: code:addons/publisher/models/sale_order_line.py:200
 #: code:addons/publisher/models/sale_subscription.py:35
 #, python-format
@@ -1617,6 +1639,11 @@ msgid "Quotation Date:"
 msgstr "Date du devis:"
 
 #. module: publisher
+#: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_draft
+msgid "Quotation Turnover"
+msgstr "CA des offres"
+
+#. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_global_template
 msgid "Ratio"
 msgstr "Ratio"
@@ -1628,8 +1655,8 @@ msgid "Ratio (Actual/Expected)"
 msgstr "Ratio (Réel/Attendu)"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:39
-#: code:addons/publisher/models/account_invoice.py:64
+#: code:addons/publisher/models/account_invoice.py:57
+#: code:addons/publisher/models/account_invoice.py:82
 #, python-format
 msgid "Refund"
 msgstr "Note de crédit"
@@ -1862,6 +1889,7 @@ msgstr "A ajouter sur les factures"
 #: model:ir.ui.view,arch_db:publisher.report_production_global_template
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
+#: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
 msgid "Total"
 msgstr "Total"
 
@@ -1876,7 +1904,7 @@ msgstr "Prix total"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:108
 #, python-format
 msgid "Total Turnover"
-msgstr "Total C.A."
+msgstr "Total CA"
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_delta_sign
@@ -1890,7 +1918,7 @@ msgid "Turnover Result"
 msgstr "Résultat"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:325
+#: code:addons/publisher/models/publisher_production.py:322
 #, python-format
 msgid "Uncategorized"
 msgstr "Sans catégorie"
@@ -1903,7 +1931,7 @@ msgid "Unit Price"
 msgstr "Prix unitaire"
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:515
+#: code:addons/publisher/models/publisher_production.py:511
 #: code:addons/publisher/models/sale_order_line.py:199
 #: code:addons/publisher/models/sale_subscription.py:34
 #, python-format
@@ -1918,8 +1946,8 @@ msgid "VAT:"
 msgstr "TVA :"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:41
-#: code:addons/publisher/models/account_invoice.py:66
+#: code:addons/publisher/models/account_invoice.py:59
+#: code:addons/publisher/models/account_invoice.py:84
 #, python-format
 msgid "Vendor Bill"
 msgstr "Facture fournisseur"
@@ -1930,8 +1958,8 @@ msgid "Vendor Bill:"
 msgstr "Facture fournisseur :"
 
 #. module: publisher
-#: code:addons/publisher/models/account_invoice.py:40
-#: code:addons/publisher/models/account_invoice.py:65
+#: code:addons/publisher/models/account_invoice.py:58
+#: code:addons/publisher/models/account_invoice.py:83
 #, python-format
 msgid "Vendor Refund"
 msgstr "Note de crédit fournisseur"
@@ -1947,7 +1975,7 @@ msgid "When creating a new production for this type, this project will be copied
 msgstr "En créant une nouvelle production avec ce type, un projet sera automatiquement créé en copiant celui selectionné (incluant les étapes et tâches)."
 
 #. module: publisher
-#: code:addons/publisher/models/publisher_production.py:522
+#: code:addons/publisher/models/publisher_production.py:514
 #: code:addons/publisher/models/sale_order_line.py:202
 #, python-format
 msgid "Your Customer : "
