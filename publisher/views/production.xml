@@ -115,6 +115,7 @@
                                     <field name="turnover_delta" widget="monetary" class="oe_inline" />
                                 </div>
                                 <field name="turnover_invoiced" widget="monetary" />
+                                <!--<button name="compute_turnovers" type="object" string="Compute" /> -->
                             </group>
                         </group>
                         <notebook>

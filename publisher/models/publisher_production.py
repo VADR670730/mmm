@@ -54,12 +54,12 @@ class Production(models.Model):
     sale_lines_full_equipment_count = fields.Char(string="Equip. Received Lines", compute='_compute_sale_lines_full_equipment_count')
 
     turnover_expected = fields.Monetary(string="Expected Turnover", readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
-    turnover_draft = fields.Monetary(string="Quotation Turnover", compute='_compute_turnovers', store=True)
-    turnover_potential = fields.Monetary(string="Potential Turnover", compute='_compute_turnovers', store=True)
-    turnover_confirmed = fields.Monetary(string="Confirmed Turnover", compute='_compute_turnovers', store=True)
-    turnover_delta = fields.Monetary(string='Delta Confirmed / Expected Turnover', compute='_compute_turnovers', store=True)
+    turnover_draft = fields.Monetary(string="Quotation Turnover", compute='_compute_turnovers')
+    turnover_potential = fields.Monetary(string="Potential Turnover", compute='_compute_turnovers')
+    turnover_confirmed = fields.Monetary(string="Confirmed Turnover", compute='_compute_turnovers')
+    turnover_delta = fields.Monetary(string='Delta Confirmed / Expected Turnover', compute='_compute_turnovers')
     turnover_delta_sign = fields.Char(string='Turnover Delta Sign', compute='_compute_turnovers')
-    turnover_invoiced = fields.Monetary(string="Invoiced Turnover", compute='_compute_turnover_invoiced', store=True)
+    turnover_invoiced = fields.Monetary(string="Invoiced Turnover", compute='_compute_turnovers')
 
     export_file = fields.Binary(attachment=True, help="This field holds the attachments export file.", readonly=True)
     sale_ids = fields.Many2many('sale.order', string="Sales", compute='_compute_sale_ids')
@@ -129,19 +129,20 @@ class Production(models.Model):
 
         self.sale_lines_full_equipment_count = str(count) + '/' + str(confirmed_count)
 
+    @api.multi
+    def compute_turnovers(self):
+        for prod in self:
+            prod._compute_turnovers()
+
     @api.one
-    @api.depends('turnover_expected', 'sale_line_all_ids', 'sale_line_all_ids.price_subtotal', 'sale_line_all_ids.order_id.state', 'sale_line_ids', 'sale_line_ids.price_subtotal', 'sale_line_ids.order_id.state')
+    @api.depends('turnover_expected', 'sale_line_all_ids', 'sale_line_all_ids.price_subtotal', 'sale_line_all_ids.order_id.state', 'sale_line_ids', 'sale_line_ids.price_subtotal', 'sale_line_ids.order_id.state', 'invoice_ids')
     def _compute_turnovers(self):
         self.turnover_draft = sum([line.price_subtotal for line in self.sale_line_all_ids.filtered(lambda r: r.order_id.state in ['draft', 'sent', 'option'])])
         self.turnover_potential = sum([line.price_subtotal for line in self.sale_line_ids])
         self.turnover_confirmed = sum([line.price_subtotal for line in self.sale_line_all_ids.filtered(lambda r: r.order_id.state in ['sale', 'done'])])
         self.turnover_delta = self.turnover_confirmed - self.turnover_expected
         self.turnover_delta_sign = '+' if self.turnover_delta > 0 else ''
-
-    @api.one
-    @api.depends('invoice_ids')
-    def _compute_turnover_invoiced(self):
-        self.turnover_invoiced = sum([invoice.amount_untaxed for invoice in self.invoice_ids])
+        self.turnover_invoiced = sum([invoice.amount_untaxed_signed for invoice in self.invoice_ids])
 
     @api.one
     def _compute_sale_ids(self):
@@ -169,7 +170,7 @@ class Production(models.Model):
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):
         self.invoice_count = len(self.invoice_ids)
-        self._compute_turnover_invoiced()
+        self.turnover_invoiced = sum([invoice.amount_untaxed_signed for invoice in self.invoice_ids])
 
     @api.one
     def _compute_purchase_invoice_ids(self):

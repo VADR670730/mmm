@@ -89,19 +89,27 @@
                                 <table style="width:100%;">
                                     <tr>
                                         <td style="width:40%;">Expected Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.expected_turnover" /></td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_expected" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Draft Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_draft" /></td>
                                     </tr>
                                     <tr>
                                         <td style="width:40%;">Potential Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.potential_turnover" /></td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_potential" /></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:40%;">Actual Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.actual_turnover" /></td>
+                                        <td style="width:40%;">Confirmed Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_confirmed" /></td>
                                     </tr>
                                     <tr>
                                         <td style="width:40%;">Turnover Result</td>
                                         <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_delta_sign" /><span t-field="doc.turnover_delta" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Invoiced Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_invoiced" /></td>
                                     </tr>
                                 </table>
                             </td>
@@ -343,19 +351,27 @@
                                 <table style="width:100%;">
                                     <tr>
                                         <td style="width:40%;">Expected Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.expected_turnover" /></td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_expected" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Draft Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_draft" /></td>
                                     </tr>
                                     <tr>
                                         <td style="width:40%;">Potential Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.potential_turnover" /></td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_potential" /></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:40%;">Actual Turnover</td>
-                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.actual_turnover" /></td>
+                                        <td style="width:40%;">Confirmed Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_confirmed" /></td>
                                     </tr>
                                     <tr>
                                         <td style="width:40%;">Turnover Result</td>
                                         <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_delta_sign" /><span t-field="doc.turnover_delta" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%;">Invoiced Turnover</td>
+                                        <td style="font-weight:bold; width:60%; text-align:right;"><span t-field="doc.turnover_invoiced" /></td>
                                     </tr>
                                 </table>
                             </td>
@@ -617,8 +633,8 @@
 
                                     <t t-set="prod_type" t-value="prod_type.with_context({'lang':user.partner_id.lang})" />
                                     
-                                    <t t-set="prod_type_expected" t-value="sum(prod.expected_turnover for prod in prods)"/>
-                                    <t t-set="prod_type_actual" t-value="sum(prod.actual_turnover for prod in prods)"/>
+                                    <t t-set="prod_type_expected" t-value="sum(prod.turnover_expected for prod in prods)"/>
+                                    <t t-set="prod_type_actual" t-value="sum(prod.turnover_confirmed for prod in prods)"/>
                                     <t t-set="prod_type_delta" t-value="prod_type_actual - prod_type_expected"/>
 
                                     <t t-set="total_expected" t-value="total_expected + prod_type_expected"/>
@@ -642,9 +658,9 @@
                                             <td><span t-field="prod.seq_number"/></td>
                                             <td><span t-field="prod.name"/></td>
                                             <td><span t-field="prod.state"/></td>
-                                            <td class="text-right"><span t-esc="prod.expected_turnover" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
-                                            <td class="text-right"><span t-esc="prod.actual_turnover" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
-                                            <td class="text-right"><span t-esc="round(prod.actual_turnover / prod.expected_turnover * 100 if prod.expected_turnover > 0 else 0, 2)"/> %</td>
+                                            <td class="text-right"><span t-esc="prod.turnover_expected" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
+                                            <td class="text-right"><span t-esc="prod.turnover_confirmed" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
+                                            <td class="text-right"><span t-esc="round(prod.turnover_confirmed / prod.turnover_expected * 100 if prod.turnover_expected > 0 else 0, 2)"/> %</td>
                                             <td class="text-right"><span t-esc="prod.turnover_delta_sign"/><span t-esc="prod.turnover_delta" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/></td>
                                             <td><span t-field="prod.date_closing"/></td>
                                         </tr>
