@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from werkzeug.exceptions import Forbidden
-from odoo import http
+from odoo import http, tools, _ 
 import pprint
 from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
@@ -13,6 +13,7 @@ _logger = logging.getLogger(__name__)
 
 class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
 
+
     @http.route()
     def address(self, **kw):
         if request.session.session_token:
@@ -21,11 +22,14 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
         first_attendee_email = request.session['1-email']
         address_partner = request.env['res.partner'].sudo().search([("email", '=', first_attendee_email)], limit=1)
 
-        address_data = super(WebsiteEventCountryControllerInherit, self).address(**kw)
+        #address_data = super(WebsiteEventCountryControllerInherit, self).address(**kw)
         """override this controller to get the default country of event when and set while rendoring address details"""
         Partner = request.env['res.partner'].with_context(
             show_address=1).sudo()
         order = request.website.sale_get_order()
+
+        if address_partner:
+            order.partner_id = address_partner.id
 
         redirection = self.checkout_redirection(order)
         if redirection:
@@ -36,6 +40,9 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
         values, errors = {}, {}
 
         partner_id = int(kw.get('partner_id', -1))
+        if address_partner:
+            partner_id = address_partner.id
+
 
         # IF PUBLIC ORDER
         if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
@@ -67,6 +74,10 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
 
         # IF POSTED
         if 'submitted' in kw:
+            kw['field_required'] = u'phone,company_name,firstname,surname'
+            firstname = kw['firstname'] or ""
+            surname = kw['surname'] or ""
+            kw['name'] = firstname + " " + surname
             pre_values = self.values_preprocess(order, mode, kw)
             errors, error_msg = self.checkout_form_validate(
                 mode, kw, pre_values)
@@ -78,9 +89,34 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
                 values = kw
             else:
                 partner_id = self._checkout_form_save(mode, post, kw)
+                partner = request.env['res.partner'].sudo().browse([partner_id])
+                if 'firstname' in kw:
+                    partner.sudo().write({'firstname': kw['firstname']})
+                if 'surname' in kw:
+                    partner.sudo().write({'surname': kw['surname']})
 
                 if mode[1] == 'billing':
                     order.partner_id = partner_id
+                    order.partner_id.company_name = partner.company_name
+                    if (not partner.parent_id and partner.company_name):
+                        existing_company = request.env['res.partner'].search([('name', '=', partner.company_name)])
+                        if not existing_company:
+                            new_company = request.env['res.partner'].sudo().create({
+                                'name': partner.company_name,
+                                'company_name': partner.company_name,
+                                'is_company': True,
+                                'lang': partner.lang,
+                                'street': partner.street,
+                                'city': partner.city,
+                                'zip': partner.zip,
+                                'country_id': partner.country_id.id,
+                                'company_id': partner.company_id.id,
+                                'vat': partner.vat,
+                            })
+                            partner.parent_id = new_company.id
+                        else:
+                            partner.parent_id = existing_company.id
+                    order.partner_invoice_id = partner.parent_id.id
                     order.onchange_partner_id()
                 elif mode[1] == 'shipping':
                     order.partner_shipping_id = partner_id
@@ -95,7 +131,7 @@ class WebsiteEventCountryControllerInherit(WebsiteEventCountryController):
         country = country and country.exists() or def_country_id
         render_values = {
             'address_partner': address_partner,
-            'partner_id': partner_id,
+            'partner_id': address_partner.id,
             # Get country from order line or sale order
             'event_country_id': order.order_line and order.order_line[0].event_id.address_id.country_id,
             'mode': mode,
@@ -126,71 +162,67 @@ class WebsiteSaleController(WebsiteSale):
 
     @http.route(['/shop/checkout'], type='http', auth="public", website=True)
     def checkout(self, **post):
-        sale_order = request.website.sale_get_order()
-        res = super(WebsiteSaleController, self).checkout(**post)
+        order = request.website.sale_get_order()
 
-        if request.session.session_token:
-            return res
+        redirection = self.checkout_redirection(order)
+        if redirection:
+            return redirection
 
-        if sale_order and sale_order.partner_id.name != "Public user" and sale_order.partner_id.email:
-            sale_order_partner = sale_order.partner_id
-            sale_order_partner_shipping = sale_order.partner_shipping_id
-            #sale_order_partner_invoice = sale_order.partner_invoice_id
-            existing_partner = request.env["res.partner"].sudo().search([('id', '!=', sale_order_partner.id),('email', '=ilike', sale_order.partner_id.email),
-            ('type','!=','delivery'), ('type','!=','invoice')], limit=1)
-            if existing_partner:
-                sale_order.sudo().write({'partner_id': existing_partner.id})
-                # if sale_order_partner == sale_order_partner_invoice:
-                #     sale_order.sudo().write({'partner_invoice_id': existing_partner.id})
-                if existing_partner.parent_id:
-                    sale_order.sudo().write({'partner_invoice_id': existing_partner.parent_id.id, 'partner_shipping_id': existing_partner.id})
-                else: 
-                    sale_order.sudo().write({'partner_invoice_id': existing_partner.id, 'partner_shipping_id': existing_partner.id})
-                #sale_order.sudo().write({'partner_shipping_id': existing_partner.id})
-                sale_order_partner_shipping.sudo().unlink()
-                sale_order_partner.sudo().unlink()
+        if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
+            return request.redirect('/shop/address')
 
-                # To be sure to remove the shipping partner.
-                request.env['res.partner'].sudo().search([('type', '=', 'delivery'), ('email', '=', existing_partner.email)]).unlink()
+        for f in self._get_mandatory_billing_fields():
+            if not f == 'company_name':
+                if not order.partner_id[f]:
+                    return request.redirect('/shop/address?partner_id=%d' % order.partner_id.id)
 
-            else:
-                company_id = None
-                existing_company = request.env['res.partner'].sudo().search([('name', '=ilike', sale_order_partner.company_name), ('is_company','=', True)])
-                if existing_company:
-                    company_id = existing_company
-                else:
-                    company_id = request.env['res.partner'].sudo().create({
-                        'name': sale_order_partner.company_name,
-                        'is_company': True,
-                        'lang': sale_order_partner.lang,
-                        'street': sale_order_partner.street,
-                        'city': sale_order_partner.city,
-                        'zip': sale_order_partner.zip,
-                        'country_id': sale_order_partner.country_id.id,
-                        'company_id': sale_order_partner.company_id.id,
-                        'vat': sale_order_partner.vat,
-                    })
-                new_partner = request.env['res.partner'].sudo().create({
-                    'name': sale_order_partner.name,
-                    'firstname': sale_order_partner.firstname,
-                    'surname':sale_order_partner.surname,
-                    'phone': sale_order_partner.phone,
-                    'email': sale_order_partner.email,
-                    'lang': sale_order_partner.lang,
-                    'parent_id': company_id.id,
-                    'type': 'contact',
-                    'street': sale_order_partner.street,
-                    'city': sale_order_partner.city,
-                    'zip': sale_order_partner.zip,
-                    'country_id': sale_order_partner.country_id.id,
-                    'company_id': sale_order_partner.company_id.id,
-                    'child_ids': sale_order_partner.child_ids
-                })
-                sale_order.sudo().write({'partner_id': new_partner.id, 'partner_invoice_id': new_partner.parent_id.id, 'partner_shipping_id': new_partner.id})
-                sale_order_partner_shipping.sudo().unlink()
-                sale_order_partner.sudo().unlink()
+        order.sudo().write({'partner_invoice_id': order.partner_id.parent_id.id})
 
-                # To be sure to remove the shipping partner.
-                request.env['res.partner'].sudo().search([('type', '=', 'delivery'), ('email', '=', new_partner.email)]).unlink()
+        values = self.checkout_values(**post)
 
-        return res
+        # Avoid useless rendering if called in ajax
+        if post.get('xhr'):
+            return 'ok'
+        return request.render("website_sale.checkout", values)
+
+    def checkout_form_validate(self, mode, all_form_values, data):
+        # mode: tuple ('new|edit', 'billing|shipping')
+        # all_form_values: all values before preprocess
+        # data: values after preprocess
+        error = dict()
+        error_message = []
+
+        # Required fields from form
+        required_fields = filter(None, (all_form_values.get('field_required') or '').split(','))
+        # Required fields from mandatory field function
+        required_fields += mode[1] == 'shipping' and ["firstname", "surname", "street", "city", "country_id"] or ["firstname", "surname", "email", "street", "city", "country_id"]
+        # Check if state required
+        if data.get('country_id'):
+            country = request.env['res.country'].browse(int(data.get('country_id')))
+            if 'state_code' in country.get_address_fields() and country.state_ids:
+                required_fields += ['state_id']
+
+        # error message for empty required fields
+        for field_name in required_fields:
+            if not data.get(field_name):
+                error[field_name] = 'missing'
+
+        # email validation
+        if data.get('email') and not tools.single_email_re.match(data.get('email')):
+            error["email"] = 'error'
+            error_message.append(_('Invalid Email! Please enter a valid email address.'))
+
+        # vat validation
+        Partner = request.env['res.partner']
+        if data.get("vat") and hasattr(Partner, "check_vat"):
+            if data.get("country_id"):
+                data["vat"] = Partner.fix_eu_vat_number(data.get("country_id"), data.get("vat"))
+            check_func = request.website.company_id.vat_check_vies and Partner.vies_vat_check or Partner.simple_vat_check
+            vat_country, vat_number = Partner._split_vat(data.get("vat"))
+            if not check_func(vat_country, vat_number):
+                error["vat"] = 'error'
+
+        if [err for err in error.values() if err == 'missing']:
+            error_message.append(_('Some required fields are empty.'))
+
+        return error, error_message
