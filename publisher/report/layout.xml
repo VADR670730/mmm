@@ -107,7 +107,7 @@
                         <li t-if="company.bank_acc.acc_number">IBAN: <span t-field="company.bank_acc.acc_number"/></li>
 
                         <li t-if="company.bank_acc.acc_number and company.bank_acc.bank_name or company.bank_acc.acc_number and company.bank_acc.bank_bic">&amp;bull;</li>
-                        <li t-if="company.bank_acc.bank_name"><span t-field="company.bank_acc.bank_name"/>, </li>
+                        <li t-if="company.bank_acc.bank_name"><span t-field="company.bank_acc.bank_name"/></li>
 
                         <li t-if="company.bank_acc.bank_bic">BIC: <span t-field="company.bank_acc.bank_bic"/></li>
                     </ul>
