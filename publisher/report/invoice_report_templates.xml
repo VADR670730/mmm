@@ -14,7 +14,9 @@
                 <t t-set="header_title1" t-value="header_title1_6" t-if="o.type == 'in_refund'" />
                 <t t-set="header_title1" t-value="header_title1_7" t-if="o.type == 'in_invoice'" />
 
-                <t t-set="header_title1" t-value="header_prefix + header_title1" />
+                <t t-if="header_prefix and header_title1">
+                    <t t-set="header_title1" t-value="header_prefix + header_title1"/>
+                </t>
 
                 <t t-if="o.fiscal_position_id and o.fiscal_position_id.invoice_display">
                     <t t-set="header_title2" t-value="o.fiscal_position_id.invoice_display" />
