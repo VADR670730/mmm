@@ -79,6 +79,8 @@
                             <thead>
                                 <tr>
                                     <th>Description</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Taxes</th>
                                     <th class="text-right">Subtotal</th>
                                 </tr>
                             </thead>
@@ -90,6 +92,13 @@
                                             <br />
                                             Price: <span t-field="l.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/> - <span t-esc="'%.2f'%(l.discount)"/> % customer discount
                                         </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="l.quantity"/>
+                                        <span t-field="l.uom_id" groups="product.group_uom"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="l.price_subtotal" 
