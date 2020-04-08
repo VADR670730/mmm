@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e-20191126\n"
+"Project-Id-Version: Odoo Server 10.0+e-20200110\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-03 13:39+0000\n"
-"PO-Revision-Date: 2020-04-03 15:45+0200\n"
+"POT-Creation-Date: 2020-04-08 08:13+0000\n"
+"PO-Revision-Date: 2020-04-08 10:15+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr " % commission agence"
 #: code:addons/publisher/models/sale_subscription.py:36
 #, python-format
 msgid " % customer discount"
-msgstr " % remise client"
+msgstr "% de remise client"
 
 #. module: publisher
 #: code:addons/publisher/models/publisher_production.py:415
@@ -120,7 +120,7 @@ msgstr " fichier(s) joint(s) supprimé(s)"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:102
 #, python-format
 msgid "% Turnover"
-msgstr "% Turnover"
+msgstr "% CA"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_invoice_document_publisher
@@ -253,7 +253,7 @@ msgstr "Réel"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:38
 #, python-format
 msgid "Actual Turnover"
-msgstr "CA réel"
+msgstr "Chiffre d'affaires réel"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.view_publisher_production_line_form
@@ -436,11 +436,6 @@ msgid "Company"
 msgstr "Société"
 
 #. module: publisher
-#: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
-msgid "Compute"
-msgstr "Compute"
-
-#. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 msgid "Confirmation Date"
@@ -557,7 +552,7 @@ msgstr "Date de commande :"
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_delta
 msgid "Delta Confirmed / Expected Turnover"
-msgstr "Diff CA confirmé / CA attendu"
+msgstr "Delta Confirmé / CA Attendu"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_invoice_document_publisher
@@ -716,11 +711,6 @@ msgid "Equipment set as not received"
 msgstr "Matériel déclaré non reçu"
 
 #. module: publisher
-#: model:ir.model,name:publisher.model_event_event
-msgid "Event"
-msgstr "Evènement"
-
-#. module: publisher
 #: selection:publisher.production.wizard,export_format:0
 msgid "Excel"
 msgstr "Excel"
@@ -737,7 +727,7 @@ msgstr "Attendu"
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 #, python-format
 msgid "Expected Turnover"
-msgstr "CA attendu"
+msgstr "Chiffre d'affaires prévu"
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_wizard_export_format
@@ -1138,7 +1128,7 @@ msgstr "Abonnements liés"
 #: model:ir.ui.view,arch_db:publisher.view_publisher_location_form
 #: model:ir.ui.view,arch_db:publisher.view_publisher_production_line_filter
 msgid "Location"
-msgstr "Lieu"
+msgstr "Endroit"
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_media_location_needed
@@ -1233,7 +1223,7 @@ msgstr "Option"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:38
 #, python-format
 msgid "Optional Turnover"
-msgstr "CA en option"
+msgstr "C.A. en option"
 
 #. module: publisher
 #: code:addons/publisher/models/sale_order.py:152
@@ -1307,7 +1297,7 @@ msgstr "Veuillez définir le compte de revenu pour ce produit : \"%s\" (id:%d) -
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 msgid "Potential Turnover"
-msgstr "CA potentiel"
+msgstr "Chiffre d'affaires potentiel"
 
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.report_saleorder_publisher_document
@@ -1363,7 +1353,6 @@ msgstr "Modèle d'article"
 #: code:addons/publisher/models/project_project.py:21
 #: model:ir.model.fields,field_description:publisher.field_account_invoice_line_production_id
 #: model:ir.model.fields,field_description:publisher.field_crm_lead_production_id
-#: model:ir.model.fields,field_description:publisher.field_event_event_production_id
 #: model:ir.model.fields,field_description:publisher.field_project_project_production_id
 #: model:ir.model.fields,field_description:publisher.field_purchase_order_line_production_id
 #: model:ir.model.fields,field_description:publisher.field_sale_order_line_production_id
@@ -1417,7 +1406,7 @@ msgstr "Lignes de production"
 #. module: publisher
 #: model:ir.ui.view,arch_db:publisher.view_publisher_production_form
 msgid "Production Lines (all)"
-msgstr "Production Lines (all)"
+msgstr "Lignes de production (toutes)"
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_sale_lines_count
@@ -1480,7 +1469,7 @@ msgstr "Production/"
 #: code:addons/publisher/models/sale_order_line.py:158
 #, python-format
 msgid "Production/Event: "
-msgstr "Production/Event: "
+msgstr "Production/Evènement :"
 
 #. module: publisher
 #: model:ir.actions.act_window,name:publisher.menu_sale_publisher_productions_action
@@ -1601,6 +1590,7 @@ msgid "Purchase Total"
 msgstr "Achat Total"
 
 #. module: publisher
+#: model:ir.ui.view,arch_db:publisher.report_invoice_document_publisher
 #: model:ir.ui.view,arch_db:publisher.report_production_invoice_status_template_document
 #: model:ir.ui.view,arch_db:publisher.report_production_template_document
 #: model:ir.ui.view,arch_db:publisher.report_saleorder_publisher_document
@@ -1835,6 +1825,7 @@ msgid "Tax"
 msgstr "Taxe"
 
 #. module: publisher
+#: model:ir.ui.view,arch_db:publisher.report_invoice_document_publisher
 #: model:ir.ui.view,arch_db:publisher.report_saleorder_publisher_document
 msgid "Taxes"
 msgstr "Taxes"
@@ -1904,7 +1895,7 @@ msgstr "Prix total"
 #: code:addons/publisher/models/publisher_production_report_xlsx.py:108
 #, python-format
 msgid "Total Turnover"
-msgstr "Total CA"
+msgstr "Total C.A."
 
 #. module: publisher
 #: model:ir.model.fields,field_description:publisher.field_publisher_production_turnover_delta_sign
