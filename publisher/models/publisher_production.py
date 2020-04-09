@@ -37,7 +37,7 @@ class Production(models.Model):
     date_closing = fields.Date(string='Closing Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     date_full_equipment_limit = fields.Date(string='Full Equipment Limit Date', readonly=True, track_visibility='always', states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]})
     sale_line_all_ids = fields.One2many('sale.order.line', 'production_id', string='All Production Lines')
-    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done', 'cancel'])])
+    sale_line_ids = fields.One2many('sale.order.line', 'production_id', string='Production Lines', domain=[('state', 'in', ['option', 'sale', 'done'])])
     invoicing_mode = fields.Selection([
         ('before', 'Before Publication'),
         ('after', 'After Publication'),
