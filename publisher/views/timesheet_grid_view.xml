@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_timesheet_form_publisher" model="ir.ui.view">
+            <field name="name">view_timesheet_form_publisher</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="timesheet_grid.view_timesheet_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='project_id']" position="attributes">
+                        <attribute name="domain">[('is_template', '=', False)]</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

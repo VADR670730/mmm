@@ -16,6 +16,7 @@
         'purchase',
         'crm',
         'report_xlsx',
+        'timesheet_grid',
     ],
     'data': [
         'views/media.xml',
@@ -35,6 +36,7 @@
         'views/account_fiscal_position.xml',
         'views/purchase_order_line.xml',
         'views/crm_lead.xml',
+        'views/timesheet_grid_view.xml',
 
         'views/menu_buttons.xml',
         'views/company_config.xml',
