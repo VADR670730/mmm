@@ -156,7 +156,7 @@ class Production(models.Model):
     def _compute_invoice_ids(self):
         invoice_ids_id = []
         # Add invoices that are linked to the sale order lines
-        for line in self.sale_line_ids:
+        for line in self.sale_line_all_ids:
             for invoice_line in line.invoice_lines:
                 if not invoice_line.invoice_id.id in invoice_ids_id:
                     invoice_ids_id.append(invoice_line.invoice_id.id)
