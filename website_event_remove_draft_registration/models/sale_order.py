@@ -17,5 +17,5 @@ class SaleOrder(models.Model):
     def remove_draft_sale_orders(self, args):
         records = self.env['sale.order'].search([('state', 'in', ['draft', 'sent']), ('confirmed_by_user', '=', False)])
         for record in records:
-            if ( record.state == "draft" and (datetime.utcnow() - datetime.strptime(record.date_order, '%Y-%m-%d %H:%M:%S')) > timedelta(1) ):
+            if (datetime.utcnow() - datetime.strptime(record.date_order, '%Y-%m-%d %H:%M:%S')) > timedelta(1):
                 record.unlink()
