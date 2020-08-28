@@ -4,29 +4,31 @@
 
         <template id="registration_attende_details_add_roles" inherit_id="website_event_registration_info.registration_attendee_details_more_fields">
             <xpath expr="//div[@class='col-md-3'][2]" position="after">
-                <div class="col-md-3" name="events_roles">
+                <div name="events_roles">
                     <t t-if="ticket['is_role_management'] and ticket['event_roles']">
-                        <strong>Event Roles</strong><span class="text-muted"></span>
-                        <t t-if="ticket['is_mandatory']">
-                            <select t-attf-name="#{counter}-event_role_id" id="select_roles" required="This Field is required" t-attf-class="form-control event_role #{counter}-event_role" t-attf-data-cntr="#{counter}">
-                                <option selected="selected"></option>
-                                <t t-foreach="ticket['event_roles']" t-as="role_id">
-                                    <option t-att-value="role_id.id">
-                                        <t t-esc="role_id.name"/>
-                                    </option>
-                                </t>
-                            </select>
-                        </t>
-                        <t t-if="not ticket['is_mandatory']">
-                            <select t-attf-name="#{counter}-event_role_id" id="select_roles" t-attf-class="form-control event_role #{counter}-event_role" t-attf-data-cntr="#{counter}">
-                                <option selected="selected"></option>
-                                <t t-foreach="ticket['event_roles']" t-as="role_id">
-                                    <option t-att-value="role_id.id">
-                                        <t t-esc="role_id.name"/>
-                                    </option>
-                                </t>
-                            </select>
-                        </t>
+                        <div class="col-md-3">
+                            <strong>Event Roles</strong><span class="text-muted"></span>
+                            <t t-if="ticket['is_mandatory']">
+                                <select t-attf-name="#{counter}-event_role_id" id="select_roles" required="This Field is required" t-attf-class="form-control event_role #{counter}-event_role" t-attf-data-cntr="#{counter}">
+                                    <option selected="selected"></option>
+                                    <t t-foreach="ticket['event_roles']" t-as="role_id">
+                                        <option t-att-value="role_id.id">
+                                            <t t-esc="role_id.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                            <t t-if="not ticket['is_mandatory']">
+                                <select t-attf-name="#{counter}-event_role_id" id="select_roles" t-attf-class="form-control event_role #{counter}-event_role" t-attf-data-cntr="#{counter}">
+                                    <option selected="selected"></option>
+                                    <t t-foreach="ticket['event_roles']" t-as="role_id">
+                                        <option t-att-value="role_id.id">
+                                            <t t-esc="role_id.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                        </div>
                     </t>
                 </div>
             </xpath>
