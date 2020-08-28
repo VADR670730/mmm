@@ -20,42 +20,42 @@
                             </h5>
                             
                             <!-- Firstname -->
-                            <div class="col-md-5">
+                            <div class="col-md-5" id="firstname">
                                 <strong>Firstname</strong>
                                 <input class="form-control" type="text" t-attf-name="#{counter}-name" required="This field is required"/>
                             </div>
                             
                             <!-- Lastname -->
-                            <div class="col-md-5">
+                            <div class="col-md-5" id="lastname">
                                 <strong>Lastname</strong>
                                 <input class="form-control" type="text" t-attf-name="#{counter}-last_name" required="This field is required"/>
                             </div>
                             
                             <!-- Company -->
-                            <div class="col-md-5">
+                            <div class="col-md-5" id="company">
                                 <strong>Company</strong>
                                 <input class="form-control" type="text" t-attf-name="#{counter}-company" required="This field is required"/>
                             </div>
 
                             <!-- Function -->
-                            <div class="col-md-5">
+                            <div class="col-md-5" id="function">
                                 <strong>Function</strong>
                                 <input class="form-control" type="text" t-attf-name="#{counter}-function" required="This field is required"/>
                             </div>
                             
                             <!-- Email -->
-                            <div class="col-md-5">
+                            <div class="col-md-5" id="email">
                                 <strong>Email</strong>
                                 <input class="form-control" type="email" t-attf-name="#{counter}-email" required="This field is required"/>
                             </div>
 
                             <!-- Phone -->
-                            <div class="col-md-3">
+                            <div class="col-md-3" id="phone">
                                 <strong>Phone</strong> <span class="text-muted">(Optional)</span>
                                 <input class="form-control" type="tel" t-attf-name="#{counter}-phone"/>
                             </div>
                             <!-- Language -->
-                            <div class="col-md-3">
+                            <div class="col-md-3" id="language">
                                 <strong>Language</strong> <span class="text-muted"></span>
                                 <select t-attf-name="#{counter}-lang_id" t-attf-id="#{counter}-lang_id" class="form-control" required="This field is required">
                                     <t t-foreach="lang_ids" t-as="lang">
